@@ -29,5 +29,9 @@ public class DigitContainer {
 		}
 		return digitArray;
 	}
+
+	public int getDigitAmount() {
+		return digits.size();
+	}
 	
 }

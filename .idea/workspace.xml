@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Digit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DigitContainer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DigitDataManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MnistLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Neuron.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DigitContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DigitContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DigitDataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DigitDataManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MNIST_CSV/mnist_train.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/MNIST_CSV/mnist_train.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,13 +23,16 @@
   "associatedIndex": 8
 }]]></component>
   <component name="ProjectId" id="2lxFAfXuouXH3OJumDjog6MccCr" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
@@ -54,5 +54,8 @@
       <updated>1726113678441</updated>
     </task>
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

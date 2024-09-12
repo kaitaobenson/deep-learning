@@ -1,24 +1,31 @@
+import com.sun.jdi.request.InvalidRequestStateException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class DigitDataManager {
 
-    private static final int DIGIT_AMOUNT = 1000;
+    private static final int DIGIT_AMOUNT = 1000000;
     private static final String TRAINING_DATA_PATH = "src/MNIST_CSV/mnist_train.csv";
     private static final String TESTING_DATA_PATH = "src/MNIST_CSV/mnist_test.csv";
 
     public DigitDataManager() {}
 
     public DigitContainer getTrainingDigits() {
-        return loadFileIntoDigits(TRAINING_DATA_PATH, DIGIT_AMOUNT);
+        DigitContainer digitContainer = loadFileIntoDigits(TRAINING_DATA_PATH, DIGIT_AMOUNT);
+        System.out.println("Testing Digits Loaded: " + digitContainer.getDigitAmount());
+        return digitContainer;
     }
 
     public DigitContainer getTestingDigits() {
-        return loadFileIntoDigits(TESTING_DATA_PATH, DIGIT_AMOUNT);
+        DigitContainer digitContainer = loadFileIntoDigits(TESTING_DATA_PATH, DIGIT_AMOUNT);
+        System.out.println("Training Digits Loaded: " + digitContainer.getDigitAmount());
+        return digitContainer;
     }
-
 
     private DigitContainer loadFileIntoDigits(String path, int digitAmount) {
         DigitContainer digitContainer = new DigitContainer();
@@ -35,6 +42,7 @@ public class DigitDataManager {
 
         while (scanner.hasNextLine() && digitCounter > 0) {
             String line = scanner.nextLine();
+
             String[] stringPixelArray = line.split(",");
 
             // First value is the label
