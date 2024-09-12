@@ -1,9 +1,16 @@
+package Java.Main;
+
+import Java.Digit.Digit;
+import Java.Digit.DigitContainer;
+import Java.Digit.MnistLoader;
+import Java.Neuron.Neuron;
+
 public class Main {
 
     public static void main(String[] args) {
-        DigitDataManager digitDataManager = new DigitDataManager();
+        MnistLoader mnistLoader = new MnistLoader();
         
-        DigitContainer trainingDigitContainer = digitDataManager.getTrainingDigits();
+        DigitContainer trainingDigitContainer = mnistLoader.getTrainingDigits();
         
         Digit digitImage1 = trainingDigitContainer.getDigit(1);
         System.out.println(digitImage1);

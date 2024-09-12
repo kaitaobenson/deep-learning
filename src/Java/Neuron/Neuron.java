@@ -1,3 +1,7 @@
+package Java.Neuron;
+
+import Java.Main.Util;
+
 import java.util.Random;
 
 // Stores weights and a bias, and computes an output from 0-1.

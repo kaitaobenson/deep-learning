@@ -1,6 +1,8 @@
+package Java.Digit;
+
 import java.util.ArrayList;
 
-// Used for storing a group of handwritten Digit images.
+// Used for storing a group of handwritten Java.Digit.Java.Digit images.
 
 public class DigitContainer {
 	

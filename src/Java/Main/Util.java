@@ -1,4 +1,4 @@
-// For random helper methods.
+package Java.Main;// For random helper methods.
 
 public class Util {
 	
@@ -52,7 +52,14 @@ public class Util {
     	}
     	return value;
     }
-    
+
+	public static double randomDouble(double min, double max) {
+		return min + (max - min) * Math.random();
+	}
+
+	public static int randomInt(int min, int max) {
+		return (int) (min + (max - min) * Math.random());
+	}
     
    
 }

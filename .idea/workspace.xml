@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DigitContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DigitContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DigitDataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DigitDataManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MNIST_CSV/mnist_train.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/MNIST_CSV/mnist_train.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MnistLoader.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

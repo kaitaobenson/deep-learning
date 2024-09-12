@@ -1,4 +1,4 @@
-// Used for a single image of a handwritten digit
+package Java.Digit;// Used for a single image of a handwritten digit
 // Stored as an array of pixels from 0 to 255 in brightness.
 
 public class Digit {
@@ -50,7 +50,7 @@ public class Digit {
     }
     
     
-    // Digit value setter / getter
+    // Java.Digit.Java.Digit value setter / getter
     public void setLabel(int label) {
     	this.label = label;
     }

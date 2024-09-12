@@ -1,19 +1,19 @@
-import com.sun.jdi.request.InvalidRequestStateException;
+package Java.Digit;
+
+import Java.Main.Util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class DigitDataManager {
+public class MnistLoader {
 
     private static final int DIGIT_AMOUNT = 1000000;
     private static final String TRAINING_DATA_PATH = "src/MNIST_CSV/mnist_train.csv";
     private static final String TESTING_DATA_PATH = "src/MNIST_CSV/mnist_test.csv";
 
-    public DigitDataManager() {}
+    public MnistLoader() {}
 
     public DigitContainer getTrainingDigits() {
         DigitContainer digitContainer = loadFileIntoDigits(TRAINING_DATA_PATH, DIGIT_AMOUNT);
