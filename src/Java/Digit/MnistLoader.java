@@ -10,8 +10,8 @@ import java.util.Scanner;
 public class MnistLoader {
 
     private static final int DIGIT_AMOUNT = 1000000;
-    private static final String TRAINING_DATA_PATH = "src/MNIST_CSV/mnist_train.csv";
-    private static final String TESTING_DATA_PATH = "src/MNIST_CSV/mnist_test.csv";
+    private static final String TRAINING_DATA_PATH = "../MNIST_CSV/mnist_train.csv";
+    private static final String TESTING_DATA_PATH = "../MNIST_CSV/mnist_test.csv";
 
     public MnistLoader() {}
 

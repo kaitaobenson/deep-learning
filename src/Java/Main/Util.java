@@ -28,38 +28,7 @@ public class Util {
     	
     	return floatArray;
     }
-    
-    
-    // Math
-    
-    // Squashes numbers between 1 and 0
-    public static double sigmoid(double value) {
-    	double negExp = Math.exp(-value);
-    	return 1 / (1 + negExp);
-    }
-    
-    // Squashes numbers between 1 and -1
-    public static double tanh(double value) {
-    	double posExp = Math.exp(value);
-    	double negExp = Math.exp(-value);
-    	return (posExp - negExp) / (posExp + negExp);
-    }
-    
-    // Returns the same value with a min of 0
-    public static double ReLU(double value) {
-    	if (value < 0) {
-    		return 0;
-    	}
-    	return value;
-    }
 
-	public static double randomDouble(double min, double max) {
-		return min + (max - min) * Math.random();
-	}
-
-	public static int randomInt(int min, int max) {
-		return (int) (min + (max - min) * Math.random());
-	}
     
    
 }

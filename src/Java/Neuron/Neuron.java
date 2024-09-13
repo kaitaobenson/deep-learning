@@ -1,8 +1,10 @@
 package Java.Neuron;
 
 import Java.Main.Util;
+import Java.Math.Vector2;
 
 import java.util.Random;
+import java.util.UUID;
 
 // Stores weights and a bias, and computes an output from 0-1.
 
@@ -16,9 +18,18 @@ public class Neuron {
 	
 	private float[] weights;
 	private float bias;
-	
+
+	private Vector2 position;
+
+	private final UUID id = UUID.randomUUID();
+
 	
 	// Compute stuff
+
+	public Neuron(int columnX, int rowY) {
+		position = new Vector2(columnX, rowY);
+	}
+
 	
 	public float computeOutput(float[] inputs) {
 	    if (weights == null) {
@@ -40,7 +51,7 @@ public class Neuron {
 	    
 	    weightedSum += bias;
 	    
-	    return (float) Util.sigmoid(weightedSum);
+	    return (float) 0.0; //(float) Util.sigmoid(weightedSum);
 	}
 	
 	// Weights setters / getters
@@ -82,6 +93,16 @@ public class Neuron {
 	public void randomizeBias() {
 	    Random random = new Random();
 	    bias = MIN_STARTING_BIAS + random.nextFloat() * (MAX_STARTING_BIAS - MIN_STARTING_BIAS);
+	}
+
+	// Identifiers
+
+	public UUID getId() {
+		return id;
+	}
+
+	public Vector2 getPosition() {
+		return position;
 	}
 	
 	
