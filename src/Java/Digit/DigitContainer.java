@@ -17,11 +17,11 @@ public class DigitContainer {
 		digits.add(digit);
 	}
 	
-	public Digit getDigit(int idx) {
-		if (idx > digits.size()) {
+	public Digit getDigit(int index) {
+		if (index > digits.size()) {
 			throw new IllegalArgumentException("Index out of bounds");
 		}
-		return digits.get(idx);
+		return digits.get(index);
 	}
 	
 	public Digit[] getDigits() {

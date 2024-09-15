@@ -1,6 +1,6 @@
 package Java.Digit;
 
-import Java.Main.Util;
+import Java.ProgramFlow.Util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class MnistLoader {
 
+    // Load all of them for now
     private static final int DIGIT_AMOUNT = 1000000;
     private static final String TRAINING_DATA_PATH = "../MNIST_CSV/mnist_train.csv";
     private static final String TESTING_DATA_PATH = "../MNIST_CSV/mnist_test.csv";

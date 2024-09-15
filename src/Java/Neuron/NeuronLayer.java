@@ -1,6 +1,10 @@
 package Java.Neuron;
 
+import Java.Activation.ActivationFunctionType;
+
 public class NeuronLayer {
+
+    private static final ActivationFunctionType activationFunctionType = ActivationFunctionType.LEAKY_RELU;
 
     private Neuron[] neurons;
 
@@ -11,7 +15,11 @@ public class NeuronLayer {
 
         neurons = new Neuron[neuronAmount];
         for (int i = 0; i < neuronAmount; i++) {
-            neurons[i] = new Neuron(layer, i);
+            NeuronDTO neuronDTO = new NeuronDTO();
+            neuronDTO.setLayer(layer);
+            neuronDTO.setIndex(i);
+            neuronDTO.setActivationFunctionType(activationFunctionType);
+            //neuronDTO.setInputAmount(neuronAmount);
         }
     }
 

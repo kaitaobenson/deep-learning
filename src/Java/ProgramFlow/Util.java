@@ -1,4 +1,4 @@
-package Java.Main;// For random helper methods.
+package Java.ProgramFlow;// For random helper methods.
 
 public class Util {
 	
@@ -28,7 +28,5 @@ public class Util {
     	
     	return floatArray;
     }
-
-    
    
 }

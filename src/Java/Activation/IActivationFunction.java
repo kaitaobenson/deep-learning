@@ -2,7 +2,7 @@ package Java.Activation;
 
 public interface IActivationFunction {
 
-    double output(double x);
+    float output(float x);
 
-    double outputDerivative(double x);
+    float outputDerivative(float x);
 }

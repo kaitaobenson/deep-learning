@@ -3,12 +3,12 @@ package Java.Activation;
 public class Sigmoid implements IActivationFunction {
 
     @Override
-    public double output(double x) {
-        return 1 / (1 + Math.exp(-x));
+    public float output(float x) {
+        return (float) (1 / (1 + Math.exp(-x)));
     }
 
     @Override
-    public double outputDerivative(double x) {
-        return x * (1 - x);
+    public float outputDerivative(float x) {
+        return (float) (x * (1 - x));
     }
 }
