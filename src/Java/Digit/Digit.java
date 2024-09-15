@@ -1,6 +1,8 @@
 package Java.Digit;// Used for a single image of a handwritten digit
 // Stored as an array of pixels from 0 to 255 in brightness.
 
+import Java.ProgramFlow.Util;
+
 public class Digit {
 	
 	// Characters to display digit (dark to bright)
@@ -63,9 +65,9 @@ public class Digit {
     // Display number onto screen
     public String toString() {
     	StringBuilder stringBuilder = new StringBuilder();
-    	
-    	stringBuilder.append(label);
-    	stringBuilder.append("--------------------------------");
+
+    	stringBuilder.append(Util.getLine());
+        stringBuilder.append(label);
     	
     	for (int j = 0; j < IMAGE_HEIGHT; j++) {
     		for (int i = 0; i < IMAGE_WIDTH; i++) {
@@ -75,7 +77,7 @@ public class Digit {
     		stringBuilder.append("\n");
     	}
 
-    	stringBuilder.append("--------------------------------");
+    	stringBuilder.append(Util.getLine());
     	
     	return stringBuilder.toString();
     }

@@ -18,13 +18,13 @@ public class MnistLoader {
 
     public DigitContainer getTrainingDigits() {
         DigitContainer digitContainer = loadFileIntoDigits(TRAINING_DATA_PATH, DIGIT_AMOUNT);
-        System.out.println("Testing Digits Loaded: " + digitContainer.getDigitAmount());
+        System.out.println("Training Digits Loaded: " + digitContainer.getDigitAmount());
         return digitContainer;
     }
 
     public DigitContainer getTestingDigits() {
         DigitContainer digitContainer = loadFileIntoDigits(TESTING_DATA_PATH, DIGIT_AMOUNT);
-        System.out.println("Training Digits Loaded: " + digitContainer.getDigitAmount());
+        System.out.println("Testing Digits Loaded: " + digitContainer.getDigitAmount());
         return digitContainer;
     }
 

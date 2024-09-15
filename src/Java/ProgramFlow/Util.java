@@ -1,12 +1,8 @@
-package Java.ProgramFlow;// For random helper methods.
+package Java.ProgramFlow;
 
 public class Util {
 	
-	public Util() {
-		
-	}
-	
-	// General
+	public Util() {}
 	
     public static int[] stringArrayToIntArray(String[] stringArray) {
     	int[] intArray = new int[stringArray.length];
@@ -17,8 +13,7 @@ public class Util {
     	
     	return intArray;
     }
-    
-    //TODO: why do we even need this?h
+
     public static float[] intArrayToFloatArray(int[] intArray) {
     	float[] floatArray = new float[intArray.length];
     	
@@ -28,5 +23,8 @@ public class Util {
     	
     	return floatArray;
     }
-   
+
+	public static String getLine() {
+		return "--------------------------------";
+	}
 }

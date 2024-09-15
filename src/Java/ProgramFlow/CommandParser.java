@@ -2,7 +2,7 @@ package Java.ProgramFlow;
 
 import javax.naming.NameNotFoundException;
 
-public class CommandManager {
+public class CommandParser {
 
     private static final Command[] commands = {
             new Command("train", false),
@@ -11,39 +11,10 @@ public class CommandManager {
             new Command("print-train-digit", true),
             new Command("print-test-digit", true),
             new Command("help", false),
+            new Command("quit", false),
     };
 
-    public void doCommand(String commandString) {
-        Command command;
-        try {
-            command = parseCommand(commandString);
-        } catch (Exception e) {
-            System.out.println("Invalid command.");
-            System.out.println(e.getMessage());
-            return;
-        }
-
-        switch (command.getName()) {
-            case "train":
-                break;
-            case "test":
-                if (command.takesData()) {
-
-                } else {
-
-                }
-                break;
-            case "print-train-digit":
-                break;
-            case "print-test-digit":
-                break;
-            case "help":
-                printCommands();
-                break;
-        }
-    }
-
-    private Command parseCommand(String commandString) throws NameNotFoundException, IllegalArgumentException {
+    public Command parseCommand(String commandString) throws NameNotFoundException, IllegalArgumentException {
         String[] parts = commandString.split(" ");
 
         if (parts.length == 0 || parts.length > 2) {
@@ -78,7 +49,7 @@ public class CommandManager {
     }
 
     public void printCommands() {
-        System.out.println("---------------------------------------------");
+        System.out.println(Util.getLine());
         System.out.println("Type in a command:");
         System.out.println("train");
         System.out.println("test");
@@ -86,5 +57,7 @@ public class CommandManager {
         System.out.println("print-train-digit (int DigitIndex)");
         System.out.println("print-test-digit (int DigitIndex)");
         System.out.println("help");
+        System.out.println("quit");
+        System.out.println(Util.getLine());
     }
 }
