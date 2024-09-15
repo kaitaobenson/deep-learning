@@ -3,7 +3,6 @@ package Java.ProgramFlow;
 import Java.Digit.Digit;
 import Java.Digit.DigitContainer;
 import Java.Digit.MnistLoader;
-
 import java.util.Scanner;
 
 public class Program {
@@ -13,6 +12,7 @@ public class Program {
 
     public Program() {}
 
+    //TODO: Geeze this command stuff is pretty silly
     public void init() {
         System.out.println("Program started...");
 
@@ -20,13 +20,49 @@ public class Program {
         testingDigitContainer = mnistLoader.getTestingDigits();
         trainingDigitContainer = mnistLoader.getTrainingDigits();
 
-        CommandManager commandManager = new CommandManager();
+        CommandParser commandParser = new CommandParser();
+        commandParser.printCommands();
+
         Scanner scanner = new Scanner(System.in);
 
+        programLoop:
         while (true) {
             String input = scanner.nextLine();
-            commandManager.doCommand(input);
+
+            Command command;
+
+            try {
+                command = commandParser.parseCommand(input);
+            } catch (Exception e) {
+                System.out.println("Invalid command.");
+                System.out.println(e.getMessage());
+                continue;
+            }
+
+            switch (command.getName()) {
+                case "train":
+                    train(trainingDigitContainer);
+                    break;
+                case "test":
+                    test(testingDigitContainer);
+                    break;
+                case "print-train-digit":
+                    printTrainingDigit(command.getData());
+                    break;
+                case "print-test-digit":
+                    printTestingDigit(command.getData());
+                    break;
+                case "help":
+                    commandParser.printCommands();
+                    break;
+                case "quit":
+                    System.out.println("Quitting...");
+                    break programLoop;
+            }
         }
+
+        scanner.close();
+        System.exit(0);
     }
 
     public void train(DigitContainer trainingDigitContainer) {
