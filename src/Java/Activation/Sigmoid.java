@@ -1,5 +1,6 @@
 package Java.Activation;
 
+
 public class Sigmoid implements IActivationFunction {
 
     @Override

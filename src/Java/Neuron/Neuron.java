@@ -3,7 +3,7 @@ package Java.Neuron;
 import Java.Activation.*;
 import Java.Math.RandomGenerator;
 
-// Stores weights and a bias, takes an input and calculates an output from 0-1.
+// Stores weights and a bias, takes an input and calculates an output.
 
 public class Neuron {
 	
@@ -12,19 +12,26 @@ public class Neuron {
 	
 	private static final int MAX_STARTING_WEIGHT = 1;
 	private static final int MIN_STARTING_WEIGHT = -1;
-	
+
 	private float[] weights;
 	private float bias;
 
-	private int layer = 0;
-	private int index = 0;
-	private IActivationFunction activationFunction;
+	private int inputAmount;
+
+	private int layer;
+	private int index;
+
+	private IActivationFunction activationFunction = new Sigmoid();
+
 
 	public Neuron(NeuronDTO neuronDTO) {
+		if (neuronDTO.getLayer() == null || neuronDTO.getIndex() == null || neuronDTO.getInputAmount() == null) {
+			throw new IllegalArgumentException("Necessary neuron property is null");
+		}
 		this.layer = neuronDTO.getLayer();
 		this.index = neuronDTO.getIndex();
 		this.weights = new float[neuronDTO.getInputAmount()];
-
+		/*
 		switch (neuronDTO.getActivationFunctionType()) {
 			case SIGMOID:
 				activationFunction = new Sigmoid();
@@ -39,11 +46,12 @@ public class Neuron {
 				activationFunction = new LeakyReLu();
 				break;
 		}
+		*/
 	}
 	
 	public float calculateOutput(float[] inputs) {
 	    if (weights == null) {
-	        throw new IllegalStateException("Weights must be initialized before computing output.");
+	        throw new IllegalStateException("Weights must be initialized before calculating output.");
 	    }
 	    if (inputs == null) {
 	        throw new IllegalArgumentException("Inputs cannot be null.");
