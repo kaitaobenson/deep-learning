@@ -4,43 +4,42 @@ import Java.Activation.ActivationFunctionType;
 
 public class NeuronDTO {
 
-    private int layer;
-    private int index;
+    private Integer layer;
+    private Integer index;
+    private Integer inputAmount;
 
-    private ActivationFunctionType activationFunctionType;
-
-    private int inputAmount;
+    private ActivationFunctionType activationFunction;
 
 
-    public int getLayer() {
+    public Integer getLayer() {
         return layer;
     }
 
-    public void setLayer(int layer) {
+    public void setLayer(Integer layer) {
         this.layer = layer;
     }
 
-    public int getIndex() {
+    public Integer getIndex() {
         return index;
     }
 
-    public void setIndex(int index) {
+    public void setIndex(Integer index) {
         this.index = index;
     }
 
-    public ActivationFunctionType getActivationFunctionType() {
-        return activationFunctionType;
-    }
-
-    public void setActivationFunctionType(ActivationFunctionType activationFunctionType) {
-        this.activationFunctionType = activationFunctionType;
-    }
-
-    public int getInputAmount() {
+    public Integer getInputAmount() {
         return inputAmount;
     }
 
-    public void setInputAmount(int inputAmount) {
+    public void setInputAmount(Integer inputAmount) {
         this.inputAmount = inputAmount;
+    }
+
+    public ActivationFunctionType getActivationFunction() {
+        return activationFunction;
+    }
+
+    public void setActivationFunction(ActivationFunctionType activationFunction) {
+        this.activationFunction = activationFunction;
     }
 }

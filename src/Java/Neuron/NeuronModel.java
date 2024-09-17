@@ -1,11 +1,14 @@
 package Java.Neuron;
 
 import Java.Digit.Digit;
+import Java.Neuron.NeuronLayer.NeuronLayer;
+
 
 public class NeuronModel {
-
+    //private NeuronLayer inputLayer = new NeuronLayer(1, )
     private NeuronLayer neuronLayer1 = new NeuronLayer(1, 16);
     private NeuronLayer neuronLayer2 = new NeuronLayer(2, 16);
+    private NeuronLayer outputLayer;
 
     public NeuronModel() {
 

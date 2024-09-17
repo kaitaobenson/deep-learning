@@ -1,5 +1,5 @@
 package Java.Activation;
 
 public enum ActivationFunctionType {
-    SIGMOID, TANH, SWISH, LEAKY_RELU,
+    SIGMOID, TANH, SWISH, LEAKY_RELU
 }
