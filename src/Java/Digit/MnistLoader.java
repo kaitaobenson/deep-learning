@@ -1,6 +1,6 @@
 package Java.Digit;
 
-import Java.ProgramFlow.Util;
+import Java.Util.Util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,6 +11,7 @@ public class MnistLoader {
 
     // Load all of them for now
     private static final int DIGIT_AMOUNT = 1000000;
+
     private static final String TRAINING_DATA_PATH = "../MNIST_CSV/mnist_train.csv";
     private static final String TESTING_DATA_PATH = "../MNIST_CSV/mnist_test.csv";
 
@@ -30,7 +31,6 @@ public class MnistLoader {
 
     private DigitContainer loadFileIntoDigits(String path, int digitAmount) {
         DigitContainer digitContainer = new DigitContainer();
-
         int digitCounter = digitAmount;
         Scanner scanner;
 
@@ -43,7 +43,6 @@ public class MnistLoader {
 
         while (scanner.hasNextLine() && digitCounter > 0) {
             String line = scanner.nextLine();
-
             String[] stringPixelArray = line.split(",");
 
             // First value is the label
@@ -53,8 +52,14 @@ public class MnistLoader {
 
             Digit digit = new Digit();
             digit.setLabel(label);
-            digit.setPixels(intPixelArray);  // This should be 784 elements long
 
+            float[] floatPixelArray = new float[intPixelArray.length];
+
+            for (int i = 0; i < intPixelArray.length; i++) {
+                floatPixelArray[i] = intPixelArray[i] / 255.0f;  // Normalize to range [0, 1]
+            }
+
+            digit.setPixels(floatPixelArray);  // Assign the normalized pixel array
             digitContainer.addDigit(digit);
             digitCounter--;
         }

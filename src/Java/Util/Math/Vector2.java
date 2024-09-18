@@ -1,4 +1,4 @@
-package Java.Math;
+package Java.Util.Math;
 
 public class Vector2 {
     public int x = 0;
