@@ -1,4 +1,6 @@
-package Java.ProgramFlow;
+package Java.Util;
+
+import java.util.Arrays;
 
 public class Util {
 	
@@ -14,17 +16,9 @@ public class Util {
     	return intArray;
     }
 
-    public static float[] intArrayToFloatArray(int[] intArray) {
-    	float[] floatArray = new float[intArray.length];
-    	
-    	for (int i = 0; i < intArray.length; i++) {
-    		floatArray[i] = intArray[i];
-    	}
-    	
-    	return floatArray;
-    }
-
 	public static String getLine() {
 		return "--------------------------------";
 	}
+
+
 }

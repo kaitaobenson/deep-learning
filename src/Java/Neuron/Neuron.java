@@ -1,7 +1,7 @@
 package Java.Neuron;
 
-import Java.Activation.*;
-import Java.Math.RandomGenerator;
+import Java.Activation.IActivationFunction;
+import Java.Util.Math.RandomGenerator;
 
 // Stores weights and a bias, takes an input and calculates an output.
 
@@ -16,38 +16,13 @@ public class Neuron {
 	private float[] weights;
 	private float bias;
 
-	private int inputAmount;
-
-	private int layer;
-	private int index;
-
-	private IActivationFunction activationFunction = new Sigmoid();
+	private NeuronLayer neuronLayer;
 
 
-	public Neuron(NeuronDTO neuronDTO) {
-		if (neuronDTO.getLayer() == null || neuronDTO.getIndex() == null || neuronDTO.getInputAmount() == null) {
-			throw new IllegalArgumentException("Necessary neuron property is null");
-		}
-		this.layer = neuronDTO.getLayer();
-		this.index = neuronDTO.getIndex();
-		this.weights = new float[neuronDTO.getInputAmount()];
-		/*
-		switch (neuronDTO.getActivationFunctionType()) {
-			case SIGMOID:
-				activationFunction = new Sigmoid();
-				break;
-			case SWISH:
-				activationFunction = new Swish();
-				break;
-			case TANH:
-				activationFunction = new Tanh();
-				break;
-			case LEAKY_RELU:
-				activationFunction = new LeakyReLu();
-				break;
-		}
-		*/
+	public Neuron(NeuronLayer neuronLayer) {
+		this.neuronLayer = neuronLayer;
 	}
+
 	
 	public float calculateOutput(float[] inputs) {
 	    if (weights == null) {
@@ -68,9 +43,11 @@ public class Neuron {
 	    
 	    weightedSum += bias;
 
+		IActivationFunction activationFunction = neuronLayer.getActivationFunctionType().getActivationFunction();
 		return activationFunction.output(bias);
 	}
-	
+
+
 	// Weights setters / getters
 	
 	public void setWeights(float[] weights) {
@@ -102,6 +79,6 @@ public class Neuron {
 	}
 
 	public void randomizeBias() {
-	    bias = RandomGenerator.randomFloat(MIN_STARTING_BIAS, MAX_STARTING_WEIGHT);
+	    bias = RandomGenerator.randomFloat(MIN_STARTING_BIAS, MAX_STARTING_BIAS);
 	}
 }

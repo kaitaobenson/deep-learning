@@ -5,15 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Java/Neuron/NeuronLayer/INeuronLayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Java/NeuronPersistence/NeuronDataLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Java/NeuronPersistence/NeuronDataSaver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Java/Activation/ActivationFunctionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/Activation/ActivationFunctionType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Java/Activation/Sigmoid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/Activation/Sigmoid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Digit/Digit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/Digit/Digit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Digit/MnistLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/Digit/MnistLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Math/RandomGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/Util/Math/RandomGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Math/Vector2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/Util/Math/Vector2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Java/Neuron/Neuron.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/Neuron/Neuron.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Java/Neuron/NeuronDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/Neuron/NeuronDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Java/Neuron/NeuronLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/Neuron/NeuronLayer/NeuronLayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Neuron/NeuronDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Neuron/NeuronLayer/INeuronLayer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Neuron/NeuronLayer/NeuronLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/Neuron/NeuronLayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Java/Neuron/NeuronModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/Neuron/NeuronModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Java/ProgramFlow/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/ProgramFlow/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/ProgramFlow/CommandParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/ProgramFlow/CommandParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/ProgramFlow/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/ProgramFlow/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/ProgramFlow/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/Util/Util.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +30,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -56,6 +63,9 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Java.Neuron" />
     </key>
   </component>
   <component name="RunManager">

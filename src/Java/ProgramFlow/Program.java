@@ -3,12 +3,17 @@ package Java.ProgramFlow;
 import Java.Digit.Digit;
 import Java.Digit.DigitContainer;
 import Java.Digit.MnistLoader;
+import Java.Neuron.NeuronLayer;
+import Java.Neuron.NeuronModel;
+
 import java.util.Scanner;
 
 public class Program {
 
     public DigitContainer testingDigitContainer;
     public DigitContainer trainingDigitContainer;
+
+    public NeuronModel neuronModel = new NeuronModel();
 
     public Program() {}
 
@@ -44,7 +49,12 @@ public class Program {
                     train(trainingDigitContainer);
                     break;
                 case "test":
-                    test(testingDigitContainer);
+                    if (command.takesData()) {
+                        int index = command.getData();
+                        test(testingDigitContainer, index);
+                    } else {
+                        test(testingDigitContainer);
+                    }
                     break;
                 case "print-train-digit":
                     printTrainingDigit(command.getData());
@@ -75,9 +85,14 @@ public class Program {
         System.out.println("Starting tester...");
     }
 
-    public void test(Digit testingDigit) {
-        // No-op
-        System.out.println("Starting test...");
+    public void test(DigitContainer testingDigitContainer, int index) {
+        System.out.println("Starting test on digit " + index);
+        System.out.print("\n");
+
+        neuronModel.inputDigit(testingDigitContainer.getDigit(index));
+
+        System.out.println("Done");
+        System.out.print("\n");
     }
 
     public void printTrainingDigit(int index) {
