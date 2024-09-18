@@ -26,6 +26,8 @@ public class NeuronModel {
 
         float[] pixels = digit.getPixels();
 
+        System.out.println(digit);
+
         // Calculate the outputs through each neuron layer
         float[] hidden1LayerValue = hidden1NeuronLayer.calculateOutputs(pixels);
         float[] hidden2LayerValue = hidden2NeuronLayer.calculateOutputs(hidden1LayerValue);
