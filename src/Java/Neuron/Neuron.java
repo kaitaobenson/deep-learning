@@ -44,7 +44,7 @@ public class Neuron {
 	    weightedSum += bias;
 
 		IActivationFunction activationFunction = neuronLayer.getActivationFunctionType().getActivationFunction();
-		return activationFunction.output(bias);
+		return activationFunction.output(weightedSum);
 	}
 
 

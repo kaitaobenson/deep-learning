@@ -5,7 +5,10 @@ import Java.Digit.DigitContainer;
 import Java.Digit.MnistLoader;
 import Java.Neuron.NeuronLayer;
 import Java.Neuron.NeuronModel;
+import Java.NeuronPersistence.NeuronDataLoader;
+import Java.NeuronPersistence.NeuronDataSaver;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Program {
@@ -14,12 +17,23 @@ public class Program {
     public DigitContainer trainingDigitContainer;
 
     public NeuronModel neuronModel = new NeuronModel();
+    public NeuronDataSaver neuronDataSaver = new NeuronDataSaver();
+    public NeuronDataLoader neuronDataLoader = new NeuronDataLoader();
 
     public Program() {}
 
     //TODO: Geeze this command stuff is pretty silly
     public void init() {
         System.out.println("Program started...");
+
+        //TODO: Remove this:
+        try {
+            neuronDataSaver.saveNeuronModel(neuronModel);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+
 
         MnistLoader mnistLoader = new MnistLoader();
         testingDigitContainer = mnistLoader.getTestingDigits();
