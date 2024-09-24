@@ -1,7 +1,6 @@
 package Java.Digit;
 
 import Java.Util.Util;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -63,6 +62,8 @@ public class MnistLoader {
             digitContainer.addDigit(digit);
             digitCounter--;
         }
+
+        scanner.close();
 
         return digitContainer;
     }

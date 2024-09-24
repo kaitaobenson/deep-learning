@@ -1,5 +1,6 @@
 package Java.ProgramFlow;
 
+import Java.Activation.ActivationFunctionType;
 import Java.Digit.Digit;
 import Java.Digit.DigitContainer;
 import Java.Digit.MnistLoader;
@@ -16,7 +17,13 @@ public class Program {
     public DigitContainer testingDigitContainer;
     public DigitContainer trainingDigitContainer;
 
-    public NeuronModel neuronModel = new NeuronModel();
+    public NeuronLayer[] neuronLayers = {
+            new NeuronLayer(16, 784, ActivationFunctionType.LEAKY_RELU),
+            new NeuronLayer(16, 16, ActivationFunctionType.LEAKY_RELU),
+            new NeuronLayer(10, 16, ActivationFunctionType.SIGMOID),
+    };
+    public NeuronModel neuronModel = new NeuronModel(neuronLayers);
+
     public NeuronDataSaver neuronDataSaver = new NeuronDataSaver();
     public NeuronDataLoader neuronDataLoader = new NeuronDataLoader();
 
@@ -25,15 +32,6 @@ public class Program {
     //TODO: Geeze this command stuff is pretty silly
     public void init() {
         System.out.println("Program started...");
-
-        //TODO: Remove this:
-        try {
-            neuronDataSaver.saveNeuronModel(neuronModel);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-
 
         MnistLoader mnistLoader = new MnistLoader();
         testingDigitContainer = mnistLoader.getTestingDigits();
@@ -75,6 +73,9 @@ public class Program {
                     break;
                 case "print-test-digit":
                     printTestingDigit(command.getData());
+                    break;
+                case "save-model":
+                    saveNeuronModel();
                     break;
                 case "help":
                     commandParser.printCommands();
@@ -129,5 +130,13 @@ public class Program {
         System.out.println("Testing digit at index: " + index);
         Digit digit = testingDigitContainer.getDigit(index);
         System.out.println(digit);
+    }
+
+    public void saveNeuronModel() {
+        try {
+            neuronDataSaver.saveNeuronModel(neuronModel);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
