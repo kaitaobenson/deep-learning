@@ -2,24 +2,30 @@ package Java.Neuron;
 
 import Java.Activation.ActivationFunctionType;
 import Java.Digit.Digit;
-
 import java.util.*;
 
 public class NeuronModel {
 
-    private NeuronLayer hidden1NeuronLayer = new NeuronLayer(16, 784, ActivationFunctionType.LEAKY_RELU);
-    private NeuronLayer hidden2NeuronLayer = new NeuronLayer(16, 16, ActivationFunctionType.LEAKY_RELU);
-    private NeuronLayer outputNeuronLayer = new NeuronLayer(10, 16, ActivationFunctionType.SIGMOID);
+    private NeuronLayer[] neuronLayers;
 
-    public NeuronModel() {
-        hidden1NeuronLayer.randomizeWeights();
-        hidden1NeuronLayer.randomizeBiases();
+    public NeuronModel(NeuronLayer[] neuronLayers) {
+        this.neuronLayers = neuronLayers.clone();
+        randomizeModel();
+    }
 
-        hidden2NeuronLayer.randomizeWeights();
-        hidden2NeuronLayer.randomizeBiases();
+    public void randomizeModel() {
+        if (neuronLayers == null) {
+            return;
+        }
 
-        outputNeuronLayer.randomizeWeights();
-        outputNeuronLayer.randomizeBiases();
+        for (NeuronLayer layer : neuronLayers) {
+            layer.randomizeWeights();
+            layer.randomizeBiases();
+        }
+    }
+
+    public NeuronLayer[] getNeuronLayers() {
+        return neuronLayers.clone();
     }
 
     public void inputDigit(Digit digit) {
@@ -29,9 +35,12 @@ public class NeuronModel {
         System.out.println(digit);
 
         // Calculate the outputs through each neuron layer
-        float[] hidden1LayerValue = hidden1NeuronLayer.calculateOutputs(pixels);
-        float[] hidden2LayerValue = hidden2NeuronLayer.calculateOutputs(hidden1LayerValue);
-        float[] outputLayerValue = outputNeuronLayer.calculateOutputs(hidden2LayerValue);
+        float[] input = pixels;
+        for (NeuronLayer neuronLayer : neuronLayers) {
+            input = neuronLayer.calculateOutputs(input);
+        }
+
+        float[] outputLayerValue = input;
 
         // Store the output in a HashMap
         HashMap<Integer, Float> outputHashMap = new HashMap<>();
@@ -53,5 +62,4 @@ public class NeuronModel {
         System.out.println(sortedEntries.get(0).getKey());
 
     }
-
 }
