@@ -6,14 +6,14 @@ import javax.naming.NameNotFoundException;
 public class CommandParser {
 
     private static final Command[] commands = {
-            new Command("train", false),
-            new Command("test", false),
-            new Command("test", true),
-            new Command("print-train-digit", true),
-            new Command("print-test-digit", true),
-            new Command("save-model", false),
-            new Command("help", false),
-            new Command("quit", false),
+            new Command("train", Command.InputType.VOID),
+            new Command("test", Command.InputType.VOID),
+            new Command("test", Command.InputType.INT),
+            new Command("print-train-digit", Command.InputType.INT),
+            new Command("print-test-digit", Command.InputType.INT),
+            new Command("save-model", Command.InputType.STRING),
+            new Command("help", Command.InputType.VOID),
+            new Command("quit", Command.InputType.VOID),
     };
 
     public Command parseCommand(String commandString) throws NameNotFoundException, IllegalArgumentException {
@@ -24,26 +24,43 @@ public class CommandParser {
         }
 
         String commandName = parts[0];
-        boolean commandTakesData = parts.length == 2;
-        int commandData = 0;
-
-        if (commandTakesData) {
-            try {
-                commandData = Integer.parseInt(parts[1]);
-            } catch (NumberFormatException e) {
-                throw new NumberFormatException("Data must be an integer.");
-            }
-        }
-
-        Command parsedCommand = new Command(commandName, commandTakesData);
+        String commandData = parts.length == 2 ? parts[1] : null;
 
         // Search for the matching command
         for (Command cmd : commands) {
-            if (cmd.equals(parsedCommand)) {
-                if (commandTakesData) {
-                    cmd.setData(commandData);
+            if (cmd.getName().equals(commandName)) {
+                // If the command expects no input
+                if (cmd.getInputType() == Command.InputType.VOID && commandData == null) {
+                    return cmd;
                 }
-                return cmd;
+                // If the command expects input and we have provided data
+                if (commandData != null) {
+                    switch (cmd.getInputType()) {
+                        case STRING:
+                            cmd.setData(commandData);
+                            return cmd;
+                        case INT:
+                            try {
+                                int intData = Integer.parseInt(commandData);
+                                cmd.setData(intData);
+                                return cmd;
+                            } catch (NumberFormatException e) {
+                                throw new IllegalArgumentException("Expected an integer but got: " + commandData);
+                            }
+                        case FLOAT:
+                            try {
+                                float floatData = Float.parseFloat(commandData);
+                                cmd.setData(floatData);
+                                return cmd;
+                            } catch (NumberFormatException e) {
+                                throw new IllegalArgumentException("Expected a float but got: " + commandData);
+                            }
+                        case BOOLEAN:
+                            boolean boolData = Boolean.parseBoolean(commandData);
+                            cmd.setData(boolData);
+                            return cmd;
+                    }
+                }
             }
         }
 
@@ -58,7 +75,7 @@ public class CommandParser {
         System.out.println("test (int DigitIndex)");
         System.out.println("print-train-digit (int DigitIndex)");
         System.out.println("print-test-digit (int DigitIndex)");
-        System.out.println("save-model");
+        System.out.println("save-model (string ModelName)");
         System.out.println("help");
         System.out.println("quit");
         System.out.println(Util.getLine());
