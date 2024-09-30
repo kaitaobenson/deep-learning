@@ -56,23 +56,27 @@ public class Program {
                 continue;
             }
 
-            switch (command.getName()) {
+            String name = command.getName();
+            Command.InputType inputType = command.getInputType();
+            Object data = command.getData();
+
+            switch (name) {
                 case "train":
                     train(trainingDigitContainer);
                     break;
                 case "test":
-                    if (command.takesData()) {
-                        int index = command.getData();
+                    if (inputType == Command.InputType.INT) {
+                        int index = (int) data;
                         test(testingDigitContainer, index);
                     } else {
                         test(testingDigitContainer);
                     }
                     break;
                 case "print-train-digit":
-                    printTrainingDigit(command.getData());
+                    printTrainingDigit((int) data);
                     break;
                 case "print-test-digit":
-                    printTestingDigit(command.getData());
+                    printTestingDigit((int) data);
                     break;
                 case "save-model":
                     saveNeuronModel();
