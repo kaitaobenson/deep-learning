@@ -1,4 +1,4 @@
-package Java.Util;
+package Util;
 
 
 public class Util {

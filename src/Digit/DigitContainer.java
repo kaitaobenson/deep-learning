@@ -1,10 +1,9 @@
-package Java.Digit;
+package Digit;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-// Used for storing a group of handwritten Java.Digit.Java.Digit images.
-
-public class DigitContainer {
+public class DigitContainer implements Serializable {
 	
 	private ArrayList<Digit> digits = new ArrayList<Digit>();
 	

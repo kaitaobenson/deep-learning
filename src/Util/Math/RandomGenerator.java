@@ -1,4 +1,4 @@
-package Java.Util.Math;
+package Util.Math;
 
 public class RandomGenerator {
 

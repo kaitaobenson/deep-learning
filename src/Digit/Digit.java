@@ -1,8 +1,10 @@
-package Java.Digit;
+package Digit;
 
-import Java.Util.Util;
+import Util.Util;
 
-public class Digit {
+import java.io.Serializable;
+
+public class Digit implements Serializable {
     private final String[] dispChars = {
             " ", ".", "`", ",", "-", "~", "+", ":", ";", "=", "*", "#", "%", "@", "█"
     };

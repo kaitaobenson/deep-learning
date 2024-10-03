@@ -1,8 +1,10 @@
-package Java.Neuron;
+package Neuron;
 
-import Java.Activation.ActivationFunctionType;
+import Activation.ActivationFunctionType;
 
-public class NeuronLayer {
+import java.io.Serializable;
+
+public class NeuronLayer implements Serializable {
 
     private Neuron[] neurons;
 
@@ -53,5 +55,4 @@ public class NeuronLayer {
             neuron.randomizeBias();
         }
     }
-
 }
