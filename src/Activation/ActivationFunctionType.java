@@ -1,9 +1,8 @@
-package Java.Activation;
+package Activation;
 
 public enum ActivationFunctionType {
     SIGMOID(0), TANH(1), SWISH(2), LEAKY_RELU(3);
 
-    //TODO: How do I get rid of this and use the activationFUnctionType instead
     private int type = 0;
 
     private ActivationFunctionType(int type) {

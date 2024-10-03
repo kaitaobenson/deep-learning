@@ -1,13 +1,12 @@
-package Java.ProgramFlow;
+package ProgramFlow;
 
-import Java.Activation.ActivationFunctionType;
-import Java.Digit.Digit;
-import Java.Digit.DigitContainer;
-import Java.Digit.MnistLoader;
-import Java.Neuron.NeuronLayer;
-import Java.Neuron.NeuronModel;
-import Java.NeuronPersistence.NeuronDataLoader;
-import Java.NeuronPersistence.NeuronDataSaver;
+import Activation.ActivationFunctionType;
+import Digit.Digit;
+import Digit.DigitContainer;
+import Persistance.MnistLoader;
+import Neuron.NeuronLayer;
+import Neuron.NeuronModel;
+import Persistance.NeuronLoader;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -24,8 +23,7 @@ public class Program {
     };
     public NeuronModel neuronModel = new NeuronModel(neuronLayers);
 
-    public NeuronDataSaver neuronDataSaver = new NeuronDataSaver();
-    public NeuronDataLoader neuronDataLoader = new NeuronDataLoader();
+    public NeuronLoader neuronLoader = new NeuronLoader();
 
     public Program() {}
 
@@ -79,7 +77,10 @@ public class Program {
                     printTestingDigit((int) data);
                     break;
                 case "save-model":
-                    saveNeuronModel();
+                    saveNeuronModel((String) data);
+                    break;
+                case "load-model":
+                    loadNeuronModel((String) data);
                     break;
                 case "help":
                     commandParser.printCommands();
@@ -136,11 +137,21 @@ public class Program {
         System.out.println(digit);
     }
 
-    public void saveNeuronModel() {
+    public void saveNeuronModel(String fileName) {
         try {
-            neuronDataSaver.saveNeuronModel(neuronModel);
+            neuronLoader.saveNeuronModel(neuronModel, fileName);
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void loadNeuronModel(String fileName) {
+        try {
+            neuronModel = neuronLoader.loadNeuronModel(fileName);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("Unexpected error happened: " + e.getMessage());
         }
     }
 }

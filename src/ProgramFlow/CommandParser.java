@@ -1,6 +1,6 @@
-package Java.ProgramFlow;
+package ProgramFlow;
 
-import Java.Util.Util;
+import Util.Util;
 import javax.naming.NameNotFoundException;
 
 public class CommandParser {
@@ -12,6 +12,7 @@ public class CommandParser {
             new Command("print-train-digit", Command.InputType.INT),
             new Command("print-test-digit", Command.InputType.INT),
             new Command("save-model", Command.InputType.STRING),
+            new Command("load-model", Command.InputType.STRING),
             new Command("help", Command.InputType.VOID),
             new Command("quit", Command.InputType.VOID),
     };
@@ -69,15 +70,9 @@ public class CommandParser {
 
     public void printCommands() {
         System.out.println(Util.getLine());
-        System.out.println("Type in a command:");
-        System.out.println("train");
-        System.out.println("test");
-        System.out.println("test (int DigitIndex)");
-        System.out.println("print-train-digit (int DigitIndex)");
-        System.out.println("print-test-digit (int DigitIndex)");
-        System.out.println("save-model (string ModelName)");
-        System.out.println("help");
-        System.out.println("quit");
+        for (Command command : commands) {
+            System.out.println(command.getName() + ", " + command.getInputType());
+        }
         System.out.println(Util.getLine());
     }
 }

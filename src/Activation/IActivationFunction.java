@@ -1,4 +1,4 @@
-package Java.Activation;
+package Activation;
 
 public interface IActivationFunction {
 

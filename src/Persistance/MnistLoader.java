@@ -1,6 +1,8 @@
-package Java.Digit;
+package Persistance;
 
-import Java.Util.Util;
+import Digit.Digit;
+import Digit.DigitContainer;
+import Util.Util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -8,7 +10,7 @@ import java.util.Scanner;
 
 public class MnistLoader {
 
-    // Load all of them for now
+    // Load all of them
     private static final int DIGIT_AMOUNT = 1000000;
 
     private static final String TRAINING_DATA_PATH = "../MNIST_CSV/mnist_train.csv";
@@ -74,11 +76,10 @@ public class MnistLoader {
 
         try {
             scanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException fileNotFoundException) {
             throw new FileNotFoundException("Data from " + file.getAbsolutePath() + " could not be loaded.");
         }
 
         return scanner;
     }
-
 }

@@ -1,11 +1,13 @@
-package Java.Neuron;
+package Neuron;
 
-import Java.Activation.IActivationFunction;
-import Java.Util.Math.RandomGenerator;
+import Activation.IActivationFunction;
+import Util.Math.RandomGenerator;
+
+import java.io.Serializable;
 
 // Stores weights and a bias, takes an input and calculates an output.
 
-public class Neuron {
+public class Neuron implements Serializable {
 	
 	private static final int MAX_STARTING_BIAS = 1;
 	private static final int MIN_STARTING_BIAS = -1;

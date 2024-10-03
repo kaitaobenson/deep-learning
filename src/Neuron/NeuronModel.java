@@ -1,10 +1,11 @@
-package Java.Neuron;
+package Neuron;
 
-import Java.Activation.ActivationFunctionType;
-import Java.Digit.Digit;
+import Digit.Digit;
+
+import java.io.Serializable;
 import java.util.*;
 
-public class NeuronModel {
+public class NeuronModel implements Serializable {
 
     private NeuronLayer[] neuronLayers;
 
@@ -60,6 +61,5 @@ public class NeuronModel {
 
         System.out.println("Best Guess:");
         System.out.println(sortedEntries.get(0).getKey());
-
     }
 }

@@ -5,11 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Persistance/NeuronLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Java/ProgramFlow/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/ProgramFlow/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Java/ProgramFlow/CommandParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/ProgramFlow/CommandParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Java/ProgramFlow/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/ProgramFlow/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Java/ProgramFlow/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Java/ProgramFlow/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Activation/ActivationFunctionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Activation/ActivationFunctionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Activation/IActivationFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Activation/IActivationFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Activation/LeakyReLu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Activation/LeakyReLu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Activation/Sigmoid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Activation/Sigmoid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Activation/Swish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Activation/Swish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Activation/Tanh.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Activation/Tanh.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Digit/Digit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Digit/Digit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Digit/DigitContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Digit/DigitContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Digit/MnistLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Persistance/MnistLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Neuron/Neuron.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Neuron/Neuron.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Neuron/NeuronLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Neuron/NeuronLayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Neuron/NeuronModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Neuron/NeuronModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/NeuronPersistence/NeuronDataLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/NeuronPersistence/NeuronDataSaver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/ProgramFlow/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProgramFlow/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/ProgramFlow/CommandParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProgramFlow/CommandParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/ProgramFlow/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProgramFlow/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/ProgramFlow/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProgramFlow/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Util/Math/RandomGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Math/RandomGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Util/Math/Vector2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Math/Vector2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Java/Util/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Util.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +77,7 @@
   </component>
   <component name="RunManager">
     <configuration name="deep-learning" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="Java.ProgramFlow.Main" />
+      <option name="MAIN_CLASS_NAME" value="ProgramFlow.Main" />
       <module name="deep-learning" />
       <method v="2">
         <option name="Make" enabled="true" />
