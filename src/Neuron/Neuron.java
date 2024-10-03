@@ -1,11 +1,8 @@
 package Neuron;
 
 import Activation.IActivationFunction;
-import Util.Math.RandomGenerator;
-
+import Util.RandomGenerator;
 import java.io.Serializable;
-
-// Stores weights and a bias, takes an input and calculates an output.
 
 public class Neuron implements Serializable {
 	
@@ -18,13 +15,11 @@ public class Neuron implements Serializable {
 	private float[] weights;
 	private float bias;
 
-	private NeuronLayer neuronLayer;
-
+	private final NeuronLayer neuronLayer;
 
 	public Neuron(NeuronLayer neuronLayer) {
 		this.neuronLayer = neuronLayer;
 	}
-
 	
 	public float calculateOutput(float[] inputs) {
 	    if (weights == null) {
@@ -37,7 +32,7 @@ public class Neuron implements Serializable {
 	        throw new IllegalArgumentException("Input array length must be the same as weights length.");
 	    }
 
-	    float weightedSum = (float) 0.0;
+	    float weightedSum = 0.0f;
 
 	    for (int i = 0; i < inputs.length; i++) {
 	        weightedSum += inputs[i] * weights[i];
@@ -49,38 +44,29 @@ public class Neuron implements Serializable {
 		return activationFunction.output(weightedSum);
 	}
 
-
-	// Weights setters / getters
-	
+	// Setters / Getters
 	public void setWeights(float[] weights) {
 		this.weights = weights.clone();
 	}
-	
+	public void setWeight(float weight, int index) {
+		weights[index] = weight;
+	}
+	public void randomizeWeights() {
+		for (int i = 0; i < weights.length; i++) {
+			weights[i] = RandomGenerator.randomFloat(MIN_STARTING_WEIGHT, MAX_STARTING_WEIGHT);
+		}
+	}
 	public float[] getWeights() {
 		return weights.clone();
 	}
 
-	public void setWeight(float weight, int index) {
-		weights[index] = weight;
-	}
-	
-	public void randomizeWeights() {
-	    for (int i = 0; i < weights.length; i++) {
-			weights[i] = RandomGenerator.randomFloat(MIN_STARTING_WEIGHT, MAX_STARTING_WEIGHT);
-		}
-	}
-	
-	// Bias setters / getters
-	
 	public void setBias(float bias) {
 		this.bias = bias;
 	}
-
+	public void randomizeBias() {
+		bias = RandomGenerator.randomFloat(MIN_STARTING_BIAS, MAX_STARTING_BIAS);
+	}
 	public float getBias() {
 		return bias;
-	}
-
-	public void randomizeBias() {
-	    bias = RandomGenerator.randomFloat(MIN_STARTING_BIAS, MAX_STARTING_BIAS);
 	}
 }

@@ -6,9 +6,9 @@ public class Command {
         VOID, STRING, INT, FLOAT, BOOLEAN;
     }
 
-    private String name;
+    private final String name;
 
-    private InputType inputType;
+    private final InputType inputType;
 
     private String stringData;
     private int intData;

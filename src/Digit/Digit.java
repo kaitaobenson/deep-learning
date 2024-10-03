@@ -1,52 +1,22 @@
 package Digit;
 
 import Util.Util;
-
 import java.io.Serializable;
 
 public class Digit implements Serializable {
-    private final String[] dispChars = {
+
+    private static final int IMAGE_WIDTH = 28;
+    private static final int IMAGE_HEIGHT = 28;
+    private static final int PIXELS_AMOUNT = IMAGE_WIDTH * IMAGE_HEIGHT;
+
+    private static final String[] dispChars = {
             " ", ".", "`", ",", "-", "~", "+", ":", ";", "=", "*", "#", "%", "@", "█"
     };
-
-    private final int IMAGE_WIDTH = 28;
-    private final int IMAGE_HEIGHT = 28;
-    private final int PIXELS_AMOUNT = IMAGE_WIDTH * IMAGE_HEIGHT;
 
     private float[] pixels = new float[PIXELS_AMOUNT];
     private int label;
 
     public Digit() {}
-
-    // Pixel setters / getters
-    public void setPixels(float[] pixels) {
-        if (pixels.length != PIXELS_AMOUNT) {
-            throw new IllegalArgumentException("Pixels array must have " + PIXELS_AMOUNT + " elements");
-        }
-        this.pixels = pixels.clone();
-    }
-
-    public float[] getPixels() {
-        return this.pixels.clone();
-    }
-
-    public float getPixel(int x, int y) {
-        int index = y * IMAGE_WIDTH + x;
-        return pixels[index];
-    }
-
-    public float getPixel(int index) {
-        return pixels[index];
-    }
-
-    // Label setters / getters
-    public void setLabel(int label) {
-        this.label = label;
-    }
-
-    public int getLabel() {
-        return label;
-    }
 
     // Display number onto screen
     public String toString() {
@@ -75,4 +45,28 @@ public class Digit implements Serializable {
         return dispChars[index];
     }
 
+    // Setters / Getters
+    public void setPixels(float[] pixels) {
+        if (pixels.length != PIXELS_AMOUNT) {
+            throw new IllegalArgumentException("Pixels array must have " + PIXELS_AMOUNT + " elements");
+        }
+        this.pixels = pixels.clone();
+    }
+    public float[] getPixels() {
+        return this.pixels.clone();
+    }
+    public float getPixel(int x, int y) {
+        int index = y * IMAGE_WIDTH + x;
+        return pixels[index];
+    }
+    public float getPixel(int index) {
+        return pixels[index];
+    }
+
+    public void setLabel(int label) {
+        this.label = label;
+    }
+    public int getLabel() {
+        return label;
+    }
 }

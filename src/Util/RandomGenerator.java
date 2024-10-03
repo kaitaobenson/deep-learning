@@ -1,4 +1,4 @@
-package Util.Math;
+package Util;
 
 public class RandomGenerator {
 
