@@ -10,26 +10,27 @@ import java.util.Scanner;
 
 public class MnistLoader {
 
-    // Load all of them
-    private static final int DIGIT_AMOUNT = 1000000;
-
+    private static final int DIGIT_AMOUNT = 1_000_000;
     private static final String TRAINING_DATA_PATH = "../MNIST_CSV/mnist_train.csv";
     private static final String TESTING_DATA_PATH = "../MNIST_CSV/mnist_test.csv";
 
     public MnistLoader() {}
 
+    // Load and return training digits
     public DigitContainer getTrainingDigits() {
         DigitContainer digitContainer = loadFileIntoDigits(TRAINING_DATA_PATH, DIGIT_AMOUNT);
         System.out.println("Training Digits Loaded: " + digitContainer.getDigitAmount());
         return digitContainer;
     }
 
+    // Load and return testing digits
     public DigitContainer getTestingDigits() {
         DigitContainer digitContainer = loadFileIntoDigits(TESTING_DATA_PATH, DIGIT_AMOUNT);
         System.out.println("Testing Digits Loaded: " + digitContainer.getDigitAmount());
         return digitContainer;
     }
 
+    // Load digits from the CSV and return a DigitContainer
     private DigitContainer loadFileIntoDigits(String path, int digitAmount) {
         DigitContainer digitContainer = new DigitContainer();
         int digitCounter = digitAmount;
@@ -42,44 +43,44 @@ public class MnistLoader {
             return null;
         }
 
+        // Get each line from the file
         while (scanner.hasNextLine() && digitCounter > 0) {
-            String line = scanner.nextLine();
-            String[] stringPixelArray = line.split(",");
-
-            // First value is the label
+            String[] stringPixelArray = scanner.nextLine().split(",");
             int[] intPixelArrayWithLabel = Util.stringArrayToIntArray(stringPixelArray);
-            int[] intPixelArray = Arrays.copyOfRange(intPixelArrayWithLabel, 1, intPixelArrayWithLabel.length);
-            int label = intPixelArrayWithLabel[0];
 
+            int label = intPixelArrayWithLabel[0];
+            int[] intPixelArray = Arrays.copyOfRange(intPixelArrayWithLabel, 1, intPixelArrayWithLabel.length);
+            float[] floatPixelArray = normalizePixels(intPixelArray);
+
+            // Create the digit
             Digit digit = new Digit();
             digit.setLabel(label);
-
-            float[] floatPixelArray = new float[intPixelArray.length];
-
-            for (int i = 0; i < intPixelArray.length; i++) {
-                floatPixelArray[i] = intPixelArray[i] / 255.0f;  // Normalize to range [0, 1]
-            }
-
-            digit.setPixels(floatPixelArray);  // Assign the normalized pixel array
+            digit.setPixels(floatPixelArray);
             digitContainer.addDigit(digit);
+
             digitCounter--;
         }
 
         scanner.close();
-
         return digitContainer;
     }
 
-    private Scanner getFileScanner(String path) throws FileNotFoundException {
-        Scanner scanner;
-        File file = new File(path);
+    // Normalize pixel values to the range [0, 1]
+    private float[] normalizePixels(int[] pixelArray) {
+        float[] normalizedPixels = new float[pixelArray.length];
+        for (int i = 0; i < pixelArray.length; i++) {
+            normalizedPixels[i] = pixelArray[i] / 255.0f;
+        }
+        return normalizedPixels;
+    }
 
+    // Get a scanner for the specified file
+    private Scanner getFileScanner(String path) throws FileNotFoundException {
+        File file = new File(path);
         try {
-            scanner = new Scanner(file);
-        } catch (FileNotFoundException fileNotFoundException) {
+            return new Scanner(file);
+        } catch (FileNotFoundException e) {
             throw new FileNotFoundException("Data from " + file.getAbsolutePath() + " could not be loaded.");
         }
-
-        return scanner;
     }
 }
