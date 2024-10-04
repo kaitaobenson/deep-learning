@@ -29,4 +29,13 @@ public class NeuronUtil {
         // Return the mean squared difference
         return sumSquaredDifference / targets.length;
     }
+
+    // Calculates the derivative of the mean squared error (MSE)
+    public static float[] getMseDerivative(float[] outputs, float[] targets) {
+        float[] errorDerivatives = new float[targets.length];
+        for (int i = 0; i < targets.length; i++){
+            errorDerivatives[i] = 2 * (outputs[i] - targets[i]) / targets.length;
+        }
+        return errorDerivatives;
+    }
 }
