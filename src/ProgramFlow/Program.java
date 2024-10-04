@@ -3,6 +3,7 @@ package ProgramFlow;
 import Activation.ActivationFunctionType;
 import Digit.Digit;
 import Digit.DigitContainer;
+import Neuron.OutputData;
 import Persistance.MnistLoader;
 import Neuron.NeuronLayer;
 import Neuron.NeuronModel;
@@ -25,9 +26,7 @@ public class Program {
 
     public NeuronLoader neuronLoader = new NeuronLoader();
 
-    public Program() {}
 
-    //TODO: Geeze this command stuff is pretty silly
     public void init() {
         System.out.println("Program started...");
 
@@ -71,16 +70,19 @@ public class Program {
                     }
                     break;
                 case "print-train-digit":
-                    printTrainingDigit((int) data);
+                    printDigit(trainingDigitContainer, (int) data);
                     break;
                 case "print-test-digit":
-                    printTestingDigit((int) data);
+                    printDigit(testingDigitContainer, (int) data);
                     break;
                 case "save-model":
                     saveNeuronModel((String) data);
                     break;
                 case "load-model":
                     loadNeuronModel((String) data);
+                    break;
+                case "random-model":
+                    randomizeNeuronModel();
                     break;
                 case "help":
                     commandParser.printCommands();
@@ -97,43 +99,43 @@ public class Program {
 
     public void train(DigitContainer trainingDigitContainer) {
         // No-op
-        System.out.println("Starting trainer...");
+        System.out.println("No-op");
     }
 
     public void test(DigitContainer testingDigitContainer) {
-        // No-op
+        // Display
         System.out.println("Starting tester...");
+
+        int totalGuesses = testingDigitContainer.getDigitAmount();
+        int correctGuesses = neuronModel.testDigits(testingDigitContainer);
+
+        System.out.println("Correct guesses / total guesses:");
+        System.out.println(correctGuesses + " / " + totalGuesses);
     }
 
-    public void test(DigitContainer testingDigitContainer, int index) {
+    public void test(DigitContainer container, int index) {
+        // Validate
+        if (index > container.getDigitAmount() || index < 0) {
+            System.out.println("Index not found");
+            return;
+        }
+        // Display
         System.out.println("Starting test on digit " + index);
-        System.out.print("\n");
+        System.out.println(container.getDigit(index));
 
-        neuronModel.inputDigit(testingDigitContainer.getDigit(index));
-
-        System.out.println("Done");
-        System.out.print("\n");
+        OutputData outputData = neuronModel.inputDigit(container.getDigit(index));
+        System.out.println(outputData);
     }
 
-    public void printTrainingDigit(int index) {
+    public void printDigit(DigitContainer container, int index) {
         // Validate
-        if (index > trainingDigitContainer.getDigitAmount() || index < 0) {
+        if (index > container.getDigitAmount() || index < 0) {
             System.out.println("Index not found");
+            return;
         }
         // Display
-        System.out.println("Train digit at index: " + index);
-        Digit digit = trainingDigitContainer.getDigit(index);
-        System.out.println(digit);
-    }
-
-    public void printTestingDigit(int index) {
-        // Validate
-        if (index > testingDigitContainer.getDigitAmount() || index < 0) {
-            System.out.println("Index not found");
-        }
-        // Display
-        System.out.println("Testing digit at index: " + index);
-        Digit digit = testingDigitContainer.getDigit(index);
+        System.out.println("Digit at index: " + index);
+        Digit digit = container.getDigit(index);
         System.out.println(digit);
     }
 
@@ -153,5 +155,10 @@ public class Program {
         } catch (ClassNotFoundException e) {
             System.out.println("Unexpected error happened: " + e.getMessage());
         }
+    }
+
+    public void randomizeNeuronModel() {
+        neuronModel.randomizeModel();
+        System.out.println("Model randomized");
     }
 }
