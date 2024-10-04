@@ -1,6 +1,7 @@
 package Digit;
 
-import Util.Util;
+import Util.GeneralUtil;
+
 import java.io.Serializable;
 
 public class Digit implements Serializable {
@@ -19,9 +20,10 @@ public class Digit implements Serializable {
     public Digit() {}
 
     // Display number onto screen
+    @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Util.getLine()).append(label).append("\n");
+        stringBuilder.append(GeneralUtil.lineBreak).append(label).append("\n");
 
         for (int j = 0; j < IMAGE_HEIGHT; j++) {
             for (int i = 0; i < IMAGE_WIDTH; i++) {
@@ -31,7 +33,7 @@ public class Digit implements Serializable {
             stringBuilder.append("\n");
         }
 
-        stringBuilder.append(Util.getLine());
+        stringBuilder.append(GeneralUtil.lineBreak);
         return stringBuilder.toString();
     }
 

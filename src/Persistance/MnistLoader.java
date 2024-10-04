@@ -2,7 +2,8 @@ package Persistance;
 
 import Digit.Digit;
 import Digit.DigitContainer;
-import Util.Util;
+import Util.GeneralUtil;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -46,7 +47,7 @@ public class MnistLoader {
         // Get each line from the file
         while (scanner.hasNextLine() && digitCounter > 0) {
             String[] stringPixelArray = scanner.nextLine().split(",");
-            int[] intPixelArrayWithLabel = Util.stringArrayToIntArray(stringPixelArray);
+            int[] intPixelArrayWithLabel = GeneralUtil.stringArrayToIntArray(stringPixelArray);
 
             int label = intPixelArrayWithLabel[0];
             int[] intPixelArray = Arrays.copyOfRange(intPixelArrayWithLabel, 1, intPixelArrayWithLabel.length);

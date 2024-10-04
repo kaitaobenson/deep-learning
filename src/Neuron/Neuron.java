@@ -1,7 +1,8 @@
 package Neuron;
 
 import Activation.IActivationFunction;
-import Util.RandomGenerator;
+import Util.GeneralUtil;
+
 import java.io.Serializable;
 
 public class Neuron implements Serializable {
@@ -53,7 +54,7 @@ public class Neuron implements Serializable {
 	}
 	public void randomizeWeights() {
 		for (int i = 0; i < weights.length; i++) {
-			weights[i] = RandomGenerator.randomFloat(MIN_STARTING_WEIGHT, MAX_STARTING_WEIGHT);
+			weights[i] = GeneralUtil.randomFloat(MIN_STARTING_WEIGHT, MAX_STARTING_WEIGHT);
 		}
 	}
 	public float[] getWeights() {
@@ -64,7 +65,7 @@ public class Neuron implements Serializable {
 		this.bias = bias;
 	}
 	public void randomizeBias() {
-		bias = RandomGenerator.randomFloat(MIN_STARTING_BIAS, MAX_STARTING_BIAS);
+		bias = GeneralUtil.randomFloat(MIN_STARTING_BIAS, MAX_STARTING_BIAS);
 	}
 	public float getBias() {
 		return bias;
