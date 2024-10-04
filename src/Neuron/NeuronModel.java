@@ -3,9 +3,8 @@ package Neuron;
 import Digit.Digit;
 import Digit.DigitContainer;
 import Util.NeuronUtil;
-
 import java.io.Serializable;
-import java.util.*;
+
 
 public class NeuronModel implements Serializable {
 
@@ -63,4 +62,23 @@ public class NeuronModel implements Serializable {
         }
         return inputs;
     }
+
+    /*
+    public void backpropagate(Digit digit, float[] targetOutputs) {
+        OutputData outputData = inputDigit(digit);
+
+        float[] predictedOutputs = outputData.getOutputs();
+
+        float[] errors = NeuronUtil.getMseDerivative(predictedOutputs, targetOutputs);
+
+        for (int i = neuronLayers.length - 1; i >= 0; i--){
+            if (i == 0) {
+                neuronLayers[i].backpropagate();
+            }
+
+            errors = neuronLayers.get(i).backpropagate(errors, (i == 0) ? inputs : layers.get(i - 1).getOutputs(), learningRate);
+        }
+    }
+    */
+
 }

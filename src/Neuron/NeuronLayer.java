@@ -27,6 +27,25 @@ public class NeuronLayer implements Serializable {
         }
         return outputs;
     }
+    /*
+    public float[] backpropagate(float[] errors, float[] inputs, float learningRate) {
+        double[] newErrors = new double[weights[0].length];  // Errors to propagate to previous layer
+        double[] deltas = new double[outputs.length];  // Gradient deltas for this layer
+
+        for (int i = 0; i < outputs.length; i++) {
+            deltas[i] = errors[i] * activationFunction.derivative(outputs[i]);
+
+            // Update weights and biases
+            for (int j = 0; j < inputs.length; j++) {
+                weights[i][j] += learningRate * deltas[i] * inputs[j];
+                newErrors[j] += deltas[i] * weights[i][j];  // Propagate error to previous layer
+            }
+            biases[i] += learningRate * deltas[i];
+        }
+
+        return newErrors;  // Propagate error back to previous layer
+    }
+    */
 
     // Setters / Getters
     public void randomizeWeights() {
