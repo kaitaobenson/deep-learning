@@ -63,7 +63,7 @@ public class NeuronModel implements Serializable {
         return inputs;
     }
 
-    /*
+
     public void backpropagate(Digit digit, float[] targetOutputs) {
         OutputData outputData = inputDigit(digit);
 
@@ -72,13 +72,17 @@ public class NeuronModel implements Serializable {
         float[] errors = NeuronUtil.getMseDerivative(predictedOutputs, targetOutputs);
 
         for (int i = neuronLayers.length - 1; i >= 0; i--){
+            float[] layerInputs;
             if (i == 0) {
-                neuronLayers[i].backpropagate();
+                layerInputs = digit.getPixels();
+            }
+            else {
+                //layerInputs = neuronLayers[i - 1].calculateOutputs();
             }
 
-            errors = neuronLayers.get(i).backpropagate(errors, (i == 0) ? inputs : layers.get(i - 1).getOutputs(), learningRate);
+            //errors = neuronLayers[i].backpropagate(errors, layerInputs, learningRate);
         }
     }
-    */
+
 
 }
