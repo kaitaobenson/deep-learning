@@ -27,25 +27,26 @@ public class NeuronLayer implements Serializable {
         }
         return outputs;
     }
-    /*
+
     public float[] backpropagate(float[] errors, float[] inputs, float learningRate) {
-        double[] newErrors = new double[weights[0].length];  // Errors to propagate to previous layer
-        double[] deltas = new double[outputs.length];  // Gradient deltas for this layer
+        float[] outputs = calculateOutputs(inputs);
+        float[] newErrors = new float[getNeuron(0).getWeights().length];  // Errors to propagate to previous layer
+        float[] deltas = new float[outputs.length];  // Gradient deltas for this layer
 
         for (int i = 0; i < outputs.length; i++) {
-            deltas[i] = errors[i] * activationFunction.derivative(outputs[i]);
+            deltas[i] = errors[i] * activationFunctionType.getActivationFunction().outputDerivative(outputs[i]);
 
             // Update weights and biases
             for (int j = 0; j < inputs.length; j++) {
-                weights[i][j] += learningRate * deltas[i] * inputs[j];
-                newErrors[j] += deltas[i] * weights[i][j];  // Propagate error to previous layer
+                getNeuron(i).getWeights()[j] += learningRate * deltas[i] * inputs[j];
+                newErrors[j] += deltas[i] * getNeuron(i).getWeights()[j];  // Propagate error to previous layer
             }
-            biases[i] += learningRate * deltas[i];
+            //getNeuron(i).getBias() += learningRate * deltas[i];
         }
 
         return newErrors;  // Propagate error back to previous layer
     }
-    */
+
 
     // Setters / Getters
     public void randomizeWeights() {
