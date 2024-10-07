@@ -123,7 +123,7 @@ public class Program {
         System.out.println("Starting test on digit " + index);
         System.out.println(container.getDigit(index));
 
-        OutputData outputData = neuronModel.inputDigit(container.getDigit(index));
+        OutputData outputData = neuronModel.feedforward(container.getDigit(index));
         System.out.println(outputData);
     }
 

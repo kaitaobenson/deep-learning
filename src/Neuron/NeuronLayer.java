@@ -1,33 +1,44 @@
 package Neuron;
 
 import Activation.ActivationFunctionType;
+import Activation.IActivationFunction;
 import java.io.Serializable;
 
 public class NeuronLayer implements Serializable {
 
+    private final int inputAmount;
     private final Neuron[] neurons;
-    private final ActivationFunctionType activationFunctionType;
+    private final IActivationFunction activationFunction;
 
-    public NeuronLayer(int neuronAmount, int inputAmount, ActivationFunctionType activationFunctionType) {
+    public NeuronLayer(int neuronAmount, int inputAmount, IActivationFunction activationFunction) {
         this.neurons = new Neuron[neuronAmount];
-        this.activationFunctionType = activationFunctionType;
+        this.inputAmount = inputAmount;
+        this.activationFunction = activationFunction;
 
-        // Initialize neurons and set weights
+        // Create neurons
         for (int i = 0; i < neuronAmount; i++) {
-            neurons[i] = new Neuron(this);
-            neurons[i].setWeights(new float[inputAmount]);
+            neurons[i] = new Neuron(inputAmount, activationFunction);
         }
     }
 
     // Calculate the outputs of all neurons in the layer
-    public float[] calculateOutputs(float[] inputs) {
+    public float[] forward(float[] inputs) {
         float[] outputs = new float[neurons.length];
+
         for (int i = 0; i < neurons.length; i++) {
-            outputs[i] = neurons[i].calculateOutput(inputs);
+            outputs[i] = neurons[i].forward(inputs);
         }
+
         return outputs;
     }
 
+    // Backpropagation for the layer
+    public void backpropagate(double[] errors, double learningRate, double[] inputs) {
+        for (int i = 0; i < neurons.length; i++) {
+            neurons[i].backpropagate(errors[i], learningRate, inputs);
+        }
+    }
+    /*
     public float[] backpropagate(float[] errors, float[] inputs, float learningRate) {
         float[] outputs = calculateOutputs(inputs);
         float[] newErrors = new float[getNeuron(0).getWeights().length];  // Errors to propagate to previous layer
@@ -46,7 +57,7 @@ public class NeuronLayer implements Serializable {
 
         return newErrors;  // Propagate error back to previous layer
     }
-
+    */
 
     // Setters / Getters
     public void randomizeWeights() {

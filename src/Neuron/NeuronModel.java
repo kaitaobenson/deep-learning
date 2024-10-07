@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public class NeuronModel implements Serializable {
 
+    private static final float LEARNING_RATE = 1.0f;
     private final NeuronLayer[] neuronLayers;
 
     public NeuronModel(NeuronLayer[] neuronLayers) {
@@ -35,7 +36,7 @@ public class NeuronModel implements Serializable {
         int correctGuesses = 0;
 
         for (Digit digit : digitContainer.getDigits()) {
-            OutputData outputData = inputDigit(digit);
+            OutputData outputData = feedforward(digit);
 
             if (outputData.getBestGuess() == digit.getLabel()) {
                 correctGuesses += 1;
@@ -46,7 +47,7 @@ public class NeuronModel implements Serializable {
     }
 
     // Gets OutputData from a digit
-    public OutputData inputDigit(Digit digit) {
+    public OutputData feedforward(Digit digit) {
         float[] inputs = digit.getPixels();
 
         float[] outputs = processInputs(inputs);
@@ -65,18 +66,21 @@ public class NeuronModel implements Serializable {
 
 
     public void backpropagate(Digit digit, float[] targetOutputs) {
-        OutputData outputData = inputDigit(digit);
+        OutputData outputData = feedforward(digit);
 
         float[] predictedOutputs = outputData.getOutputs();
 
         float[] errors = NeuronUtil.getMseDerivative(predictedOutputs, targetOutputs);
 
+        float[] nextErrors = errors.clone();
+
         for (int i = neuronLayers.length - 1; i >= 0; i--){
-            float[] layerInputs;
+            float[] layerInputs = digit.getPixels();;
             if (i == 0) {
-                layerInputs = digit.getPixels();
+                nextErrors = neuronLayers[i].backpropagate(nextErrors, layerInputs, LEARNING_RATE);
             }
             else {
+                nextErrors = neuronLayers[i - 1].
                 //layerInputs = neuronLayers[i - 1].calculateOutputs();
             }
 
