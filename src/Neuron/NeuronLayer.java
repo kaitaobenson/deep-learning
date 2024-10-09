@@ -31,14 +31,17 @@ public class NeuronLayer implements Serializable {
 
         return outputs;
     }
+
     /*
-    // Backpropagation for the layer
+    // Neuron-based backpropagation for the layer
     public void backpropagate(float[] errors, float learningRate, float[] inputs) {
         for (int i = 0; i < neurons.length; i++) {
             neurons[i].backpropagate(errors[i], learningRate, inputs);
         }
     }
     */
+
+    //Layer-based backpropagation for the layer
     public float[] backpropagate(float[] errors, float[] inputs, float learningRate) {
         float[] outputs = forward(inputs);
         float[] newErrors = new float[getNeuron(0).getWeights().length];  // Errors to propagate to previous layer
@@ -52,7 +55,7 @@ public class NeuronLayer implements Serializable {
                 getNeuron(i).getWeights()[j] += learningRate * deltas[i] * inputs[j];
                 newErrors[j] += deltas[i] * getNeuron(i).getWeights()[j];  // Propagate error to previous layer
             }
-            //getNeuron(i).getBias() += learningRate * deltas[i];
+            getNeuron(i).setBias(getNeuron(i).getBias() + learningRate * deltas[i]);
         }
 
         return newErrors;  // Propagate error back to previous layer

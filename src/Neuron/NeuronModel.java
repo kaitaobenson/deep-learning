@@ -75,16 +75,20 @@ public class NeuronModel implements Serializable {
         float[] nextErrors = errors.clone();
 
         for (int i = neuronLayers.length - 1; i >= 0; i--){
-            float[] layerInputs = digit.getPixels();;
-            if (i == 0) {
-                //nextErrors = neuronLayers[i].backpropagate(nextErrors, layerInputs, LEARNING_RATE);
-            }
-            else {
-                //nextErrors = neuronLayers[i - 1].
-                //layerInputs = neuronLayers[i - 1].calculateOutputs();
-            }
+            float[] layerInputs = digit.getPixels();
 
-            //errors = neuronLayers[i].backpropagate(errors, layerInputs, learningRate);
+            // If the current layer isn't the first layer in the network, finds the current layer's inputs by doing a foward pass up to the current layer.
+            // Otherwise, we can just use the inputs of the network
+            if (i != 0) {
+                for (int f = 0; f < i; i++){
+                    // Very inefficient, but we don't have a variable that saves the outputs of a layer for the current training example I don't think
+                    // So this is the best idea I had
+                    layerInputs = neuronLayers[f].forward(layerInputs);
+                }
+            }
+            nextErrors = neuronLayers[i].backpropagate(nextErrors, layerInputs, LEARNING_RATE);
+
+            errors = neuronLayers[i].backpropagate(errors, layerInputs, LEARNING_RATE);
         }
     }
 
