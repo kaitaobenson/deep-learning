@@ -31,21 +31,21 @@ public class NeuronLayer implements Serializable {
 
         return outputs;
     }
-
+    /*
     // Backpropagation for the layer
-    public void backpropagate(double[] errors, double learningRate, double[] inputs) {
+    public void backpropagate(float[] errors, float learningRate, float[] inputs) {
         for (int i = 0; i < neurons.length; i++) {
             neurons[i].backpropagate(errors[i], learningRate, inputs);
         }
     }
-    /*
+    */
     public float[] backpropagate(float[] errors, float[] inputs, float learningRate) {
-        float[] outputs = calculateOutputs(inputs);
+        float[] outputs = forward(inputs);
         float[] newErrors = new float[getNeuron(0).getWeights().length];  // Errors to propagate to previous layer
         float[] deltas = new float[outputs.length];  // Gradient deltas for this layer
 
         for (int i = 0; i < outputs.length; i++) {
-            deltas[i] = errors[i] * activationFunctionType.getActivationFunction().outputDerivative(outputs[i]);
+            deltas[i] = errors[i] * activationFunction.outputDerivative(outputs[i]);
 
             // Update weights and biases
             for (int j = 0; j < inputs.length; j++) {
@@ -57,7 +57,7 @@ public class NeuronLayer implements Serializable {
 
         return newErrors;  // Propagate error back to previous layer
     }
-    */
+
 
     // Setters / Getters
     public void randomizeWeights() {
@@ -80,7 +80,7 @@ public class NeuronLayer implements Serializable {
         }
         return neurons[index];
     }
-    public ActivationFunctionType getActivationFunctionType() {
-        return activationFunctionType;
-    }
+    //public ActivationFunctionType getActivationFunctionType() {
+    //    return activationFunctionType;
+    //}
 }

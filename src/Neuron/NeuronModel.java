@@ -59,7 +59,7 @@ public class NeuronModel implements Serializable {
     // Processes inputs through the neuron layers
     private float[] processInputs(float[] inputs) {
         for (NeuronLayer neuronLayer : neuronLayers) {
-            inputs = neuronLayer.calculateOutputs(inputs);
+            inputs = neuronLayer.forward(inputs);
         }
         return inputs;
     }
@@ -77,10 +77,10 @@ public class NeuronModel implements Serializable {
         for (int i = neuronLayers.length - 1; i >= 0; i--){
             float[] layerInputs = digit.getPixels();;
             if (i == 0) {
-                nextErrors = neuronLayers[i].backpropagate(nextErrors, layerInputs, LEARNING_RATE);
+                //nextErrors = neuronLayers[i].backpropagate(nextErrors, layerInputs, LEARNING_RATE);
             }
             else {
-                nextErrors = neuronLayers[i - 1].
+                //nextErrors = neuronLayers[i - 1].
                 //layerInputs = neuronLayers[i - 1].calculateOutputs();
             }
 
