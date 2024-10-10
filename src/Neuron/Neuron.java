@@ -63,8 +63,9 @@ public class Neuron implements Serializable {
 	}
 
 	// Updates weights and biases
-	// Used for neuron-based backpropagation
 	public void backpropagate(float error, float learningRate, float[] inputs) {
+		System.out.println("inputs length: " + inputs.length);
+		System.out.println("weights length: " + weights.length);
 		delta = error * activationFunction.outputDerivative(output);
 
 		for (int i = 0; i < weights.length; i++) {

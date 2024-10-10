@@ -18,9 +18,9 @@ public class Program {
     public DigitContainer trainingDigitContainer;
 
     public NeuronLayer[] neuronLayers = {
-            new NeuronLayer(16, 784, ActivationFunctionType.LEAKY_RELU),
-            new NeuronLayer(16, 16, ActivationFunctionType.LEAKY_RELU),
-            new NeuronLayer(10, 16, ActivationFunctionType.SIGMOID),
+            new NeuronLayer(16, 784, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
+            new NeuronLayer(16, 16, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
+            new NeuronLayer(10, 16, ActivationFunctionType.SIGMOID.getActivationFunction()),
     };
     public NeuronModel neuronModel = new NeuronModel(neuronLayers);
 
@@ -97,17 +97,19 @@ public class Program {
         System.exit(0);
     }
 
-    public void train(DigitContainer trainingDigitContainer) {
+    public void train(DigitContainer container) {
         // No-op
-        System.out.println("No-op");
+        System.out.println("Starting trainer...");
+        neuronModel.backpropagateAll(container);
+        System.out.println("Finished training");
     }
 
-    public void test(DigitContainer testingDigitContainer) {
+    public void test(DigitContainer container) {
         // Display
         System.out.println("Starting tester...");
 
-        int totalGuesses = testingDigitContainer.getDigitAmount();
-        int correctGuesses = neuronModel.testDigits(testingDigitContainer);
+        int totalGuesses = container.getDigitAmount();
+        int correctGuesses = neuronModel.feedforwardAll(container);
 
         System.out.println("Correct guesses / total guesses:");
         System.out.println(correctGuesses + " / " + totalGuesses);

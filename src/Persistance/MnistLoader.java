@@ -11,22 +11,23 @@ import java.util.Scanner;
 
 public class MnistLoader {
 
-    private static final int DIGIT_AMOUNT = 1_000_000;
+    private static final int TRAINING_AMOUNT = 1000;
     private static final String TRAINING_DATA_PATH = "../MNIST_CSV/mnist_train.csv";
+    private static final int TESTING_AMOUNT = 1000000;
     private static final String TESTING_DATA_PATH = "../MNIST_CSV/mnist_test.csv";
 
     public MnistLoader() {}
 
     // Load and return training digits
     public DigitContainer getTrainingDigits() {
-        DigitContainer digitContainer = loadFileIntoDigits(TRAINING_DATA_PATH, DIGIT_AMOUNT);
+        DigitContainer digitContainer = loadFileIntoDigits(TRAINING_DATA_PATH, TRAINING_AMOUNT);
         System.out.println("Training Digits Loaded: " + digitContainer.getDigitAmount());
         return digitContainer;
     }
 
     // Load and return testing digits
     public DigitContainer getTestingDigits() {
-        DigitContainer digitContainer = loadFileIntoDigits(TESTING_DATA_PATH, DIGIT_AMOUNT);
+        DigitContainer digitContainer = loadFileIntoDigits(TESTING_DATA_PATH, TESTING_AMOUNT);
         System.out.println("Testing Digits Loaded: " + digitContainer.getDigitAmount());
         return digitContainer;
     }

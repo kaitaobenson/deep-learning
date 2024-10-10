@@ -4,7 +4,6 @@ import Digit.Digit;
 
 public class NeuronUtil {
 
-
     // Returns an array of the target values based on target digit
     public static float[] getTargets(Digit digit) {
         // Label between 0 - 9
@@ -16,7 +15,6 @@ public class NeuronUtil {
 
     // Calculates the mean squared error (MSE) loss between outputs and targets
     public static float getMse(float[] outputs, float[] targets) {
-
         if (outputs.length != targets.length) {
             throw new IllegalArgumentException("Outputs and targets must be the same length.");
         }
