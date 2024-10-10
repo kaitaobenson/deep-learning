@@ -1,6 +1,5 @@
 package Neuron;
 
-import Activation.ActivationFunctionType;
 import Activation.IActivationFunction;
 import java.io.Serializable;
 
@@ -9,6 +8,8 @@ public class NeuronLayer implements Serializable {
     private final int inputAmount;
     private final Neuron[] neurons;
     private final IActivationFunction activationFunction;
+
+    private float[] outputs;
 
     public NeuronLayer(int neuronAmount, int inputAmount, IActivationFunction activationFunction) {
         this.neurons = new Neuron[neuronAmount];
@@ -23,7 +24,7 @@ public class NeuronLayer implements Serializable {
 
     // Calculate the outputs of all neurons in the layer
     public float[] forward(float[] inputs) {
-        float[] outputs = new float[neurons.length];
+        outputs = new float[neurons.length];
 
         for (int i = 0; i < neurons.length; i++) {
             outputs[i] = neurons[i].forward(inputs);
@@ -32,15 +33,15 @@ public class NeuronLayer implements Serializable {
         return outputs;
     }
 
-    /*
+
     // Neuron-based backpropagation for the layer
     public void backpropagate(float[] errors, float learningRate, float[] inputs) {
         for (int i = 0; i < neurons.length; i++) {
             neurons[i].backpropagate(errors[i], learningRate, inputs);
         }
     }
-    */
 
+    /*
     //Layer-based backpropagation for the layer
     public float[] backpropagate(float[] errors, float[] inputs, float learningRate) {
         float[] outputs = forward(inputs);
@@ -60,6 +61,7 @@ public class NeuronLayer implements Serializable {
 
         return newErrors;  // Propagate error back to previous layer
     }
+    */
 
 
     // Setters / Getters
@@ -83,7 +85,10 @@ public class NeuronLayer implements Serializable {
         }
         return neurons[index];
     }
-    //public ActivationFunctionType getActivationFunctionType() {
-    //    return activationFunctionType;
-    //}
+    public IActivationFunction getActivationFunction() {
+        return activationFunction;
+    }
+    public float[] getOutputs() {
+        return outputs.clone();
+    }
 }
