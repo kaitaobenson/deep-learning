@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class NeuronModel implements Serializable {
 
-    private static final float LEARNING_RATE = -0.05f;
+    private static final float LEARNING_RATE = 0.005f;
     private final NeuronLayer[] neuronLayers;
 
     public NeuronModel(NeuronLayer[] neuronLayers) {
@@ -79,52 +79,25 @@ public class NeuronModel implements Serializable {
         // Perform a forward pass to get the output data
         OutputData outputData = feedforward(digit);
 
-        // Inputs to the first layer are the pixels of the digit
-        float[] layerInputs = digit.getPixels();
+        // Predicted outputs (what the model thinks the digit is)
+        float[] predictedOutputs = outputData.getOutputs();
 
         // Target outputs (actual labels) for the digit
         float[] targetOutputs = NeuronUtil.getTargets(digit);
 
-        // Predicted outputs (what the model thinks the digit is)
-        float[] predictedOutputs = outputData.getOutputs();
+        // Inputs to the first layer are the pixels of the digit
+        float[] layerInputs = digit.getPixels();
 
-        // Initial error is the derivative of MSE with respect to the predicted outputs
-        float[] errors = NeuronUtil.getMseDerivative(predictedOutputs, targetOutputs);
+        float[] outputErrors = new float[predictedOutputs.length];
 
-        // Initialize nextErrors to store the propagated error for the next layer
-        float[] nextErrors = errors;
+        for (int i = predictedOutputs.length - 1; i >= 0; i--){
+            outputErrors[i] = targetOutputs[i] - predictedOutputs[i];
+        }
 
-        // Backpropagate through all layers starting from the last layer
-        for (int i = neuronLayers.length - 1; i >= 0; i--) {
-            NeuronLayer layer = neuronLayers[i];
+        float[] nextErrors = outputErrors;
 
-            // Perform backpropagation on the current layer using the errors and update the weights
-            layer.backpropagate(nextErrors, LEARNING_RATE, layerInputs);
-
-            if (i != 0) {
-                // The inputs to the current layer come from the outputs of the previous layer
-                layerInputs = neuronLayers[i - 1].getOutputs();
-
-                // Initialize the errors for the previous layer, which should match the size of the inputs to the current layer
-                nextErrors = new float[layerInputs.length]; // Size should be the number of inputs to the current layer
-
-                // Loop over each neuron in the current layer
-                for (int j = 0; j < layer.getNeurons().length; j++) {
-                    Neuron neuron = layer.getNeurons()[j];
-                    float delta = neuron.getDelta();
-
-                    // For each neuron, propagate the delta back to each corresponding input using its weights
-                    for (int k = 0; k < neuron.getWeights().length; k++) {
-                        // Ensure we are not going out of bounds in nextErrors and weights
-                        if (k < nextErrors.length) {
-                            // Accumulate the error for the input neuron at index k
-                            nextErrors[k] += delta * neuron.getWeights()[k];
-                        } else {
-                            System.err.println("Index out of bounds! Weights length: " + neuron.getWeights().length + ", nextErrors length: " + nextErrors.length);
-                        }
-                    }
-                }
-            }
+        for (int i = neuronLayers.length - 1; i >= 0; i--){
+            nextErrors = neuronLayers[i].backpropagate(nextErrors, LEARNING_RATE);
         }
     }
 

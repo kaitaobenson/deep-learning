@@ -9,7 +9,9 @@ public class NeuronLayer implements Serializable {
     private final Neuron[] neurons;
     private final IActivationFunction activationFunction;
 
+    private float[] inputs; //Used for backpropagation
     private float[] outputs;
+    private float[] deltas;
 
     public NeuronLayer(int neuronAmount, int inputAmount, IActivationFunction activationFunction) {
         this.neurons = new Neuron[neuronAmount];
@@ -24,6 +26,7 @@ public class NeuronLayer implements Serializable {
 
     // Calculate the outputs of all neurons in the layer
     public float[] forward(float[] inputs) {
+        this.inputs = inputs;
         outputs = new float[neurons.length];
 
         for (int i = 0; i < neurons.length; i++) {
@@ -35,33 +38,29 @@ public class NeuronLayer implements Serializable {
 
 
     // Neuron-based backpropagation for the layer
-    public void backpropagate(float[] errors, float learningRate, float[] inputs) {
+    public float[] backpropagate(float[] outputErrors, float LEARNING_RATE) {
+        float[] inputErrors = new float[inputAmount];
+
+        deltas = new float[neurons.length];
+
+        // Calculate deltas for current layer
         for (int i = 0; i < neurons.length; i++) {
-            neurons[i].backpropagate(errors[i], learningRate, inputs);
+            deltas[i] = outputErrors[i] * activationFunction.outputDerivative(outputs[i]);
         }
-    }
 
-    /*
-    //Layer-based backpropagation for the layer
-    public float[] backpropagate(float[] errors, float[] inputs, float learningRate) {
-        float[] outputs = forward(inputs);
-        float[] newErrors = new float[getNeuron(0).getWeights().length];  // Errors to propagate to previous layer
-        float[] deltas = new float[outputs.length];  // Gradient deltas for this layer
+        for (int i = 0; i < neurons.length; i++) { // Iterate through each neuron in the current layer
+            float[] weights = getNeuron(i).getWeights(); // Get weights for neuron i
 
-        for (int i = 0; i < outputs.length; i++) {
-            deltas[i] = errors[i] * activationFunction.outputDerivative(outputs[i]);
-
-            // Update weights and biases
-            for (int j = 0; j < inputs.length; j++) {
-                getNeuron(i).getWeights()[j] += learningRate * deltas[i] * inputs[j];
-                newErrors[j] += deltas[i] * getNeuron(i).getWeights()[j];  // Propagate error to previous layer
+            for (int j = 0; j < inputAmount; j++) { // Iterate through each input connection
+                inputErrors[j] += weights[j] * deltas[i]; // Accumulate input errors
+                weights[j] += LEARNING_RATE * deltas[i] * inputs[j]; // Update weights
             }
-            getNeuron(i).setBias(getNeuron(i).getBias() + learningRate * deltas[i]);
         }
-
-        return newErrors;  // Propagate error back to previous layer
+        for (int i = 0; i < neurons.length; i++) {
+            neurons[i].setBias(neurons[i].getBias() + LEARNING_RATE * deltas[i]);
+        }
+        return inputErrors; // Propagate errors back to the previous layer
     }
-    */
 
 
     // Setters / Getters
