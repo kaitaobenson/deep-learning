@@ -1,14 +1,17 @@
 package Neuron;
 
+import Activation.ActivationFunctionType;
 import Digit.Digit;
 import Digit.DigitContainer;
 import Util.NeuronUtil;
 import java.io.Serializable;
+import java.util.Arrays;
 
+import Activation.IActivationFunction;
 
 public class NeuronModel implements Serializable {
 
-    private static final float LEARNING_RATE = 0.005f;
+    private static final float LEARNING_RATE = .001f;
     private final NeuronLayer[] neuronLayers;
 
     public NeuronModel(NeuronLayer[] neuronLayers) {
@@ -85,21 +88,31 @@ public class NeuronModel implements Serializable {
         // Target outputs (actual labels) for the digit
         float[] targetOutputs = NeuronUtil.getTargets(digit);
 
+        System.out.println("Targets: " + Arrays.toString(targetOutputs));
+        System.out.println(digit);
+
         // Inputs to the first layer are the pixels of the digit
         float[] layerInputs = digit.getPixels();
 
-        float[] outputErrors = new float[predictedOutputs.length];
+        float[] mseDerivatives = NeuronUtil.getMseDerivative(predictedOutputs, targetOutputs);
 
-        for (int i = predictedOutputs.length - 1; i >= 0; i--){
-            outputErrors[i] = targetOutputs[i] - predictedOutputs[i];
+        float[] errors = new float[mseDerivatives.length];
+
+        for (int i = 0; i < errors.length; i++){
+            errors[i] = mseDerivatives[i] * neuronLayers[neuronLayers.length - 1].getActivationFunction().outputDerivative(neuronLayers[neuronLayers.length - 1].getWeightedSums()[i]);
         }
-
-        float[] nextErrors = outputErrors;
 
         for (int i = neuronLayers.length - 1; i >= 0; i--){
-            nextErrors = neuronLayers[i].backpropagate(nextErrors, LEARNING_RATE);
+            NeuronLayer previousLayer;
+            if (i != 0){
+                previousLayer = neuronLayers[i - 1];
+            }
+            else{
+                previousLayer = null;
+            }
+
+            errors = neuronLayers[i].backpropagate(errors, LEARNING_RATE, previousLayer);
         }
+        feedforward(digit);
     }
-
-
 }

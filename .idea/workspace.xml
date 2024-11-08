@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="">
+    <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="Backpropagation that runs but doesn't work, just commiting to have this saved in case we want to test on later">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Neuron/Neuron.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Neuron/Neuron.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Neuron/NeuronLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Neuron/NeuronLayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Neuron/NeuronModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Neuron/NeuronModel.java" afterDir="false" />
     </list>
@@ -24,6 +25,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -73,6 +77,15 @@
       <option name="presentableId" value="Default" />
       <updated>1726113678441</updated>
     </task>
+    <task id="LOCAL-00001" summary="Backpropagation that runs but doesn't work, just commiting to have this saved in case we want to test on later">
+      <option name="closed" value="true" />
+      <created>1730675700070</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1730675700070</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -88,6 +101,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Backpropagation that runs but doesn't work, just commiting to have this saved in case we want to test on later" />
+    <option name="LAST_COMMIT_MESSAGE" value="Backpropagation that runs but doesn't work, just commiting to have this saved in case we want to test on later" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
