@@ -20,6 +20,7 @@ public class Neuron implements Serializable {
 	private float bias;
 
 	private float output;
+	float weightedSum;
 	private float delta;
 
 	public Neuron(int inputAmount, IActivationFunction activationFunction) {
@@ -38,8 +39,8 @@ public class Neuron implements Serializable {
 		this.bias = bias;
 	}
 
-	// Calculates the output value
-	public float forward(float[] inputs) {
+	// Calculates the output value and returns the output and weighted sum
+	public float[] forward(float[] inputs) {
 	    if (weights == null) {
 	        throw new IllegalStateException("Weights cannot be null.");
 	    }
@@ -50,7 +51,9 @@ public class Neuron implements Serializable {
 	        throw new IllegalArgumentException("Input amount was not correct.");
 	    }
 
-	    float weightedSum = 0.0f;
+		float[] outputs = new float[2]; // Since both the weightedSum and the output is needed, I'm just going to have it return a float array cus i don't know a better way to do it
+
+		weightedSum = 0.0f;
 
 	    for (int i = 0; i < inputs.length; i++) {
 	        weightedSum += inputs[i] * weights[i];
@@ -58,20 +61,27 @@ public class Neuron implements Serializable {
 	    
 	    weightedSum += bias;
 
+		outputs[0] = weightedSum; // First element is weighted sum
+
 		output = activationFunction.output(weightedSum);
-		return output;
+
+		outputs[1] = output; // Second element is output
+
+		return outputs;
 	}
 
 	// Updates weights and biases
-	public void backpropagate(float error, float learningRate, float[] inputs) {
-		System.out.println("inputs length: " + inputs.length);
-		System.out.println("weights length: " + weights.length);
-		delta = error * activationFunction.outputDerivative(output);
+	public void backpropagate(float error, float[] inputs, float LEARNING_RATE) {
+		float activationDerivative = activationFunction.outputDerivative(weightedSum);
 
 		for (int i = 0; i < weights.length; i++) {
-			weights[i] += learningRate * delta * inputs[i];
+			float weightGradient = error * inputs[i] * activationDerivative;
+			weights[i] -= LEARNING_RATE * weightGradient;
 		}
-		bias += learningRate * delta;
+
+		float biasGradient = error * activationDerivative;
+
+		bias -= LEARNING_RATE * biasGradient;
 	}
 
 	// Setters / Getters
@@ -105,6 +115,9 @@ public class Neuron implements Serializable {
 	}
 	public float getOutput() {
 		return output;
+	}
+	public float getWeightedSum() {
+		return weightedSum;
 	}
 	public float getDelta() {
 		return delta;
