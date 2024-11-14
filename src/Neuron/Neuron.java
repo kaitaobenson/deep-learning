@@ -13,6 +13,12 @@ public class Neuron implements Serializable {
 	private static final int MAX_STARTING_WEIGHT = 1;
 	private static final int MIN_STARTING_WEIGHT = -1;
 
+	private static final float MAX_WEIGHT_GRADIENT = 1000f;
+	private static final float MIN_WEIGHT_GRADIENT = -1000f;
+
+	private static final float MAX_BIAS_GRADIENT = 1000f;
+	private static final float MIN_BIAS_GRADIENT = -1000f;
+
 	private final int inputAmount;
 	private final IActivationFunction activationFunction;
 
@@ -75,11 +81,12 @@ public class Neuron implements Serializable {
 		float activationDerivative = activationFunction.outputDerivative(weightedSum);
 
 		for (int i = 0; i < weights.length; i++) {
-			float weightGradient = error * inputs[i] * activationDerivative;
+			float weightGradient = Math.clamp(error * inputs[i] * activationDerivative, MIN_WEIGHT_GRADIENT, MAX_WEIGHT_GRADIENT);
+
 			weights[i] -= LEARNING_RATE * weightGradient;
 		}
 
-		float biasGradient = error * activationDerivative;
+		float biasGradient = Math.clamp(error * activationDerivative, MIN_BIAS_GRADIENT, MAX_BIAS_GRADIENT);
 
 		bias -= LEARNING_RATE * biasGradient;
 	}

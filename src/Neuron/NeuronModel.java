@@ -11,7 +11,7 @@ import Activation.IActivationFunction;
 
 public class NeuronModel implements Serializable {
 
-    private static final float LEARNING_RATE = .001f;
+    private static final float LEARNING_RATE = .01f;
     private final NeuronLayer[] neuronLayers;
 
     public NeuronModel(NeuronLayer[] neuronLayers) {
@@ -89,7 +89,7 @@ public class NeuronModel implements Serializable {
         float[] targetOutputs = NeuronUtil.getTargets(digit);
 
         System.out.println("Targets: " + Arrays.toString(targetOutputs));
-        System.out.println(digit);
+        System.out.println("Outputs: " + Arrays.toString(predictedOutputs));
 
         // Inputs to the first layer are the pixels of the digit
         float[] layerInputs = digit.getPixels();
