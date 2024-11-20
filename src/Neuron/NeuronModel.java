@@ -73,15 +73,12 @@ public class NeuronModel implements Serializable {
         for (int i = 0; i < digitContainer.getDigitAmount(); i++) {
             System.out.println("Backpropagate: " + i);
             Digit digit = digitContainer.getDigit(i);
-            backpropagate(digit);
+            backpropagate(feedforward(digit), digit);
         }
     }
 
 
-    public void backpropagate(Digit digit) {
-        // Perform a forward pass to get the output data
-        OutputData outputData = feedforward(digit);
-
+    public void backpropagate(OutputData outputData, Digit digit) {
         // Predicted outputs (what the model thinks the digit is)
         float[] predictedOutputs = outputData.getOutputs();
 
@@ -91,16 +88,7 @@ public class NeuronModel implements Serializable {
         System.out.println("Targets: " + Arrays.toString(targetOutputs));
         System.out.println("Outputs: " + Arrays.toString(predictedOutputs));
 
-        // Inputs to the first layer are the pixels of the digit
-        float[] layerInputs = digit.getPixels();
-
-        float[] mseDerivatives = NeuronUtil.getMseDerivative(predictedOutputs, targetOutputs);
-
-        float[] errors = new float[mseDerivatives.length];
-
-        for (int i = 0; i < errors.length; i++){
-            errors[i] = mseDerivatives[i] * neuronLayers[neuronLayers.length - 1].getActivationFunction().outputDerivative(neuronLayers[neuronLayers.length - 1].getWeightedSums()[i]);
-        }
+        float[] errors = calculateInitalErrors(predictedOutputs, targetOutputs);
 
         for (int i = neuronLayers.length - 1; i >= 0; i--){
             NeuronLayer previousLayer;
@@ -114,5 +102,18 @@ public class NeuronModel implements Serializable {
             errors = neuronLayers[i].backpropagate(errors, LEARNING_RATE, previousLayer);
         }
         feedforward(digit);
+    }
+
+    private float[] calculateInitalErrors(float[] outputs, float[] targets) {
+        float[] mseDerivatives = NeuronUtil.getMseDerivative(outputs, targets);
+        float[] weightedSums = neuronLayers[neuronLayers.length - 1].getWeightedSums();
+
+        float[] errors = new float[mseDerivatives.length];
+
+        for (int i = 0; i < errors.length; i++){
+            errors[i] = mseDerivatives[i] * neuronLayers[neuronLayers.length - 1].getActivationFunction().outputDerivative(weightedSums[i]);
+        }
+
+        return errors;
     }
 }
