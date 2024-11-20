@@ -81,12 +81,12 @@ public class Neuron implements Serializable {
 		float activationDerivative = activationFunction.outputDerivative(weightedSum);
 
 		for (int i = 0; i < weights.length; i++) {
-			float weightGradient = Math.clamp(error * inputs[i] * activationDerivative, MIN_WEIGHT_GRADIENT, MAX_WEIGHT_GRADIENT);
+			float weightGradient = Math.clamp(error * inputs[i], MIN_WEIGHT_GRADIENT, MAX_WEIGHT_GRADIENT);
 
 			weights[i] -= LEARNING_RATE * weightGradient;
 		}
 
-		float biasGradient = Math.clamp(error * activationDerivative, MIN_BIAS_GRADIENT, MAX_BIAS_GRADIENT);
+		float biasGradient = Math.clamp(error, MIN_BIAS_GRADIENT, MAX_BIAS_GRADIENT);
 
 		bias -= LEARNING_RATE * biasGradient;
 	}

@@ -18,7 +18,9 @@ public class Program {
     public DigitContainer trainingDigitContainer;
 
     public NeuronLayer[] neuronLayers = {
-            new NeuronLayer(10, 784, ActivationFunctionType.SIGMOID.getActivationFunction()),
+            new NeuronLayer(16, 784, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
+            new NeuronLayer(16, 16, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
+            new NeuronLayer(10, 16, ActivationFunctionType.SIGMOID.getActivationFunction()),
     };
     public NeuronModel neuronModel = new NeuronModel(neuronLayers);
 

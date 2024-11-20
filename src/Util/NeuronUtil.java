@@ -21,7 +21,7 @@ public class NeuronUtil {
 
         float sumSquaredDifference = 0.0f;
         for (int i = 0; i < outputs.length; i++) {
-            sumSquaredDifference += Math.pow(outputs[i] - targets[i], 2);
+            sumSquaredDifference += (float) Math.pow(outputs[i] - targets[i], 2);
         }
 
         // Return the mean squared difference
@@ -32,7 +32,7 @@ public class NeuronUtil {
     public static float[] getMseDerivative(float[] outputs, float[] targets) {
         float[] errorDerivatives = new float[targets.length];
         for (int i = 0; i < targets.length; i++){
-            errorDerivatives[i] = 2 * (outputs[i] - targets[i]) / targets.length;
+            errorDerivatives[i] = 2.0f * (outputs[i] - targets[i]) / targets.length;
         }
         return errorDerivatives;
     }

@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="Backpropagation that actually learns... when you only train it on one thing. Otherwise it skibs itself">
+    <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="Backprop works with only 1 layer but not with multiple. Implemented gradient clipping as well. FULL BOXED">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Neuron/Neuron.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Neuron/Neuron.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Neuron/NeuronModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Neuron/NeuronModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Persistance/MnistLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Persistance/MnistLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProgramFlow/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProgramFlow/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/NeuronUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/NeuronUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
