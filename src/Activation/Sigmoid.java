@@ -10,6 +10,6 @@ public class Sigmoid implements IActivationFunction {
 
     @Override
     public float outputDerivative(float x) {
-        return (float) (x * (1 - x));
+        return (float) (output(x) * (1 - output(x)));
     }
 }
