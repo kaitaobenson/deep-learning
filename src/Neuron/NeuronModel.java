@@ -11,7 +11,7 @@ import Activation.IActivationFunction;
 
 public class NeuronModel implements Serializable {
 
-    private static final float LEARNING_RATE = .01f;
+    private static final float LEARNING_RATE = .1f;
     private final NeuronLayer[] neuronLayers;
 
     public NeuronModel(NeuronLayer[] neuronLayers) {
@@ -37,6 +37,8 @@ public class NeuronModel implements Serializable {
 
     public int feedforwardAll(DigitContainer digitContainer) {
         int correctGuesses = 0;
+        float[] incorrectGuesses = new float[neuronLayers[neuronLayers.length - 1].getNeurons().length];
+        float[] incorrectGuessesTargets = new float[neuronLayers[neuronLayers.length - 1].getNeurons().length];
 
         for (Digit digit : digitContainer.getDigits()) {
             OutputData outputData = feedforward(digit);
@@ -44,8 +46,12 @@ public class NeuronModel implements Serializable {
             if (outputData.getBestGuess() == digit.getLabel()) {
                 correctGuesses += 1;
             }
+            else{
+                incorrectGuesses[outputData.getBestGuess()] += 1;
+                incorrectGuessesTargets[digit.getLabel()] += 1;
+            }
         }
-
+        System.out.println("Incorrect guesses: " + Arrays.toString(incorrectGuesses) + "\n" + "Incorrect guesses targets: " + Arrays.toString(incorrectGuessesTargets));
         return correctGuesses;
     }
 
