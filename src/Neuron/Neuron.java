@@ -72,15 +72,14 @@ public class Neuron implements Serializable {
 
 	// Updates weights and biases
 	public void backpropagate(float error, float[] inputs, float LEARNING_RATE) {
-		for (int i = 0; i < weights.length; i++) {
+		for (int i = 0; i < inputs.length; i++){
 			float weightGradient = error * inputs[i];
 
-			weights[i] -= LEARNING_RATE * weightGradient;
+			weights[i] -= weightGradient * LEARNING_RATE;
 		}
 
 		float biasGradient = error;
-
-		bias -= LEARNING_RATE * biasGradient;
+		bias += biasGradient * LEARNING_RATE;
 	}
 
 	// Setters / Getters

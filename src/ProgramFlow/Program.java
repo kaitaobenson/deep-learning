@@ -18,8 +18,9 @@ public class Program {
     public DigitContainer trainingDigitContainer;
 
     public NeuronLayer[] neuronLayers = {
-
-            new NeuronLayer(10, 784, ActivationFunctionType.SIGMOID.getActivationFunction()),
+            new NeuronLayer(16, 784, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
+            new NeuronLayer(16, 16, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
+            new NeuronLayer(10, 16, ActivationFunctionType.SIGMOID.getActivationFunction()),
     };
     public NeuronModel neuronModel = new NeuronModel(neuronLayers);
 
@@ -58,7 +59,7 @@ public class Program {
 
             switch (name) {
                 case "train":
-                    train(trainingDigitContainer);
+                    train(trainingDigitContainer, (int) data);
                     break;
                 case "test":
                     if (inputType == Command.InputType.INT) {
@@ -96,10 +97,16 @@ public class Program {
         System.exit(0);
     }
 
-    public void train(DigitContainer container) {
-        // No-op
-        System.out.println("Starting trainer...");
-        neuronModel.backpropagateAll(container);
+    public void train(DigitContainer container, int epochs) {
+        // Validate
+        if (epochs < 0){
+            System.out.println("Amount of epochs cannot be negative");
+            return;
+        }
+
+        // Display
+        System.out.println("Starting trainer for " + epochs + " epochs...");
+        neuronModel.train(container, epochs);
         System.out.println("Finished training");
     }
 
