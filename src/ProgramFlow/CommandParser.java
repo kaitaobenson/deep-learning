@@ -7,7 +7,7 @@ import javax.naming.NameNotFoundException;
 public class CommandParser {
 
     private static final Command[] commands = {
-            new Command("train", Command.InputType.VOID),
+            new Command("train", Command.InputType.INT),
             new Command("test", Command.InputType.VOID),
             new Command("test", Command.InputType.INT),
             new Command("print-train-digit", Command.InputType.INT),

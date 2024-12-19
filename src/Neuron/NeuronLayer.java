@@ -1,6 +1,8 @@
 package Neuron;
 
 import Activation.IActivationFunction;
+import Activation.LeakyReLu;
+
 import java.io.Serializable;
 
 public class NeuronLayer implements Serializable {
@@ -46,16 +48,17 @@ public class NeuronLayer implements Serializable {
         float[] nextErrors = new float[inputs.length];
 
         if (previousLayer != null) {
-            for (int i = 0; i < nextErrors.length; i++) {
-                float sum = 0.0f;
+            for (int i = 0; i < previousLayer.getNeurons().length; i++) {
+                float sum = 0;
                 for (int j = 0; j < neurons.length; j++) {
-                    sum += errors[j] * getNeuron(j).getWeights()[i];
+                    sum += errors[j] * getNeurons()[j].getWeights()[i];
                 }
-                nextErrors[i] = sum * previousLayer.activationFunction.outputDerivative(previousLayer.getNeuron(i).getWeightedSum());
+                nextErrors[i] = sum * previousLayer.getActivationFunction().outputDerivative(previousLayer.getWeightedSums()[i]);
             }
         }
+
         for (int i = 0; i < neurons.length; i++){
-            getNeuron(i).backpropagate(errors[i], inputs, LEARNING_RATE);
+            neurons[i].backpropagate(errors[i], inputs, LEARNING_RATE);
         }
 
         return nextErrors;
