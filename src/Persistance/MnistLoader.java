@@ -13,7 +13,7 @@ public class MnistLoader {
 
     private static final int TRAINING_AMOUNT = 60000;
     private static final String TRAINING_DATA_PATH = "../MNIST_CSV/mnist_train.csv";
-    private static final int TESTING_AMOUNT = 1000000;
+    private static final int TESTING_AMOUNT = 10000;
     private static final String TESTING_DATA_PATH = "../MNIST_CSV/mnist_test.csv";
 
     public MnistLoader() {}
