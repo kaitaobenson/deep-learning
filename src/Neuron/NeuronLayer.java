@@ -2,14 +2,24 @@ package Neuron;
 
 import Activation.IActivationFunction;
 import Activation.LeakyReLu;
+import Util.GeneralUtil;
 
 import java.io.Serializable;
 
 public class NeuronLayer implements Serializable {
+    private static final int MAX_STARTING_BIAS = 1;
+    private static final int MIN_STARTING_BIAS = -1;
+
+    private static final int MAX_STARTING_WEIGHT = 1;
+    private static final int MIN_STARTING_WEIGHT = -1;
 
     private final int inputAmount;
-    private final Neuron[] neurons;
+    private final int neuronAmount;
+
     private final IActivationFunction activationFunction;
+
+    private float[][] weights;
+    private float[] biases;
 
     private float[] inputs;
     private float[] weightedSums;
@@ -17,26 +27,24 @@ public class NeuronLayer implements Serializable {
 
 
     public NeuronLayer(int neuronAmount, int inputAmount, IActivationFunction activationFunction) {
-        this.neurons = new Neuron[neuronAmount];
         this.inputAmount = inputAmount;
+        this.neuronAmount = neuronAmount;
         this.activationFunction = activationFunction;
-
-        // Create neurons
-        for (int i = 0; i < neuronAmount; i++) {
-            neurons[i] = new Neuron(inputAmount, activationFunction);
-        }
+        this.weights = new float[neuronAmount][inputAmount];
+        this.biases = new float[neuronAmount];
     }
 
     // Calculate the outputs of all neurons in the layer
     public float[] forward(float[] inputs) {
         this.inputs = inputs;
-        outputs = new float[neurons.length];
-        weightedSums = new float[neurons.length];
+        outputs = new float[weights.length];
+        weightedSums = new float[weights.length];
 
-        for (int i = 0; i < neurons.length; i++) {
-            float[] outputData = neurons[i].forward(inputs);
-            weightedSums[i] = outputData[0]; //Saves the weighted sums
-            outputs[i] = outputData[1];
+        weightedSums = dotProduct(weights, inputs);
+
+        for (int i = 0; i < weightedSums.length; i++){
+            weightedSums[i] += biases[i];
+            outputs[i] = activationFunction.output(weightedSums[i]);
         }
 
         return outputs;
@@ -48,17 +56,28 @@ public class NeuronLayer implements Serializable {
         float[] nextErrors = new float[inputs.length];
 
         if (previousLayer != null) {
-            for (int i = 0; i < previousLayer.getNeurons().length; i++) {
-                float sum = 0;
-                for (int j = 0; j < neurons.length; j++) {
-                    sum += errors[j] * getNeurons()[j].getWeights()[i];
+            float[][] weightsT = transpose(weights);
+            for (int i = 0; i < weightsT.length; i++) {
+                float sum = 0.0f;
+
+                for (int j = 0; j < weightsT[i].length; j++) {
+                    sum += errors[j] * weightsT[i][j];
                 }
+
                 nextErrors[i] = sum * previousLayer.getActivationFunction().outputDerivative(previousLayer.getWeightedSums()[i]);
             }
         }
 
-        for (int i = 0; i < neurons.length; i++){
-            neurons[i].backpropagate(errors[i], inputs, LEARNING_RATE);
+        for (int i = 0; i < weights.length; i++){
+            for (int j = 0; j < weights[i].length; j++){
+                float weightGradient = errors[i] * inputs[j];
+
+                weights[i][j] -= weightGradient * LEARNING_RATE;
+            }
+
+            float biasGradient = errors[i];
+
+            biases[i] -= biasGradient * LEARNING_RATE;
         }
 
         return nextErrors;
@@ -66,25 +85,18 @@ public class NeuronLayer implements Serializable {
 
     // Setters / Getters
     public void randomizeWeights() {
-        for (Neuron neuron : neurons) {
-            neuron.randomizeWeights();
+        for (int i = 0; i < weights.length; i++) {
+            for (int j = 0; j < weights[i].length; j++) {
+                weights[i][j] = GeneralUtil.randomFloat(MIN_STARTING_WEIGHT, MAX_STARTING_WEIGHT);
+            }
         }
     }
     public void randomizeBiases() {
-        for (Neuron neuron : neurons) {
-            neuron.randomizeBias();
+        for (int i = 0; i < biases.length; i++) {
+            biases[i] = GeneralUtil.randomFloat(MIN_STARTING_BIAS, MAX_STARTING_BIAS);
         }
     }
 
-    public Neuron[] getNeurons() {
-        return neurons;
-    }
-    public Neuron getNeuron(int index) {
-        if (index >= neurons.length || index < 0) {
-            throw new IllegalArgumentException("Index out of bounds");
-        }
-        return neurons[index];
-    }
     public IActivationFunction getActivationFunction() {
         return activationFunction;
     }
@@ -92,6 +104,69 @@ public class NeuronLayer implements Serializable {
         return outputs.clone();
     }
     public float[] getWeightedSums(){
-        return weightedSums;
+        return weightedSums.clone();
+    }
+    public float[][] getWeights(){
+        return weights.clone();
+    }
+    public float[] getBiases(){
+        return biases.clone();
+    }
+    public int getNeuronAmount(){
+        return neuronAmount;
+    }
+    public int getInputAmount(){
+        return inputAmount;
+    }
+
+    public float[] dotProduct(float[][] weights, float[] inputs){
+        float[] multipliedArray = new float[weights.length];
+
+        if (weights[0].length != inputs.length){
+            throw new IllegalArgumentException("The number of input features must match the number of weight columns.");
+        }
+
+        for (int i = 0; i < weights.length; i++){
+            float sum = 0.0f;
+            for (int j = 0; j < inputs.length; j++){
+                sum += weights[i][j] * inputs[j];
+            }
+            multipliedArray[i] = sum;
+        }
+
+        return multipliedArray;
+    }
+
+    public float[][] transpose(float[][] matrix){
+        // Validate matrix uniformity (all rows must have the same length)
+        int secondDimensionShape = matrix[0].length;
+        for (int i = 1; i < matrix.length; i++){
+            if (matrix[i].length != secondDimensionShape){
+                throw new IllegalArgumentException("Matrix shape must be uniform to transpose");
+            }
+        }
+
+        float[][] transposedMatrix = new float[secondDimensionShape][matrix.length];
+
+        for (int i = 0; i < matrix.length; i++){
+            for (int j = 0; j < secondDimensionShape; j++){
+                transposedMatrix[j][i] = matrix[i][j];
+            }
+        }
+
+        return transposedMatrix;
+    }
+
+    public float[] softmax(float[] outputs){
+        float sum = 0;
+        for (int i = 0; i < outputs.length; i++){
+            sum += (float) Math.exp(outputs[i]);
+        }
+
+        float[] softmaxOutputs = new float[outputs.length];
+        for (int i = 0; i < outputs.length; i++){
+            softmaxOutputs[i] = (float) Math.exp(outputs[i]/sum);
+        }
+        return softmaxOutputs;
     }
 }

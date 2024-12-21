@@ -11,7 +11,7 @@ import Activation.IActivationFunction;
 
 public class NeuronModel implements Serializable {
 
-    private static final float LEARNING_RATE = .01f;
+    private static final float LEARNING_RATE = .1f;
     private final NeuronLayer[] neuronLayers;
 
     public NeuronModel(NeuronLayer[] neuronLayers) {
@@ -37,8 +37,8 @@ public class NeuronModel implements Serializable {
 
     public int feedforwardAll(DigitContainer digitContainer) {
         int correctGuesses = 0;
-        float[] incorrectGuesses = new float[neuronLayers[neuronLayers.length - 1].getNeurons().length];
-        float[] incorrectGuessesTargets = new float[neuronLayers[neuronLayers.length - 1].getNeurons().length];
+        float[] incorrectGuesses = new float[neuronLayers[neuronLayers.length - 1].getNeuronAmount()];
+        float[] incorrectGuessesTargets = new float[neuronLayers[neuronLayers.length - 1].getNeuronAmount()];
 
         for (Digit digit : digitContainer.getDigits()) {
             OutputData outputData = feedforward(digit);
@@ -83,22 +83,25 @@ public class NeuronModel implements Serializable {
                 float[] outputs = feedforward(digit).getOutputs();
                 float[] targets = NeuronUtil.getTargets(digit);
                 float loss = NeuronUtil.getMse(outputs, targets);
-                System.out.println("Loss: " + loss);
+                //System.out.println("Loss: " + loss);
 
                 totalLoss += loss;
 
-                backpropagate(outputs, targets, digit);
+                backpropagate(outputs, targets);
             }
             System.out.printf("Epoch %d: Average Loss = %.4f%n", epoch + 1, totalLoss / digitContainer.getDigitAmount());
         }
+        System.out.println(Arrays.deepToString(neuronLayers[neuronLayers.length-1].getWeights()));
+        System.out.println(Arrays.toString(neuronLayers[neuronLayers.length-1].getBiases()));
     }
 
 
-    public void backpropagate(float[] outputs, float[] targets, Digit digit) {
-        System.out.println("Targets: " + Arrays.toString(targets));
-        System.out.println("Outputs: " + Arrays.toString(outputs));
+    public void backpropagate(float[] outputs, float[] targets) {
+        //System.out.println("Targets: " + Arrays.toString(targets));
+        //System.out.println("Outputs: " + Arrays.toString(outputs));
 
         float[] errors = calculateInitalErrors(outputs, targets);
+        //System.out.println(Arrays.toString(errors));
         for (int i = neuronLayers.length - 1; i >= 0; i--){
             NeuronLayer previousLayer;
             if (i != 0){
@@ -116,7 +119,7 @@ public class NeuronModel implements Serializable {
 
         NeuronLayer lastLayer = neuronLayers[neuronLayers.length - 1];
         for (int i = 0; i < errors.length; i++){
-            errors[i] *= lastLayer.getActivationFunction().outputDerivative(lastLayer.getNeurons()[i].getWeightedSum());
+            errors[i] *= lastLayer.getActivationFunction().outputDerivative(lastLayer.getWeightedSums()[i]);
         }
 
         return errors;
