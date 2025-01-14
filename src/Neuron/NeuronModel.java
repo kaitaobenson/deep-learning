@@ -11,7 +11,7 @@ import Activation.IActivationFunction;
 
 public class NeuronModel implements Serializable {
 
-    private static final float LEARNING_RATE = .1f;
+    private static final float LEARNING_RATE = .01f;
     private final NeuronLayer[] neuronLayers;
 
     public NeuronModel(NeuronLayer[] neuronLayers) {

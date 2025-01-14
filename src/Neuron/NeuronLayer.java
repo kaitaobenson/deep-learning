@@ -7,11 +7,11 @@ import Util.GeneralUtil;
 import java.io.Serializable;
 
 public class NeuronLayer implements Serializable {
-    private static final int MAX_STARTING_BIAS = 1;
-    private static final int MIN_STARTING_BIAS = -1;
+    private static final float MAX_STARTING_BIAS = .1f;
+    private static final float MIN_STARTING_BIAS = -.1f;
 
-    private static final int MAX_STARTING_WEIGHT = 1;
-    private static final int MIN_STARTING_WEIGHT = -1;
+    private static final float MAX_STARTING_WEIGHT = .1f;
+    private static final float MIN_STARTING_WEIGHT = -.1f;
 
     private final int inputAmount;
     private final int neuronAmount;
