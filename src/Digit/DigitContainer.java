@@ -2,11 +2,13 @@ package Digit;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class DigitContainer implements Serializable {
 	
 	private final ArrayList<Digit> digits = new ArrayList<Digit>();
-	
+
 	public DigitContainer() {}
 
 	// Setters / Getters
@@ -21,9 +23,12 @@ public class DigitContainer implements Serializable {
 		return digits.get(index);
 	}
 	public Digit[] getDigits() {
-		Digit[] digitArray = new Digit[digits.size()];
-		for (int i = 0; i < digits.size(); i++) {
-			digitArray[i] = digits.get(i);
+		ArrayList<Digit> shuffledDigits = digits;
+		Collections.shuffle(shuffledDigits);
+
+		Digit[] digitArray = new Digit[shuffledDigits.size()];
+		for (int i = 0; i < shuffledDigits.size(); i++) {
+			digitArray[i] = shuffledDigits.get(i);
 		}
 		return digitArray;
 	}

@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="Fixed Sigmoid.java output derivative">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Digit/DigitContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Digit/DigitContainer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Neuron/NeuronLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Neuron/NeuronLayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Neuron/NeuronModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Neuron/NeuronModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProgramFlow/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProgramFlow/Program.java" afterDir="false" />

@@ -21,6 +21,8 @@ public class Program {
             new NeuronLayer(20, 784, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
             new NeuronLayer(20, 20, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
             new NeuronLayer(20, 20, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
+            new NeuronLayer(20, 20, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
+            new NeuronLayer(20, 20, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
             new NeuronLayer(10, 20, ActivationFunctionType.SIGMOID.getActivationFunction()),
     };
     public NeuronModel neuronModel = new NeuronModel(neuronLayers);
@@ -116,7 +118,7 @@ public class Program {
         System.out.println("Starting tester...");
 
         int totalGuesses = container.getDigitAmount();
-        int correctGuesses = neuronModel.feedforwardAll(container);
+        int correctGuesses = neuronModel.feedforwardALL(container);
 
         System.out.println("Correct guesses / total guesses:");
         System.out.println(correctGuesses + " / " + totalGuesses);

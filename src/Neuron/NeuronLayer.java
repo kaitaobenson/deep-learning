@@ -5,6 +5,7 @@ import Activation.LeakyReLu;
 import Util.GeneralUtil;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class NeuronLayer implements Serializable {
     private static final float MAX_STARTING_BIAS = .1f;
@@ -25,6 +26,8 @@ public class NeuronLayer implements Serializable {
     private float[] weightedSums;
     private float[] outputs;
 
+    private float[][] weightDeltas;
+    private float[] biasDeltas;
 
     public NeuronLayer(int neuronAmount, int inputAmount, IActivationFunction activationFunction) {
         this.inputAmount = inputAmount;
@@ -32,6 +35,8 @@ public class NeuronLayer implements Serializable {
         this.activationFunction = activationFunction;
         this.weights = new float[neuronAmount][inputAmount];
         this.biases = new float[neuronAmount];
+        this.weightDeltas = new float[neuronAmount][inputAmount];
+        this.biasDeltas = new float[neuronAmount];
     }
 
     // Calculate the outputs of all neurons in the layer
@@ -72,15 +77,27 @@ public class NeuronLayer implements Serializable {
             for (int j = 0; j < weights[i].length; j++){
                 float weightGradient = errors[i] * inputs[j];
 
-                weights[i][j] -= weightGradient * LEARNING_RATE;
+                weightDeltas[i][j] -= weightGradient;
             }
 
             float biasGradient = errors[i];
 
-            biases[i] -= biasGradient * LEARNING_RATE;
+            biasDeltas[i] -= biasGradient;
         }
 
         return nextErrors;
+    }
+
+    public void step(int batchSize, float LEARNING_RATE){
+        for (int i = 0; i < weights.length; i++) {
+            for (int j = 0; j < weights[i].length; j++) {
+                weights[i][j] += weightDeltas[i][j] * LEARNING_RATE / batchSize;
+            }
+            biases[i] += biasDeltas[i] * LEARNING_RATE / batchSize;
+        }
+        //System.out.println(Arrays.toString(biasDeltas));
+        weightDeltas = new float[neuronAmount][inputAmount];
+        biasDeltas = new float[neuronAmount];
     }
 
     // Setters / Getters
