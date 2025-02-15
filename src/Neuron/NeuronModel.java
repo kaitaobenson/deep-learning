@@ -5,6 +5,7 @@ import Digit.Digit;
 import Digit.DigitContainer;
 import Util.NeuronUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import Activation.IActivationFunction;
@@ -12,7 +13,7 @@ import Activation.IActivationFunction;
 public class NeuronModel implements Serializable {
 
     private static final float LEARNING_RATE = .01f;
-    private static boolean miniBatch = false;
+    private static boolean miniBatch = true;
     private static int batchSize = 5000;
     private final NeuronLayer[] neuronLayers;
 
@@ -79,49 +80,59 @@ public class NeuronModel implements Serializable {
         for (int epoch = 0; epoch < epochs; epoch++) {
             float totalLoss = 0.0f;
 
-            DigitContainer batch;
+            DigitContainer[] batches = new DigitContainer[1];
             if (miniBatch){
-                batch = generateMiniBatch(digitContainer, batchSize);
+                batches = generateMiniBatches(digitContainer, batchSize);
             }
             else{
-                batch = digitContainer;
+                batches[0] = digitContainer;
             }
 
-            for (int i = 0; i < batch.getDigitAmount(); i++){
-                Digit digit = batch.getDigit(i);
+            for (DigitContainer batch : batches)
+                for (int i = 0; i < batch.getDigitAmount(); i++){
+                    Digit digit = batch.getDigit(i);
 
-                float[] outputs = feedforward(digit).getOutputs();
-                float[] targets = NeuronUtil.getTargets(digit);
-                float loss = NeuronUtil.getMse(outputs, targets);
-                //System.out.println("Loss: " + loss);
+                    float[] outputs = feedforward(digit).getOutputs();
+                    float[] targets = NeuronUtil.getTargets(digit);
+                    float loss = NeuronUtil.getMse(outputs, targets);
+                    //System.out.println("Loss: " + loss);
 
-                totalLoss += loss;
+                    totalLoss += loss;
 
-                backpropagate(outputs, targets);
-            }
-
-            if (miniBatch){
-                for (int i = 0; i < neuronLayers.length; i++){
-                    neuronLayers[i].step(batchSize, LEARNING_RATE);
+                    backpropagate(outputs, targets);
                 }
+
+                if (miniBatch){
+                    for (NeuronLayer neuronLayer : neuronLayers) {
+                        neuronLayer.step(batchSize, LEARNING_RATE);
+                    }
             }
 
-            System.out.printf("Epoch %d: Average Loss = %.4f%n", epoch + 1, totalLoss / batch.getDigitAmount());
+            System.out.printf("Epoch %d: Average Loss = %.4f%n", epoch + 1, totalLoss / digitContainer.getDigitAmount());
         }
 
         //System.out.println(Arrays.deepToString(neuronLayers[neuronLayers.length-1].getWeights()));
         //System.out.println(Arrays.toString(neuronLayers[neuronLayers.length-1].getBiases()));
     }
 
-    public DigitContainer generateMiniBatch(DigitContainer digitContainer, int batchSize) {
-        DigitContainer miniBatch = new DigitContainer();
-
-        Digit[] digits = digitContainer.getDigits();
-        for (int i = 0; i < batchSize; i++){
-            miniBatch.addDigit(digits[i]);
+    public DigitContainer[] generateMiniBatches(DigitContainer digitContainer, int batchSize) {
+        if (digitContainer.getDigitAmount() % batchSize != 0){
+            throw new IllegalArgumentException("Error: The batch size does not evenly divide the dataset size. Please choose a batch size that is a factor of the total data amount.");
         }
 
-        return miniBatch;
+        DigitContainer[] miniBatches = new DigitContainer[digitContainer.getDigitAmount()/batchSize];
+
+        for (int i = 0; i < miniBatches.length; i++){
+            miniBatches[i] = new DigitContainer();
+        }
+
+        Digit[] digits = digitContainer.getDigits();
+        for (int i = 0; i < digits.length; i++){
+            int batch = Math.floorDiv(i, batchSize);
+            miniBatches[batch].addDigit(digits[i]);
+        }
+
+        return miniBatches;
     }
 
     public void backpropagate(float[] outputs, float[] targets) {

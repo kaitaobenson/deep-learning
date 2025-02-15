@@ -20,9 +20,6 @@ public class Program {
     public NeuronLayer[] neuronLayers = {
             new NeuronLayer(20, 784, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
             new NeuronLayer(20, 20, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
-            new NeuronLayer(20, 20, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
-            new NeuronLayer(20, 20, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
-            new NeuronLayer(20, 20, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
             new NeuronLayer(10, 20, ActivationFunctionType.SIGMOID.getActivationFunction()),
     };
     public NeuronModel neuronModel = new NeuronModel(neuronLayers);
