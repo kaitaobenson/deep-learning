@@ -1,9 +1,10 @@
-package layer;
+package network;
 
 
 import activation.IActivationFunction;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -20,13 +21,13 @@ public class NeuronLayer implements Serializable {
         neuronLayer.neurons = new Neuron[inputs.length];
 
         for (int i = 0; i < inputs.length; i++) {
-            neuronLayer.neurons[i] = Neuron.createInputNeuron(inputs[i], i);
+            neuronLayer.neurons[i] = Neuron.createInputNeuron(inputs[i]);
         }
 
         return neuronLayer;
     }
 
-    public static NeuronLayer createHiddenLayer(int layerNum, int inputAmount, int neuronAmount, IActivationFunction activationFunction) {
+    public static NeuronLayer createHiddenLayer(int inputAmount, int neuronAmount, IActivationFunction activationFunction) {
         NeuronLayer neuronLayer = new NeuronLayer();
 
         neuronLayer.activationFunction = activationFunction;
@@ -36,7 +37,7 @@ public class NeuronLayer implements Serializable {
             float[] weights = getHeInitWeights(inputAmount);
             float bias = 0.0f;
 
-            neuronLayer.neurons[i] = Neuron.createHiddenNeuron(weights, bias, layerNum, i);
+            neuronLayer.neurons[i] = Neuron.createHiddenNeuron(weights, bias);
         }
 
         return neuronLayer;

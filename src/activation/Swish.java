@@ -1,4 +1,4 @@
-package Activation;
+package activation;
 
 public class Swish implements IActivationFunction {
 

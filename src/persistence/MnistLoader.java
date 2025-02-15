@@ -1,88 +1,99 @@
-package Persistance;
+package persistence;
 
+import data.DataSet;
 import data.Digit;
-import data.DigitContainer;
-import Util.GeneralUtil;
+import util.GeneralUtil;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class MnistLoader {
 
-    private static final int TRAINING_AMOUNT = 60000;
     private static final String TRAINING_DATA_PATH = "../MNIST_CSV/mnist_train.csv";
-    private static final int TESTING_AMOUNT = 10000;
     private static final String TESTING_DATA_PATH = "../MNIST_CSV/mnist_test.csv";
 
-    public MnistLoader() {}
-
     // Load and return training digits
-    public DigitContainer getTrainingDigits() {
-        DigitContainer digitContainer = loadFileIntoDigits(TRAINING_DATA_PATH, TRAINING_AMOUNT);
-        System.out.println("Training Digits Loaded: " + digitContainer.getDigitAmount());
-        return digitContainer;
+    public DataSet getTrainingDigits() {
+        DataSet dataset = parseCsv(TRAINING_DATA_PATH);
+        System.out.println("Training Digits Loaded: " + dataset.getSampleAmount());
+        return dataset;
     }
 
     // Load and return testing digits
-    public DigitContainer getTestingDigits() {
-        DigitContainer digitContainer = loadFileIntoDigits(TESTING_DATA_PATH, TESTING_AMOUNT);
-        System.out.println("Testing Digits Loaded: " + digitContainer.getDigitAmount());
-        return digitContainer;
+    public DataSet getTestingDigits() {
+        DataSet dataset = parseCsv(TESTING_DATA_PATH);
+        System.out.println("Testing Digits Loaded: " + dataset.getSampleAmount());
+        return dataset;
     }
 
-    // Load digits from the CSV and return a DigitContainer
-    private DigitContainer loadFileIntoDigits(String path, int digitAmount) {
-        DigitContainer digitContainer = new DigitContainer();
-        int digitCounter = digitAmount;
-        Scanner scanner;
+    public Digit getDigitFromPng(String path) {
+        File file = new File(path);
 
+        BufferedImage img = null;
         try {
-            scanner = getFileScanner(path);
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+            img = ImageIO.read(file);
+        } catch (IOException e) {
+            System.out.println("Error loading PNG file from: " + path);
             return null;
         }
 
-        // Get each line from the file
-        while (scanner.hasNextLine() && digitCounter > 0) {
-            String[] stringPixelArray = scanner.nextLine().split(",");
-            int[] intPixelArrayWithLabel = GeneralUtil.stringArrayToIntArray(stringPixelArray);
+        assert(img.getHeight() == 28 && img.getWidth() == 28);
 
-            int label = intPixelArrayWithLabel[0];
-            int[] intPixelArray = Arrays.copyOfRange(intPixelArrayWithLabel, 1, intPixelArrayWithLabel.length);
-            float[] floatPixelArray = normalizePixels(intPixelArray);
+        float[] pixels = new float[784];  // 28*28
 
-            // Create the digit
-            Digit digit = new Digit();
-            digit.setLabel(label);
-            digit.setPixels(floatPixelArray);
-            digitContainer.addDigit(digit);
+        for (int y = 0; y < 28; y++) {
+            for (int x = 0; x < 28; x++) {
+                int rgb = img.getRGB(x, y);
 
-            digitCounter--;
+                // Convert to float normalized + flipped (black = 1, white = 0)
+                float alpha = ((rgb >> 24) & 0xFF) / 255.0f;
+                float red = ((rgb >> 16) & 0xFF) / 255.0f;
+                float green = ((rgb >> 8) & 0xFF) / 255.0f;
+                float blue = ((rgb) & 0xFF) / 255.0f;
+
+                float grayscale = (1 - (0.299f * red + 0.587f * green + 0.114f * blue)) * alpha;
+
+                pixels[x + y*28] = grayscale;
+            }
         }
 
-        scanner.close();
-        return digitContainer;
+        return new Digit(pixels, 0);  // No label
     }
 
-    // Normalize pixel values to the range [0, 1]
-    private float[] normalizePixels(int[] pixelArray) {
-        float[] normalizedPixels = new float[pixelArray.length];
-        for (int i = 0; i < pixelArray.length; i++) {
-            normalizedPixels[i] = pixelArray[i] / 255.0f;
-        }
-        return normalizedPixels;
-    }
 
-    // Get a scanner for the specified file
-    private Scanner getFileScanner(String path) throws FileNotFoundException {
+    private DataSet parseCsv(String path) {
         File file = new File(path);
+        Scanner scanner;
         try {
-            return new Scanner(file);
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("Data from " + file.getAbsolutePath() + " could not be loaded.");
+            scanner = new Scanner(file);
+        } catch (IOException e) {
+            System.out.println("Error loading CSV file from: " + path);
+            return null;
         }
+
+        DataSet dataSet = new DataSet(1000);
+
+        // Parse each line
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+
+            int[] values = GeneralUtil.stringArrayToIntArray(line.split(","));
+
+            int label = values[0];
+            float[] pixels = new float[784];
+
+            for (int i = 0; i < pixels.length; i++) {
+                pixels[i] = (float) (values[i+1] / 255.0);
+            }
+
+            Digit digit = new Digit(pixels, label);
+
+            dataSet.data.add(digit);
+        }
+
+        return dataSet;
     }
 }

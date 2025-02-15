@@ -5,10 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="Fixed Sigmoid.java output derivative">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Neuron/NeuronLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Neuron/NeuronLayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Neuron/NeuronModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Neuron/NeuronModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ProgramFlow/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProgramFlow/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MNIST_CSV/mnist_test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MNIST_CSV/mnist_train.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MNIST_CSV/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/ActivationFunctionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/activation/ActivationFunctionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/IActivationFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/activation/IActivationFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/LeakyReLu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/activation/LeakyReLu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/Sigmoid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/activation/Sigmoid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/Softmax.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/activation/Softmax.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/Swish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/activation/Swish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/Tanh.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/activation/Tanh.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/DataSample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/DataSample.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/DataSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/DataSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Digit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Digit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/Neuron.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/Neuron.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/NeuronLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/NeuronLayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/NeuronModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/NeuronModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/output/OutputAllData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/output/OutputAllData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/output/OutputSingleData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/output/OutputSingleData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/MnistLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/MnistLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/NeuronModelLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/NeuronModelLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/program/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/program/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/program/CommandParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/program/CommandParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/program/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/program/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/program/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/program/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/GeneralUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/GeneralUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/StatUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/StatUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,29 +64,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.deep-learning.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/xavie/Downloads/DeepLearning/deep-learning&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.Main.executor": "Run",
+    "Application.deep-learning.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "kai",
+    "ignore.preview.features.used": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/kaibenson/Desktop/Deep-Learning-Space/Deep-Learning",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="network.output" />
       <recent name="Java.Neuron" />
     </key>
   </component>
   <component name="RunManager">
     <configuration name="deep-learning" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="ProgramFlow.Main" />
+      <option name="MAIN_CLASS_NAME" value="program.Main" />
       <module name="deep-learning" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -121,11 +148,6 @@
           <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ProgramFlow/Main.java</url>
-          <line>2</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

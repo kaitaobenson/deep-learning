@@ -1,52 +1,58 @@
-package layer;
+package network;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class Neuron implements Serializable {
 
-	public int layer;
-	public int layerIndex;
 	public float[] weights;
 	public float[] cacheWeights;
-	public float gradient;
+
 	public float bias;
+	public float cacheBias;
+
+	public float gradient;
 	public float value;
 
 
-	public static Neuron createInputNeuron(float value, int layerIndex) {
+	public static Neuron createInputNeuron(float value) {
 		Neuron neuron = new Neuron();
 
-		neuron.weights = null;
-		neuron.cacheWeights = null;
+		neuron.weights = new float[0]; // Empty array instead of null
+		neuron.cacheWeights = new float[0];
 
 		neuron.bias = -1;
+		neuron.cacheBias = -1;
+
 		neuron.gradient = -1;
 		neuron.value = value;
-
-		neuron.layer = 0;
-		neuron.layerIndex = layerIndex;
 
 		return neuron;
 	}
 
-	public static Neuron createHiddenNeuron(float[] weights, float bias, int layer, int layerIndex) {
+
+	public static Neuron createHiddenNeuron(float[] weights, float bias) {
 		Neuron neuron = new Neuron();
 
 		neuron.weights = weights;
-		neuron.cacheWeights = weights;
+		neuron.cacheWeights = Arrays.copyOf(weights, weights.length);
 		neuron.bias = bias;
+		neuron.cacheBias = bias;
 
 		neuron.gradient = 0;
 		neuron.value = 0;
 
-		neuron.layer = layer;
-		neuron.layerIndex = layerIndex;
-
 		return neuron;
 	}
 
-	// Used at the end of backpropagation
-	public void update_weights() {
-		this.weights = this.cacheWeights;
+	public void updateWeights(float learningRate) {
+		if (weights != null) { // Skip input neurons
+			for (int i = 0; i < weights.length; i++) {
+				weights[i] = cacheWeights[i]; // Apply cached updates
+			}
+		}
+		bias = cacheBias;
 	}
+
+
 }

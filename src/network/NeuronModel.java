@@ -1,14 +1,16 @@
-package model;
+package network;
 
 import data.DataSample;
-import layer.Neuron;
-import layer.NeuronLayer;
+import data.DataSet;
+import network.output.OutputAllData;
+import network.output.OutputSingleData;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class NeuronModel implements Serializable {
 
-    public static float learningRate = 1.0f;
+    public static float learningRate = 0.01f;
 
     private final NeuronLayer[] layers;
 
@@ -17,9 +19,45 @@ public class NeuronModel implements Serializable {
         this.layers = neuronLayers;
     }
 
-    public void forward(float[] inputs) {
+    public void train(DataSet dataSet, int epochs) {
+        for (int epoch = 0; epoch < epochs; epoch++) {
+            for (DataSample dataSample : dataSet.data) {
+                forward(dataSample.getInputs());
+                backward(learningRate, dataSample);
+            }
+            System.out.println("Epoch " + (epoch + 1) + " complete");
+            System.out.println(Arrays.toString(layers[1].neurons[0].weights));
+        }
+    }
+
+    public OutputSingleData testSingle(DataSample dataSample) {
+        forward(dataSample.getInputs());
+        float[] outputs = extractOutputs();
+        OutputSingleData output = new OutputSingleData(outputs, dataSample);
+        return output;
+    }
+
+    public OutputAllData testAll(DataSet dataSet) {
+        int totalCorrect = 0;
+        for (DataSample dataSample : dataSet.data) {
+            OutputSingleData outputData = testSingle(dataSample);
+            if (outputData.isCorrect) {
+                totalCorrect++;
+            }
+        }
+
+        OutputAllData output = new OutputAllData(dataSet.getSampleAmount(), totalCorrect);
+        return output;
+    }
+
+    public void randomize() {
+
+    }
+
+
+    private void forward(float[] inputs) {
         // Put inputs in first layer
-        layers[0] = new NeuronLayer(inputs);
+        layers[0] = NeuronLayer.createInputLayer(inputs);
 
         // Loop layers
         for (int i = 1; i < layers.length; i++) {
@@ -41,58 +79,83 @@ public class NeuronModel implements Serializable {
         }
     }
 
-    public void backward(DataSample data) {
-        int numLayers = layers.length;
-        int outIndex = layers.length - 1;
+
+    private void backward(float learningRate, DataSample dataSample) {
+        int lastLayer = layers.length - 1;
 
         // Update output layer gradients
-        for (Neuron neuron : layers[outIndex].neurons) {
-            neuron.gradient = computeOutputGradient(neuron, data.expectedOutput);
+        for (int i = 0; i < layers[lastLayer].neurons.length; i++) {
+            Neuron neuron = layers[lastLayer].neurons[i];
+            float output = neuron.value;
+            float target = dataSample.getTargets()[i];
+
+            float delta = (output - target) * layers[lastLayer].activationFunction.outputDerivative(output);
+
+            neuron.gradient = delta;
+
+            for (int j = 0; j < neuron.weights.length; j++) {
+                neuron.cacheWeights[j] = neuron.weights[j] - learningRate * delta * layers[lastLayer - 1].neurons[j].value;
+            }
+            neuron.cacheBias = neuron.bias - learningRate * delta;
         }
 
+
         // Update hidden layers
-        for (int i = outIndex - 1; i > 0; i--) {
-            for (Neuron neuron : layers[i].neurons) {
-                neuron.gradient = computeHiddenGradient(neuron, i + 1);
+        for (int l = lastLayer - 1; l > 0; l--) { // Start from last hidden layer (not input layer)
+            for (int j = 0; j < layers[l].neurons.length; j++) {
+                Neuron neuron = layers[l].neurons[j];
+
+                if (neuron.weights == null) continue; // Skip input neurons
+
+                float output = neuron.value;
+                float gradientSum = sumGradient(j, l + 1);
+
+                float delta = gradientSum * layers[l].activationFunction.outputDerivative(output);
+                float maxDelta = 10f;
+                delta = Math.max(-maxDelta, Math.min(maxDelta, delta));
+
+                //System.out.println("GRADIENT: " + delta);
+
+                neuron.gradient = delta;
+
+                for (int k = 0; k < neuron.weights.length; k++) {
+                    neuron.cacheWeights[k] = neuron.weights[k] - learningRate * delta * layers[l - 1].neurons[k].value;
+                }
+                neuron.cacheBias = neuron.bias - learningRate * delta;
             }
         }
 
-        // Update all weights
-        updateAllWeights();
+        // Apply weight updates
+        for (NeuronLayer layer : layers) {
+            for (Neuron neuron : layer.neurons) {
+                neuron.updateWeights(learningRate);
+            }
+        }
     }
 
+    private float[] extractOutputs() {
+        NeuronLayer lastLayer = layers[layers.length - 1];
 
+        float[] outputs = new float[lastLayer.neurons.length];
 
-    private float sumGradient(int n_index,int l_index) {
+        for (int i = 0; i < lastLayer.neurons.length; i++) {
+            outputs[i] = lastLayer.neurons[i].value;
+        }
+        return outputs;
+    }
+
+    private float sumGradient(int n_index, int l_index) {
         float gradient_sum = 0;
         NeuronLayer current_layer = layers[l_index];
 
         for (Neuron neuron : current_layer.neurons) {
+            if (neuron.weights == null) {
+                System.out.println("WEIGHTS WERE NULL");
+                continue;
+            }// Skip if weights are not initialized
             gradient_sum += neuron.weights[n_index] * neuron.gradient;
         }
         return gradient_sum;
     }
-
-    private float computeOutputGradient(Neuron neuron, float[] expectedOutput) {
-        float output = neuron.value;
-        float target = expectedOutput[neuron.index];
-        float derivative = output - target;
-        return derivative * (output * (1 - output)); // Sigmoid derivative
-    }
-
-    private float computeHiddenGradient(Neuron neuron, int nextLayerIndex) {
-        float output = neuron.value;
-        float gradientSum = sumGradient(neuron.index, nextLayerIndex);
-        return gradientSum * (output * (1 - output)); // Sigmoid derivative
-    }
-
-    private void updateAllWeights() {
-        for (Layer layer : layers) {
-            for (Neuron neuron : layer.neurons) {
-                neuron.update_weight();
-            }
-        }
-    }
-
 
 }

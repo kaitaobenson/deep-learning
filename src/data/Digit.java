@@ -2,32 +2,26 @@ package data;
 
 import java.io.Serializable;
 
-public class LabeledImage implements Serializable {
+public class Digit implements DataSample, Serializable {
 
     private static final String[] dispChars = {
             " ", ".", "`", ",", "-", "~", "+", ":", ";", "=", "*", "#", "%", "@", "█"
     };
 
-    public final int width;
-    public final int height;
+    public static final int width = 28;
+    public static final int height = 28;
+
+    public float[] pixels;
     public int label;
 
-    public final float[] pixels;
+    public Digit(float[] pixels, int label) {
+        // Pixels array must match width & height
+        assert(pixels.length == width * height);
+        // Label must be 0-9
+        assert(label >= 0 && label <= 9 );
 
-    public LabeledImage(int width, int height, int label, float[] pixels) {
-        this.width = width;
-        this.height = height;
-        this.label = label;
-
-        if (pixels.length != width * height) {
-            System.err.println("Pixels array length does not match width and height");
-        }
         this.pixels = pixels;
-    }
-
-    public void setPixel(int x, int y, float pixel) {
-        int index = y * width + x;
-        this.pixels[index] = pixel;
+        this.label = label;
     }
 
     public float getPixel(int x, int y) {
@@ -38,6 +32,21 @@ public class LabeledImage implements Serializable {
     public float[] getPixels() {
         return pixels;
     }
+
+    @Override
+    public float[] getInputs() {
+        return getPixels();
+    }
+
+    @Override
+    public float[] getTargets() {
+        float[] targets = new float[10];
+        // Labeled number should be 1, all other numbers 0
+        targets[label] = 1.0f;
+
+        return targets;
+    }
+
 
     // Display image in ASCII
     @Override

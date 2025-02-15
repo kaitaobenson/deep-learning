@@ -1,4 +1,4 @@
-package Activation;
+package activation;
 
 
 public class Sigmoid implements IActivationFunction {
@@ -10,6 +10,7 @@ public class Sigmoid implements IActivationFunction {
 
     @Override
     public float outputDerivative(float x) {
-        return (float) (output(x) * (1 - output(x)));
+        float y = output(x);
+        return y * (1 - y);
     }
 }

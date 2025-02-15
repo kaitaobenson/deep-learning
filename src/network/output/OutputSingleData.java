@@ -6,23 +6,33 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class OutputSingle {
+public class OutputSingleData {
 
     public final float[] outputs;
     public final Map<Integer, Float> sortedOutputs;
 
     public final int bestGuess;
+    public boolean isCorrect;
 
     public final DataSample dataSample;
 
     private float error;
 
 
-    public OutputSingle(float[] outputs, DataSample dataSample) {
+    public OutputSingleData(float[] outputs, DataSample dataSample) {
         this.outputs = outputs;
         this.sortedOutputs = sortOutputs(outputs);
 
         this.bestGuess = sortedOutputs.keySet().iterator().next();
+
+        int correctNum = 0;
+        for (int i = 0; i < dataSample.getTargets().length; i++) {
+            if (dataSample.getTargets()[i] == 1) {
+                correctNum = i;
+            }
+        }
+
+        isCorrect = bestGuess == correctNum;
 
         this.dataSample = dataSample;
 

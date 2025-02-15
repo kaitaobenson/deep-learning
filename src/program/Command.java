@@ -1,4 +1,4 @@
-package ProgramFlow;
+package program;
 
 public class Command {
 

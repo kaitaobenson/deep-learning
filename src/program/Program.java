@@ -1,31 +1,36 @@
-package ProgramFlow;
+package program;
 
-import activation.ActivationFunctionType;
+import activation.LeakyReLu;
+import activation.Sigmoid;
+import data.DataSample;
 import data.Digit;
-import data.DigitContainer;
-import model.OutputData;
+import data.DataSet;
+import network.output.OutputAllData;
+import network.output.OutputSingleData;
 import persistence.MnistLoader;
-import layer.NeuronLayer;
-import model.NeuronModel;
-import persistence.NeuronLoader;
+import network.NeuronLayer;
+import network.NeuronModel;
+import persistence.NeuronModelLoader;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Program {
 
-    public DigitContainer testingDigitContainer;
-    public DigitContainer trainingDigitContainer;
+    public DataSet testingDigitContainer;
+    public DataSet trainingDigitContainer;
 
     public NeuronLayer[] neuronLayers = {
-            new NeuronLayer(20, 784, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
-            new NeuronLayer(20, 20, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
-            new NeuronLayer(20, 20, ActivationFunctionType.LEAKY_RELU.getActivationFunction()),
-            new NeuronLayer(10, 20, ActivationFunctionType.SIGMOID.getActivationFunction()),
+            NeuronLayer.createInputLayer(new float[784]),
+            NeuronLayer.createHiddenLayer(784, 16, new LeakyReLu()),
+            NeuronLayer.createHiddenLayer(16, 16, new LeakyReLu()),
+            NeuronLayer.createHiddenLayer(16, 16, new LeakyReLu()),
+            NeuronLayer.createHiddenLayer(16, 16, new LeakyReLu()),
+            NeuronLayer.createHiddenLayer(16, 10, new LeakyReLu()),
     };
     public NeuronModel neuronModel = new NeuronModel(neuronLayers);
 
-    public NeuronLoader neuronLoader = new NeuronLoader();
+    public NeuronModelLoader neuronModelLoader = new NeuronModelLoader();
 
 
     public void init() {
@@ -65,10 +70,14 @@ public class Program {
                 case "test":
                     if (inputType == Command.InputType.INT) {
                         int index = (int) data;
-                        test(testingDigitContainer, index);
+                        test(testingDigitContainer.getSample(index));
                     } else {
                         test(testingDigitContainer);
                     }
+                    break;
+                case "test-png":
+                    String path = (String) data;
+                    test(path);
                     break;
                 case "print-train-digit":
                     printDigit(trainingDigitContainer, (int) data);
@@ -98,7 +107,7 @@ public class Program {
         System.exit(0);
     }
 
-    public void train(DigitContainer container, int epochs) {
+    public void train(DataSet container, int epochs) {
         // Validate
         if (epochs < 0){
             System.out.println("Amount of epochs cannot be negative");
@@ -111,46 +120,46 @@ public class Program {
         System.out.println("Finished training");
     }
 
-    public void test(DigitContainer container) {
+    public void test(DataSet dataSet) {
         // Display
         System.out.println("Starting tester...");
 
-        int totalGuesses = container.getDigitAmount();
-        int correctGuesses = neuronModel.feedforwardAll(container);
+        OutputAllData outputData = neuronModel.testAll(dataSet);
 
-        System.out.println("Correct guesses / total guesses:");
-        System.out.println(correctGuesses + " / " + totalGuesses);
-    }
-
-    public void test(DigitContainer container, int index) {
-        // Validate
-        if (index > container.getDigitAmount() || index < 0) {
-            System.out.println("Index not found");
-            return;
-        }
-        // Display
-        System.out.println("Starting test on digit " + index);
-        System.out.println(container.getDigit(index));
-
-        OutputData outputData = neuronModel.feedforward(container.getDigit(index));
+        System.out.println("ABOOUTA PRINT OUTPUT DATA:");
         System.out.println(outputData);
     }
 
-    public void printDigit(DigitContainer container, int index) {
+    public void test(DataSample dataSample) {
+        // Display
+        System.out.println(dataSample);
+
+        OutputSingleData outputData = neuronModel.testSingle(dataSample);
+        System.out.println(outputData);
+    }
+
+    public void test(String path) {
+        MnistLoader mnistLoader = new MnistLoader();
+        Digit digit = mnistLoader.getDigitFromPng(path);
+
+        test(digit);
+    }
+
+    public void printDigit(DataSet dataSet, int index) {
         // Validate
-        if (index > container.getDigitAmount() || index < 0) {
+        if (index > dataSet.getSampleAmount() || index < 0) {
             System.out.println("Index not found");
             return;
         }
         // Display
         System.out.println("Digit at index: " + index);
-        Digit digit = container.getDigit(index);
+        Digit digit = (Digit) dataSet.getSample(index); //TODO: Fix casting ??
         System.out.println(digit);
     }
 
     public void saveNeuronModel(String fileName) {
         try {
-            neuronLoader.saveNeuronModel(neuronModel, fileName);
+            neuronModelLoader.save(neuronModel, fileName);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -158,7 +167,7 @@ public class Program {
 
     public void loadNeuronModel(String fileName) {
         try {
-            neuronModel = neuronLoader.loadNeuronModel(fileName);
+            neuronModel = neuronModelLoader.load(fileName);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         } catch (ClassNotFoundException e) {
@@ -167,7 +176,7 @@ public class Program {
     }
 
     public void randomizeNeuronModel() {
-        neuronModel.randomizeModel();
+        neuronModel.randomize();
         System.out.println("Model randomized");
     }
 }
