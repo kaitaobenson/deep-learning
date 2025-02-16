@@ -6,10 +6,10 @@ import java.util.Arrays;
 public class Neuron implements Serializable {
 
 	public float[] weights;
-	public float[] cacheWeights;
+	public float[] weightDeltas;
 
 	public float bias;
-	public float cacheBias;
+	public float biasDelta;
 
 	public float gradient;
 	public float value;
@@ -19,10 +19,10 @@ public class Neuron implements Serializable {
 		Neuron neuron = new Neuron();
 
 		neuron.weights = new float[0]; // Empty array instead of null
-		neuron.cacheWeights = new float[0];
+		neuron.weightDeltas = new float[0];
 
 		neuron.bias = -1;
-		neuron.cacheBias = -1;
+		neuron.biasDelta = -1;
 
 		neuron.gradient = -1;
 		neuron.value = value;
@@ -35,9 +35,9 @@ public class Neuron implements Serializable {
 		Neuron neuron = new Neuron();
 
 		neuron.weights = weights;
-		neuron.cacheWeights = Arrays.copyOf(weights, weights.length);
+		neuron.weightDeltas = new float[weights.length];
 		neuron.bias = bias;
-		neuron.cacheBias = bias;
+		neuron.biasDelta = 0;
 
 		neuron.gradient = 0;
 		neuron.value = 0;
@@ -45,13 +45,16 @@ public class Neuron implements Serializable {
 		return neuron;
 	}
 
-	public void updateWeights(float learningRate) {
+	public void updateWeights(float learningRate, int batchSize) {
 		if (weights != null) { // Skip input neurons
 			for (int i = 0; i < weights.length; i++) {
-				weights[i] = cacheWeights[i]; // Apply cached updates
+				weights[i] += weightDeltas[i] / batchSize; // Apply cached updates
 			}
 		}
-		bias = cacheBias;
+		bias += biasDelta / batchSize;
+
+		weightDeltas = new float[weights.length];
+		biasDelta = 0;
 	}
 
 

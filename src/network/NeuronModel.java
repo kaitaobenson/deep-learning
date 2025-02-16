@@ -7,6 +7,7 @@ import network.output.OutputSingleData;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
 
 public class NeuronModel implements Serializable {
 
@@ -24,7 +25,36 @@ public class NeuronModel implements Serializable {
             for (DataSample dataSample : dataSet.data) {
                 forward(dataSample.getInputs());
                 backward(learningRate, dataSample);
+
+                // Apply weight updates
+                for (NeuronLayer layer : layers) {
+                    for (Neuron neuron : layer.neurons) {
+                        neuron.updateWeights(learningRate, 1);
+                    }
+                }
             }
+            System.out.println("Epoch " + (epoch + 1) + " complete");
+            System.out.println(Arrays.toString(layers[1].neurons[0].weights));
+        }
+    }
+
+    public void trainMiniBatch(DataSet dataSet, int epochs, int batchSize){
+        for (int epoch = 0; epoch < epochs; epoch++) {
+            DataSet[] miniBatches = generateMiniBatches(dataSet, batchSize);
+            for (DataSet batch : miniBatches) {
+                for (DataSample dataSample : batch.data) {
+                    forward(dataSample.getInputs());
+                    backward(learningRate, dataSample);
+                }
+
+                // Apply weight updates
+                for (NeuronLayer layer : layers) {
+                    for (Neuron neuron : layer.neurons) {
+                        neuron.updateWeights(learningRate, batch.getSampleAmount());
+                    }
+                }
+            }
+
             System.out.println("Epoch " + (epoch + 1) + " complete");
             System.out.println(Arrays.toString(layers[1].neurons[0].weights));
         }
@@ -94,9 +124,9 @@ public class NeuronModel implements Serializable {
             neuron.gradient = delta;
 
             for (int j = 0; j < neuron.weights.length; j++) {
-                neuron.cacheWeights[j] = neuron.weights[j] - learningRate * delta * layers[lastLayer - 1].neurons[j].value;
+                neuron.weightDeltas[j] -= learningRate * delta * layers[lastLayer - 1].neurons[j].value;
             }
-            neuron.cacheBias = neuron.bias - learningRate * delta;
+            neuron.biasDelta -= learningRate * delta;
         }
 
 
@@ -119,16 +149,9 @@ public class NeuronModel implements Serializable {
                 neuron.gradient = delta;
 
                 for (int k = 0; k < neuron.weights.length; k++) {
-                    neuron.cacheWeights[k] = neuron.weights[k] - learningRate * delta * layers[l - 1].neurons[k].value;
+                    neuron.weightDeltas[k] -= learningRate * delta * layers[l - 1].neurons[k].value;
                 }
-                neuron.cacheBias = neuron.bias - learningRate * delta;
-            }
-        }
-
-        // Apply weight updates
-        for (NeuronLayer layer : layers) {
-            for (Neuron neuron : layer.neurons) {
-                neuron.updateWeights(learningRate);
+                neuron.biasDelta -= learningRate * delta;
             }
         }
     }
@@ -158,4 +181,30 @@ public class NeuronModel implements Serializable {
         return gradient_sum;
     }
 
+    private DataSet[] generateMiniBatches(DataSet dataset, int batchSize){
+        if (dataset.getSampleAmount() % batchSize != 0){
+            throw new IllegalArgumentException("Error: The batch size does not evenly divide the dataset size. Please choose a batch size that is a factor of the total data amount.");
+        }
+
+        DataSet[] miniBatches = new DataSet[Math.ceilDiv(dataset.getSampleAmount(),batchSize)];
+        System.out.println(miniBatches.length);
+        for (int i = 0; i < miniBatches.length; i++) {
+            if (i != miniBatches.length - 1) {
+                miniBatches[i] = new DataSet(batchSize);
+            }
+            else{
+                miniBatches[i] = new DataSet(dataset.getSampleAmount() % batchSize);
+            }
+        }
+
+        List<DataSample> data = dataset.data;
+        for (int i = 0; i < data.size(); i++){
+            System.out.println(i);
+            DataSet batch = miniBatches[Math.floorDiv(i, batchSize)];
+            System.out.println(batch.data.size());
+            batch.data.set(i % batchSize, data.get(i));
+        }
+
+        return miniBatches;
+    }
 }

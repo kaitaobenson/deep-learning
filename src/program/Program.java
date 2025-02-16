@@ -20,6 +20,9 @@ public class Program {
     public DataSet testingDigitContainer;
     public DataSet trainingDigitContainer;
 
+    public boolean miniBatch = false;
+    public int batchSize = 5000;
+
     public NeuronLayer[] neuronLayers = {
             NeuronLayer.createInputLayer(new float[784]),
             NeuronLayer.createHiddenLayer(784, 16, new LeakyReLu()),
@@ -116,7 +119,12 @@ public class Program {
 
         // Display
         System.out.println("Starting trainer for " + epochs + " epochs...");
-        neuronModel.train(container, epochs);
+        if (!miniBatch) {
+            neuronModel.train(container, epochs);
+        }
+        else{
+            neuronModel.trainMiniBatch(container, epochs, batchSize);
+        }
         System.out.println("Finished training");
     }
 
