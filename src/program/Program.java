@@ -20,8 +20,8 @@ public class Program {
     public DataSet testingDigitContainer;
     public DataSet trainingDigitContainer;
 
-    public boolean miniBatch = false;
-    public int batchSize = 5000;
+    public boolean miniBatch = true;
+    public int batchSize = 100;
 
     public NeuronLayer[] neuronLayers = {
             NeuronLayer.createInputLayer(new float[784]),

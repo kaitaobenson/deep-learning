@@ -187,22 +187,14 @@ public class NeuronModel implements Serializable {
         }
 
         DataSet[] miniBatches = new DataSet[Math.ceilDiv(dataset.getSampleAmount(),batchSize)];
-        System.out.println(miniBatches.length);
         for (int i = 0; i < miniBatches.length; i++) {
-            if (i != miniBatches.length - 1) {
-                miniBatches[i] = new DataSet(batchSize);
-            }
-            else{
-                miniBatches[i] = new DataSet(dataset.getSampleAmount() % batchSize);
-            }
+            miniBatches[i] = new DataSet(batchSize);
         }
 
         List<DataSample> data = dataset.data;
         for (int i = 0; i < data.size(); i++){
-            System.out.println(i);
             DataSet batch = miniBatches[Math.floorDiv(i, batchSize)];
-            System.out.println(batch.data.size());
-            batch.data.set(i % batchSize, data.get(i));
+            batch.data.add(i % batchSize, data.get(i));
         }
 
         return miniBatches;
