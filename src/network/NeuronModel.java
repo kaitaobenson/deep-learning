@@ -11,13 +11,27 @@ import java.util.List;
 
 public class NeuronModel implements Serializable {
 
-    public static float learningRate = 0.01f;
+    public final float learningRate;
+    public final boolean miniBatch;
+    public final int batchSize;
 
     private final NeuronLayer[] layers;
 
 
-    public NeuronModel(NeuronLayer[] neuronLayers) {
+    public NeuronModel(NeuronLayer[] neuronLayers, boolean miniBatch, int batchSize, float learningRate) {
         this.layers = neuronLayers;
+        this.learningRate = learningRate;
+        this.miniBatch = miniBatch;
+        this.batchSize = batchSize;
+    }
+
+    public void trainModel(DataSet dataSet, int epochs){
+        if (!miniBatch) {
+            train(dataSet, epochs);
+        }
+        else{
+            trainMiniBatch(dataSet, epochs, batchSize);
+        }
     }
 
     public void train(DataSet dataSet, int epochs) {
