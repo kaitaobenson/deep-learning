@@ -2,14 +2,17 @@ package network.output;
 
 public class OutputAllData {
 
-    public int totalSamples;
-    public int correctSamples;
+    public static int totalSamples;
+    public static int correctSamples;
 
     public OutputAllData(int totalSamples, int correctSamples) {
-        this.totalSamples = totalSamples;
-        this.correctSamples = correctSamples;
+        OutputAllData.totalSamples = totalSamples;
+        OutputAllData.correctSamples = correctSamples;
     }
 
+    public static float getAccuracy() {
+        return (float) correctSamples / totalSamples;
+    }
 
     @Override
     public String toString() {

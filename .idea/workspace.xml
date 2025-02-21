@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="Fixed Sigmoid.java output derivative">
-      <change afterPath="$PROJECT_DIR$/src/data/LayerAmountDataCollector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/data/DataCollector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/data/LayerAmountTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/NeuronModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/NeuronModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/program/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/program/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/LayerAmountDataCollector.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/output/OutputAllData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/output/OutputAllData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/MnistLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/MnistLoader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

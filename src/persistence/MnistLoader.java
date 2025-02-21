@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class MnistLoader {
@@ -19,6 +20,7 @@ public class MnistLoader {
     public DataSet getTrainingDigits() {
         DataSet dataset = parseCsv(TRAINING_DATA_PATH);
         System.out.println("Training Digits Loaded: " + dataset.getSampleAmount());
+        Collections.shuffle(dataset.data);
         return dataset;
     }
 
