@@ -38,7 +38,7 @@ public class LayerAmountTest {
     }
 
     public float[][] TestLayerAmount(){
-        float[][] data = new float[2][testSize];
+        float[][] data = new float[testSize][2];
 
         for (int i = 0; i < testSize; i++) {
             // Create layers
@@ -72,11 +72,11 @@ public class LayerAmountTest {
             OutputAllData outputData = neuronModel.testAll(testingDigitContainer);
 
             // Record input value
-            data[0][i] = layerAmount;
+            data[i][0] = layerAmount;
             // Record output value
-            data[1][i] = OutputAllData.getAccuracy();
+            data[i][1] = OutputAllData.getAccuracy();
 
-
+            layerAmount += 1;
         }
 
         return data;
