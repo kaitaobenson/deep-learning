@@ -1,4 +1,4 @@
-package data;
+package data.logging;
 
 import activation.IActivationFunction;
 import network.NeuronLayer;
