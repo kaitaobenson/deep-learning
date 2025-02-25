@@ -9,7 +9,7 @@ import persistence.MnistLoader;
 
 import java.util.Arrays;
 
-public class LayerAmountTest implements NetworkTest {
+public class DataAmountTest implements NetworkTest {
     public int testRunSize;
     public int testRunAmount;
     public int inputAmount;
@@ -17,14 +17,13 @@ public class LayerAmountTest implements NetworkTest {
     public float learningRate;
     public IActivationFunction activationFunction;
     public int neuronAmount;
-    public int epochAmount;
-    public boolean miniBatch;
     public int batchSize;
-
-    // Independent variable
     public int layerAmount;
 
-    public LayerAmountTest(int testRunSize, int testRunAmount, int inputAmount, int outputAmount, float learningRate, IActivationFunction activationFunction, int initialLayerAmount, int neuronAmount, int epochAmount, boolean miniBatch, int batchSize){
+    // Independent variable
+    public int batchAmount;
+
+    public DataAmountTest(int testRunSize, int testRunAmount, int inputAmount, int outputAmount, float learningRate, IActivationFunction activationFunction, int layerAmount, int neuronAmount, int batchSize, int initialBatchAmount){
         this.testRunSize = testRunSize;
         this.testRunAmount = testRunAmount;
         this.inputAmount = inputAmount;
@@ -32,12 +31,11 @@ public class LayerAmountTest implements NetworkTest {
         this.learningRate = learningRate;
         this.activationFunction = activationFunction;
         this.neuronAmount = neuronAmount;
-        this.epochAmount = epochAmount;
-        this.miniBatch = miniBatch;
         this.batchSize = batchSize;
+        this.layerAmount = layerAmount;
 
-        // Set layer amount to it's initial amount
-        this.layerAmount = initialLayerAmount;
+        // Set batch amount to its initial size
+        this.batchAmount = initialBatchAmount;
     }
 
     @Override
@@ -46,6 +44,7 @@ public class LayerAmountTest implements NetworkTest {
 
         for (int i = 0; i < testRunAmount; i++) {
             for (int j = 0; j < testRunSize; j++) {
+
                 // Create layers
                 NeuronLayer[] neuronLayers = new NeuronLayer[layerAmount + 1];
 
@@ -62,24 +61,35 @@ public class LayerAmountTest implements NetworkTest {
                 }
 
                 // Init model
-                NeuronModel neuronModel = new NeuronModel(neuronLayers, miniBatch, batchSize, learningRate);
+                NeuronModel neuronModel = new NeuronModel(neuronLayers, true, batchSize, learningRate);
 
                 // Load test and train digits
                 MnistLoader mnistLoader = new MnistLoader();
                 DataSet testingDigitContainer = mnistLoader.getTestingDigits();
                 DataSet trainingDigitContainer = mnistLoader.getTrainingDigits();
 
+                // Create training digit thing
+                DataSet trainingDigits = new DataSet(batchAmount * batchSize);
+                int iterations = Math.ceilDiv(batchAmount * batchSize, trainingDigitContainer.data.size());
+                for (int k = 0; k < iterations; k++){
+                    if (k != iterations - 1) {
+                        trainingDigits.data.addAll(trainingDigitContainer.data);
+                    } else {
+                        trainingDigits.data.addAll(trainingDigitContainer.data.subList(0, (batchAmount * batchSize) % trainingDigitContainer.data.size()));
+                    }
+                }
+
                 // Train model with set parameters
-                neuronModel.trainModel(trainingDigitContainer, epochAmount);
+                neuronModel.trainModel(trainingDigits, 1);
 
                 // Test model
                 OutputAllData outputData = neuronModel.testAll(testingDigitContainer);
 
                 // Record input and output values
-                dataPointLogger.addPoint(layerAmount, OutputAllData.getAccuracy());
+                dataPointLogger.addPoint(batchAmount, OutputAllData.getAccuracy());
             }
 
-            layerAmount += 1;
+            batchAmount += 1;
         }
 
         dataPointLogger.writeFile("data");
