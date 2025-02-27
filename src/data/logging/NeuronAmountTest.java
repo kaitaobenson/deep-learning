@@ -1,56 +1,54 @@
 package data.logging;
 
 import activation.IActivationFunction;
-import activation.LeakyReLu;
 import data.DataSet;
 import network.NeuronLayer;
 import network.NeuronModel;
 import network.output.OutputAllData;
 import persistence.MnistLoader;
 
-import java.util.Arrays;
-
-public class LayerAmountTest implements NetworkTest {
+public class NeuronAmountTest implements NetworkTest {
     public int testRunSize;
     public int testRunAmount;
     public int inputAmount;
     public int outputAmount;
     public float learningRate;
     public IActivationFunction activationFunction;
-    public int neuronAmount;
+    public int layerAmount;
     public int epochAmount;
     public boolean miniBatch;
     public int batchSize;
 
     // Independent variable
-    public int layerAmount;
+    public int neuronAmount;
 
     // Independent variable step size
-    int layerStepSize;
+    int neuronStepSize;
 
-    public LayerAmountTest(int testRunSize, int testRunAmount, int initialLayerAmount, int layerStepSize, int inputAmount, int outputAmount, float learningRate, IActivationFunction activationFunction, int neuronAmount, int epochAmount, boolean miniBatch, int batchSize){
+    public NeuronAmountTest(int testRunSize, int testRunAmount, int initialNeuronAmount, int neuronStepSize, int inputAmount, int outputAmount, float learningRate, IActivationFunction activationFunction, int layerAmount, int epochAmount, boolean miniBatch, int batchSize){
         this.testRunSize = testRunSize;
         this.testRunAmount = testRunAmount;
         this.inputAmount = inputAmount;
         this.outputAmount = outputAmount;
         this.learningRate = learningRate;
         this.activationFunction = activationFunction;
-        this.neuronAmount = neuronAmount;
+        this.layerAmount = layerAmount;
         this.epochAmount = epochAmount;
         this.miniBatch = miniBatch;
         this.batchSize = batchSize;
 
         // Set layer amount to it's initial amount
-        this.layerAmount = initialLayerAmount;
-        this.layerStepSize = layerStepSize;
+        this.neuronAmount = initialNeuronAmount;
+        this.neuronStepSize = neuronStepSize;
     }
 
     @Override
     public void test(){
-        PointLogger dataPointLogger = new PointLogger("Layer amount logger", "For logging the input and output data of a layer amount network test");
+        PointLogger dataPointLogger = new PointLogger("Neuron amount logger", "For logging the input and output data of a neuron amount network test");
 
         for (int i = 0; i < testRunAmount; i++) {
             for (int j = 0; j < testRunSize; j++) {
+                System.out.println(i+j);
                 // Create layer array
                 NeuronLayer[] neuronLayers = new NeuronLayer[layerAmount + 1];
 
@@ -83,12 +81,12 @@ public class LayerAmountTest implements NetworkTest {
                 OutputAllData outputData = neuronModel.testAll(testingDigitContainer);
 
                 // Record input and output values
-                dataPointLogger.addPoint(layerAmount, OutputAllData.getAccuracy());
+                dataPointLogger.addPoint(neuronAmount, OutputAllData.getAccuracy());
             }
 
-            layerAmount += layerStepSize;
+            neuronAmount += neuronStepSize;
         }
 
-        dataPointLogger.writeFile("layerAmountData");
+        dataPointLogger.writeFile("neuronAmountData");
     }
 }

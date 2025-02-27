@@ -23,7 +23,10 @@ public class DataAmountTest implements NetworkTest {
     // Independent variable
     public int batchAmount;
 
-    public DataAmountTest(int testRunSize, int testRunAmount, int inputAmount, int outputAmount, float learningRate, IActivationFunction activationFunction, int layerAmount, int neuronAmount, int batchSize, int initialBatchAmount){
+    // Independent variable step size
+    public int batchStepSize;
+
+    public DataAmountTest(int testRunSize, int testRunAmount, int initialBatchAmount, int batchStepSize, int inputAmount, int outputAmount, float learningRate, IActivationFunction activationFunction, int layerAmount, int neuronAmount, int batchSize){
         this.testRunSize = testRunSize;
         this.testRunAmount = testRunAmount;
         this.inputAmount = inputAmount;
@@ -36,16 +39,17 @@ public class DataAmountTest implements NetworkTest {
 
         // Set batch amount to its initial size
         this.batchAmount = initialBatchAmount;
+        this.batchStepSize = batchStepSize;
     }
 
     @Override
     public void test(){
-        PointLogger dataPointLogger = new PointLogger("Layer amount logger", "For logging the input and output data of a layer amount network test");
+        PointLogger dataPointLogger = new PointLogger("Data amount logger", "For logging the input and output data of a data amount network test");
 
         for (int i = 0; i < testRunAmount; i++) {
             for (int j = 0; j < testRunSize; j++) {
 
-                // Create layers
+                // Create layer array
                 NeuronLayer[] neuronLayers = new NeuronLayer[layerAmount + 1];
 
                 // Create input layer
@@ -53,7 +57,9 @@ public class DataAmountTest implements NetworkTest {
                 // Create hidden layer(s)
                 if (layerAmount > 1) {
                     neuronLayers[1] = NeuronLayer.createHiddenLayer(inputAmount, neuronAmount, activationFunction);
-                    Arrays.fill(neuronLayers, 2, layerAmount, NeuronLayer.createHiddenLayer(neuronAmount, neuronAmount, activationFunction));
+                    for (int k = 2; k < layerAmount; k++){
+                        neuronLayers[k] = NeuronLayer.createHiddenLayer(neuronAmount, neuronAmount, activationFunction);
+                    }
                     // Create output layer
                     neuronLayers[layerAmount] = NeuronLayer.createHiddenLayer(neuronAmount, outputAmount, activationFunction);
                 } else if (layerAmount == 1) {
@@ -83,15 +89,15 @@ public class DataAmountTest implements NetworkTest {
                 neuronModel.trainModel(trainingDigits, 1);
 
                 // Test model
-                OutputAllData outputData = neuronModel.testAll(testingDigitContainer);
+                neuronModel.testAll(testingDigitContainer);
 
                 // Record input and output values
                 dataPointLogger.addPoint(batchAmount, OutputAllData.getAccuracy());
             }
 
-            batchAmount += 1;
+            batchAmount += batchStepSize;
         }
 
-        dataPointLogger.writeFile("data");
+        dataPointLogger.writeFile("DataAmountData");
     }
 }
