@@ -45,10 +45,11 @@ public class DataAmountTest implements NetworkTest {
     @Override
     public void test(){
         PointLogger dataPointLogger = new PointLogger("Data amount logger", "For logging the input and output data of a data amount network test");
+        PointLogger averageLogger = new PointLogger("Data amount average logger", "For logging the input and average output data of a data amount network test");
 
         for (int i = 0; i < testRunAmount; i++) {
+            float testRunAverage = 0.0f;
             for (int j = 0; j < testRunSize; j++) {
-
                 // Create layer array
                 NeuronLayer[] neuronLayers = new NeuronLayer[layerAmount + 1];
 
@@ -92,12 +93,16 @@ public class DataAmountTest implements NetworkTest {
                 neuronModel.testAll(testingDigitContainer);
 
                 // Record input and output values
-                dataPointLogger.addPoint(batchAmount, OutputAllData.getAccuracy());
+                int correctSamples = OutputAllData.correctSamples;
+                dataPointLogger.addPoint(batchAmount, correctSamples);
+                testRunAverage += correctSamples;
             }
 
+            averageLogger.addPoint(batchAmount, testRunAverage/testRunSize);
             batchAmount += batchStepSize;
         }
 
         dataPointLogger.writeFile("DataAmountData");
+        averageLogger.writeFile("DataAmountAverageData");
     }
 }
