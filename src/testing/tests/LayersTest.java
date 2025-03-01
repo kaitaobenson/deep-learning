@@ -1,4 +1,4 @@
-package data.logging;
+package testing.tests;
 
 import activation.IActivationFunction;
 import data.DataSet;
@@ -6,49 +6,54 @@ import network.NeuronLayer;
 import network.NeuronModel;
 import network.output.OutputAllData;
 import persistence.MnistLoader;
+import testing.NetworkTest;
+import testing.PointLogger;
 
-public class NeuronAmountTest implements NetworkTest {
+public class LayersTest implements NetworkTest {
     public int testRunSize;
     public int testRunAmount;
     public int inputAmount;
     public int outputAmount;
     public float learningRate;
     public IActivationFunction activationFunction;
-    public int layerAmount;
+    public int neuronAmount;
     public int epochAmount;
     public boolean miniBatch;
     public int batchSize;
 
     // Independent variable
-    public int neuronAmount;
+    public int layerAmount;
 
     // Independent variable step size
-    int neuronStepSize;
+    int layerStepSize;
 
-    public NeuronAmountTest(int testRunSize, int testRunAmount, int initialNeuronAmount, int neuronStepSize, int inputAmount, int outputAmount, float learningRate, IActivationFunction activationFunction, int layerAmount, int epochAmount, boolean miniBatch, int batchSize){
+    public LayersTest(int testRunSize, int testRunAmount, int initialLayerAmount, int layerStepSize, int inputAmount, int outputAmount, float learningRate, IActivationFunction activationFunction, int neuronAmount, int epochAmount, boolean miniBatch, int batchSize) {
         this.testRunSize = testRunSize;
         this.testRunAmount = testRunAmount;
         this.inputAmount = inputAmount;
         this.outputAmount = outputAmount;
         this.learningRate = learningRate;
         this.activationFunction = activationFunction;
-        this.layerAmount = layerAmount;
+        this.neuronAmount = neuronAmount;
         this.epochAmount = epochAmount;
         this.miniBatch = miniBatch;
         this.batchSize = batchSize;
 
         // Set layer amount to it's initial amount
-        this.neuronAmount = initialNeuronAmount;
-        this.neuronStepSize = neuronStepSize;
+        this.layerAmount = initialLayerAmount;
+        this.layerStepSize = layerStepSize;
     }
 
     @Override
     public void test(){
-        PointLogger dataPointLogger = new PointLogger("Neuron amount logger", "For logging the input and output data of a neuron amount network test");
-        PointLogger averageLogger = new PointLogger("Neuron amount average logger", "For logging the input and average output data of a neuron amount network test");
+        PointLogger dataPointLogger = new PointLogger();
+
+        // Load test and train digits
+        MnistLoader mnistLoader = new MnistLoader();
+        DataSet testingDigitContainer = mnistLoader.getTestingDigits();
+        DataSet trainingDigitContainer = mnistLoader.getTrainingDigits();
 
         for (int i = 0; i < testRunAmount; i++) {
-            float testRunAverage = 0.0f;
             for (int j = 0; j < testRunSize; j++) {
                 // Create layer array
                 NeuronLayer[] neuronLayers = new NeuronLayer[layerAmount + 1];
@@ -70,10 +75,7 @@ public class NeuronAmountTest implements NetworkTest {
                 // Init model
                 NeuronModel neuronModel = new NeuronModel(neuronLayers, miniBatch, batchSize, learningRate);
 
-                // Load test and train digits
-                MnistLoader mnistLoader = new MnistLoader();
-                DataSet testingDigitContainer = mnistLoader.getTestingDigits();
-                DataSet trainingDigitContainer = mnistLoader.getTrainingDigits();
+                trainingDigitContainer.shuffle();
 
                 // Train model with set parameters
                 neuronModel.trainModel(trainingDigitContainer, epochAmount);
@@ -83,15 +85,15 @@ public class NeuronAmountTest implements NetworkTest {
 
                 // Record input and output values
                 int correctSamples = OutputAllData.correctSamples;
-                dataPointLogger.addPoint(neuronAmount, correctSamples);
-                testRunAverage += correctSamples;
+                dataPointLogger.addPoint(layerAmount, correctSamples);
             }
 
-            averageLogger.addPoint(neuronAmount, testRunAverage/testRunSize);
-            neuronAmount += neuronStepSize;
+            layerAmount += layerStepSize;
         }
 
-        dataPointLogger.writeFile("NeuronAmountData");
-        averageLogger.writeFile("NeuronAmountAverageData");
+        dataPointLogger.writeFile("LayerData", savePath);
+
+        PointLogger averageLogger = dataPointLogger.getAvgPointLogger();
+        averageLogger.writeFile("LayerDataAvg", savePath);
     }
 }

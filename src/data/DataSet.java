@@ -1,6 +1,7 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DataSet {
@@ -9,6 +10,10 @@ public class DataSet {
 
     public DataSet(int initialSize) {
         data = new ArrayList<>(initialSize);
+    }
+
+    public void shuffle() {
+        Collections.shuffle(data);
     }
 
     public int getSampleAmount() {

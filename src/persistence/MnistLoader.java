@@ -18,20 +18,21 @@ public class MnistLoader {
 
     // Load and return training digits
     public DataSet getTrainingDigits() {
-        DataSet dataset = parseCsv(TRAINING_DATA_PATH);
+        DataSet dataset = parseDataSetFromCsv(TRAINING_DATA_PATH);
+        assert dataset != null;
         System.out.println("Training Digits Loaded: " + dataset.getSampleAmount());
-        Collections.shuffle(dataset.data);
         return dataset;
     }
 
     // Load and return testing digits
     public DataSet getTestingDigits() {
-        DataSet dataset = parseCsv(TESTING_DATA_PATH);
+        DataSet dataset = parseDataSetFromCsv(TESTING_DATA_PATH);
+        assert dataset != null;
         System.out.println("Testing Digits Loaded: " + dataset.getSampleAmount());
         return dataset;
     }
 
-    public Digit getDigitFromPng(String path) {
+    public Digit parseDigitFromPng(String path) {
         File file = new File(path);
 
         BufferedImage img = null;
@@ -66,7 +67,7 @@ public class MnistLoader {
     }
 
 
-    private DataSet parseCsv(String path) {
+    private DataSet parseDataSetFromCsv(String path) {
         File file = new File(path);
         Scanner scanner;
         try {

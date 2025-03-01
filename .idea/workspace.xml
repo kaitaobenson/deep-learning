@@ -5,13 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="Fixed Sigmoid.java output derivative">
-      <change afterPath="$PROJECT_DIR$/LayerAmountAverageData.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LayerData.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LayerDataAvg.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TrainingDataTest.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TrainingDataTestAvg.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/layerAmountData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/layerAmountData.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/logging/DataAmountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/logging/DataAmountTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/logging/LayerAmountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/logging/LayerAmountTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/logging/NeuronAmountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/logging/NeuronAmountTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAmountData.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LayerAmountAverageData.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layerAmountData.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neuronAmountData.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rizzing.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skibidi.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/DataSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/DataSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/logging/DataAmountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/tests/TrainingDataTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/logging/LayerAmountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/tests/LayersTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/logging/NetworkTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/NetworkTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/logging/NeuronAmountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/tests/NeuronsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/logging/PointLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/PointLogger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/MnistLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/MnistLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/program/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/program/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/program/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/program/Program.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +34,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -54,14 +67,13 @@
     &quot;ignore.preview.features.used&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/kaibenson/Desktop/Deep-Learning-Space/Deep-Learning&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Problems&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/testing" />
+      <recent name="$PROJECT_DIR$/data-collected" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -71,7 +83,6 @@
   </component>
   <component name="RunManager">
     <configuration name="deep-learning" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="21" />
       <option name="MAIN_CLASS_NAME" value="program.Main" />
       <module name="deep-learning" />
       <method v="2">

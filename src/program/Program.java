@@ -145,7 +145,7 @@ public class Program {
 
     public void test(String path) {
         MnistLoader mnistLoader = new MnistLoader();
-        Digit digit = mnistLoader.getDigitFromPng(path);
+        Digit digit = mnistLoader.parseDigitFromPng(path);
 
         test(digit);
     }
