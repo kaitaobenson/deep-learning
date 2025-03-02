@@ -4,9 +4,7 @@ package network;
 import activation.IActivationFunction;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Random;
-
 
 public class NeuronLayer implements Serializable {
 

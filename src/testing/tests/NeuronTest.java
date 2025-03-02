@@ -9,7 +9,7 @@ import persistence.MnistLoader;
 import testing.NetworkTest;
 import testing.PointLogger;
 
-public class NeuronsTest implements NetworkTest {
+public class NeuronTest implements NetworkTest {
     public int testRunSize;
     public int testRunAmount;
     public int inputAmount;
@@ -27,7 +27,7 @@ public class NeuronsTest implements NetworkTest {
     // Independent variable step size
     int neuronStepSize;
 
-    public NeuronsTest(int testRunSize, int testRunAmount, int initialNeuronAmount, int neuronStepSize, int inputAmount, int outputAmount, float learningRate, IActivationFunction activationFunction, int layerAmount, int epochAmount, boolean miniBatch, int batchSize) {
+    public NeuronTest(int testRunSize, int testRunAmount, int initialNeuronAmount, int neuronStepSize, int inputAmount, int outputAmount, float learningRate, IActivationFunction activationFunction, int layerAmount, int epochAmount, boolean miniBatch, int batchSize) {
         this.testRunSize = testRunSize;
         this.testRunAmount = testRunAmount;
         this.inputAmount = inputAmount;

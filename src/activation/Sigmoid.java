@@ -1,7 +1,9 @@
 package activation;
 
 
-public class Sigmoid implements IActivationFunction {
+import java.io.Serializable;
+
+public class Sigmoid implements IActivationFunction, Serializable {
 
     @Override
     public float output(float x) {

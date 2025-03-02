@@ -5,26 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5660a75e-9a17-4eb2-a34d-168a118d028f" name="Changes" comment="Fixed Sigmoid.java output derivative">
-      <change afterPath="$PROJECT_DIR$/LayerData.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LayerDataAvg.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TrainingDataTest.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TrainingDataTestAvg.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/persistence/saved_models/93-model.ser" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/testing/data_collected/NeuronData.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/testing/data_collected/NeuronDataAvg.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataAmountData.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LayerAmountAverageData.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/layerAmountData.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/neuronAmountData.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rizzing.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skibidi.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/DataSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/DataSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/logging/DataAmountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/tests/TrainingDataTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/logging/LayerAmountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/tests/LayersTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/logging/NetworkTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/NetworkTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/logging/NeuronAmountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/tests/NeuronsTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/logging/PointLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/PointLogger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LayerData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/data_collected/LayerData.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LayerDataAvg.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/data_collected/LayerDataAvg.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeuronData.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeuronDataAvg.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TrainingDataTest.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/data_collected/BatchData.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TrainingDataTestAvg.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/data_collected/BatchDataAvg.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/ActivationFunctionType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/LeakyReLu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/activation/LeakyReLu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/Sigmoid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/activation/Sigmoid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/Softmax.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/activation/Softmax.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/Swish.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activation/Tanh.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/Neuron.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/Neuron.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/NeuronLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/NeuronLayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/NeuronModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/NeuronModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/persistence/MnistLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/MnistLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/NeuronModelLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/NeuronModelLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/program/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/program/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/program/CommandParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/program/CommandParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/program/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/program/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/program/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/program/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/testing/tests/LayersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/tests/LayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/testing/tests/NeuronsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/tests/NeuronTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/testing/tests/TrainingDataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/tests/BatchTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/GeneralUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/StatUtil.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +83,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/testing/data-collected" />
       <recent name="$PROJECT_DIR$/src/testing" />
       <recent name="$PROJECT_DIR$/data-collected" />
       <recent name="$PROJECT_DIR$/src" />

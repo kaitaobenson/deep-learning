@@ -30,14 +30,14 @@ public class CommandParser {
 
         // Search for the matching command
         for (Command cmd : commands) {
-            if (cmd.getName().equals(commandName)) {
+            if (cmd.name.equals(commandName)) {
                 // If the command expects no input
-                if (cmd.getInputType() == Command.InputType.VOID && commandData == null) {
+                if (cmd.inputType == Command.InputType.VOID && commandData == null) {
                     return cmd;
                 }
                 // If the command expects input and we have provided data
                 if (commandData != null) {
-                    switch (cmd.getInputType()) {
+                    switch (cmd.inputType) {
                         case STRING:
                             cmd.setData(commandData);
                             return cmd;
@@ -72,7 +72,7 @@ public class CommandParser {
     public void printCommands() {
         System.out.println("----------------------------------");
         for (Command command : commands) {
-            System.out.println(command.getName() + ", " + command.getInputType());
+            System.out.println(command.name + ", " + command.inputType);
         }
         System.out.println("----------------------------------");
     }

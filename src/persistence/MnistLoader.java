@@ -2,13 +2,12 @@ package persistence;
 
 import data.DataSet;
 import data.Digit;
-import util.GeneralUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class MnistLoader {
@@ -57,7 +56,7 @@ public class MnistLoader {
                 float green = ((rgb >> 8) & 0xFF) / 255.0f;
                 float blue = ((rgb) & 0xFF) / 255.0f;
 
-                float grayscale = (1 - (0.299f * red + 0.587f * green + 0.114f * blue)) * alpha;
+                float grayscale = (0.299f * red + 0.587f * green + 0.114f * blue) * alpha;
 
                 pixels[x + y*28] = grayscale;
             }
@@ -83,7 +82,7 @@ public class MnistLoader {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
 
-            int[] values = GeneralUtil.stringArrayToIntArray(line.split(","));
+            int[] values = stringArrayToIntArray(line.split(","));
 
             int label = values[0];
             float[] pixels = new float[784];
@@ -98,5 +97,9 @@ public class MnistLoader {
         }
 
         return dataSet;
+    }
+
+    private int[] stringArrayToIntArray(String[] array) {
+        return Arrays.stream(array).mapToInt(Integer::parseInt).toArray();
     }
 }

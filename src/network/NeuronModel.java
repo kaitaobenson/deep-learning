@@ -43,7 +43,7 @@ public class NeuronModel implements Serializable {
                 // Apply weight updates
                 for (NeuronLayer layer : layers) {
                     for (Neuron neuron : layer.neurons) {
-                        neuron.updateWeights(learningRate, 1);
+                        neuron.updateWeights(1);
                     }
                 }
             }
@@ -64,21 +64,20 @@ public class NeuronModel implements Serializable {
                 // Apply weight updates
                 for (NeuronLayer layer : layers) {
                     for (Neuron neuron : layer.neurons) {
-                        neuron.updateWeights(learningRate, batch.getSampleAmount());
+                        neuron.updateWeights(batch.getSampleAmount());
                     }
                 }
             }
 
             System.out.println("Epoch " + (epoch + 1) + " complete");
-            System.out.println(Arrays.toString(layers[1].neurons[0].weights));
+            System.out.println(Arrays.toString(layers[2].neurons[1].weights));
         }
     }
 
     public OutputSingleData testSingle(DataSample dataSample) {
         forward(dataSample.getInputs());
         float[] outputs = extractOutputs();
-        OutputSingleData output = new OutputSingleData(outputs, dataSample);
-        return output;
+        return new OutputSingleData(outputs, dataSample);
     }
 
     public OutputAllData testAll(DataSet dataSet) {
@@ -90,8 +89,7 @@ public class NeuronModel implements Serializable {
             }
         }
 
-        OutputAllData output = new OutputAllData(dataSet.getSampleAmount(), totalCorrect);
-        return output;
+        return new OutputAllData(dataSet.getSampleAmount(), totalCorrect);
     }
 
     public void randomize() {

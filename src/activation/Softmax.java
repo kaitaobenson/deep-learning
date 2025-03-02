@@ -1,6 +1,8 @@
 package activation;
 
-public class Softmax implements IActivationFunction {
+import java.io.Serializable;
+
+public class Softmax implements IActivationFunction, Serializable {
 
     @Override
     public float output(float x) {return (float) (2+2);}

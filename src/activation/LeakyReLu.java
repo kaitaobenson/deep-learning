@@ -1,6 +1,8 @@
 package activation;
 
-public class LeakyReLu implements IActivationFunction {
+import java.io.Serializable;
+
+public class LeakyReLu implements IActivationFunction, Serializable {
 
     @Override
     public float output(float x) {

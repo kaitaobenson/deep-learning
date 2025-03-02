@@ -1,7 +1,6 @@
 package network;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 public class Neuron implements Serializable {
 
@@ -45,7 +44,7 @@ public class Neuron implements Serializable {
 		return neuron;
 	}
 
-	public void updateWeights(float learningRate, int batchSize) {
+	public void updateWeights(int batchSize) {
 		if (weights != null) { // Skip input neurons
 			for (int i = 0; i < weights.length; i++) {
 				weights[i] += weightDeltas[i] / batchSize; // Apply cached updates
@@ -56,6 +55,4 @@ public class Neuron implements Serializable {
 		weightDeltas = new float[weights.length];
 		biasDelta = 0;
 	}
-
-
 }

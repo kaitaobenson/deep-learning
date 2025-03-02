@@ -1,7 +1,7 @@
 # Instructions for running
 
 ## Download IntelliJ CE
-Link: https://www.jetbrains.com/products/compare/?product=idea&product=idea-ce
+Link: https://www.jetbrains.com/idea/download/other.html
 
 Make sure that you are downloading COMMUNITY EDITION.
 
@@ -13,8 +13,7 @@ Click on "Download Raw Dataset".
 ## Clone the Repository
 Clone the repository on your terminal.
 
-Rename the repository to something different, like "deep-learning-repo"
+Move the MNIST Dataset into a parent folder (Should NOT be inside repo, because of 100 mb limit for git)
 
-Move the repository into another folder
-
-Move the MNIST Dataset into this parent folder (Should NOT be inside repo, because of 100 mb limit for git)
+## Run the code
+Run Main.java and use commands in terminal to operate

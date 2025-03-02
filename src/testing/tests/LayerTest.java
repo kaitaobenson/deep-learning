@@ -9,7 +9,7 @@ import persistence.MnistLoader;
 import testing.NetworkTest;
 import testing.PointLogger;
 
-public class TrainingDataTest implements NetworkTest {
+public class LayerTest implements NetworkTest {
     public int testRunSize;
     public int testRunAmount;
     public int inputAmount;
@@ -17,16 +17,17 @@ public class TrainingDataTest implements NetworkTest {
     public float learningRate;
     public IActivationFunction activationFunction;
     public int neuronAmount;
+    public int epochAmount;
+    public boolean miniBatch;
     public int batchSize;
-    public int layerAmount;
 
     // Independent variable
-    public int batchAmount;
+    public int layerAmount;
 
     // Independent variable step size
-    public int batchStepSize;
+    int layerStepSize;
 
-    public TrainingDataTest(int testRunSize, int testRunAmount, int initialBatchAmount, int batchStepSize, int inputAmount, int outputAmount, float learningRate, IActivationFunction activationFunction, int layerAmount, int neuronAmount, int batchSize){
+    public LayerTest(int testRunSize, int testRunAmount, int initialLayerAmount, int layerStepSize, int inputAmount, int outputAmount, float learningRate, IActivationFunction activationFunction, int neuronAmount, int epochAmount, boolean miniBatch, int batchSize) {
         this.testRunSize = testRunSize;
         this.testRunAmount = testRunAmount;
         this.inputAmount = inputAmount;
@@ -34,12 +35,13 @@ public class TrainingDataTest implements NetworkTest {
         this.learningRate = learningRate;
         this.activationFunction = activationFunction;
         this.neuronAmount = neuronAmount;
+        this.epochAmount = epochAmount;
+        this.miniBatch = miniBatch;
         this.batchSize = batchSize;
-        this.layerAmount = layerAmount;
 
-        // Set batch amount to its initial size
-        this.batchAmount = initialBatchAmount;
-        this.batchStepSize = batchStepSize;
+        // Set layer amount to it's initial amount
+        this.layerAmount = initialLayerAmount;
+        this.layerStepSize = layerStepSize;
     }
 
     @Override
@@ -71,38 +73,27 @@ public class TrainingDataTest implements NetworkTest {
                 }
 
                 // Init model
-                NeuronModel neuronModel = new NeuronModel(neuronLayers, true, batchSize, learningRate);
+                NeuronModel neuronModel = new NeuronModel(neuronLayers, miniBatch, batchSize, learningRate);
 
                 trainingDigitContainer.shuffle();
 
-                // Create training digit thing
-                DataSet trainingDigits = new DataSet(batchAmount * batchSize);
-                int iterations = Math.ceilDiv(batchAmount * batchSize, trainingDigitContainer.data.size());
-                for (int k = 0; k < iterations; k++){
-                    if (k != iterations - 1) {
-                        trainingDigits.data.addAll(trainingDigitContainer.data);
-                    } else {
-                        trainingDigits.data.addAll(trainingDigitContainer.data.subList(0, (batchAmount * batchSize) % trainingDigitContainer.data.size()));
-                    }
-                }
-
                 // Train model with set parameters
-                neuronModel.trainModel(trainingDigits, 1);
+                neuronModel.trainModel(trainingDigitContainer, epochAmount);
 
                 // Test model
-                neuronModel.testAll(testingDigitContainer);
+                OutputAllData outputData = neuronModel.testAll(testingDigitContainer);
 
                 // Record input and output values
                 int correctSamples = OutputAllData.correctSamples;
-                dataPointLogger.addPoint(batchAmount, correctSamples);
+                dataPointLogger.addPoint(layerAmount, correctSamples);
             }
 
-            batchAmount += batchStepSize;
+            layerAmount += layerStepSize;
         }
 
-        dataPointLogger.writeFile("TrainingDataTest", savePath);
+        dataPointLogger.writeFile("LayerData", savePath);
 
         PointLogger averageLogger = dataPointLogger.getAvgPointLogger();
-        averageLogger.writeFile("TrainingDataTestAvg", savePath);
+        averageLogger.writeFile("LayerDataAvg", savePath);
     }
 }

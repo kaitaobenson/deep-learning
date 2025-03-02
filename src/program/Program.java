@@ -1,7 +1,6 @@
 package program;
 
 import activation.LeakyReLu;
-import activation.Sigmoid;
 import data.DataSample;
 import data.Digit;
 import data.DataSet;
@@ -26,11 +25,11 @@ public class Program {
 
     public NeuronLayer[] neuronLayers = {
             NeuronLayer.createInputLayer(new float[784]),
-            NeuronLayer.createHiddenLayer(784, 16, new LeakyReLu()),
-            NeuronLayer.createHiddenLayer(16, 16, new LeakyReLu()),
-            NeuronLayer.createHiddenLayer(16, 16, new LeakyReLu()),
-            NeuronLayer.createHiddenLayer(16, 16, new LeakyReLu()),
-            NeuronLayer.createHiddenLayer(16, 10, new LeakyReLu()),
+            NeuronLayer.createHiddenLayer(784, 20, new LeakyReLu()),
+            NeuronLayer.createHiddenLayer(20, 20, new LeakyReLu()),
+            NeuronLayer.createHiddenLayer(20, 20, new LeakyReLu()),
+            NeuronLayer.createHiddenLayer(20, 20, new LeakyReLu()),
+            NeuronLayer.createHiddenLayer(20, 10, new LeakyReLu()),
     };
     public NeuronModel neuronModel = new NeuronModel(neuronLayers, miniBatch, batchSize, learningRate);
 
@@ -63,8 +62,8 @@ public class Program {
                 continue;
             }
 
-            String name = command.getName();
-            Command.InputType inputType = command.getInputType();
+            String name = command.name;
+            Command.InputType inputType = command.inputType;
             Object data = command.getData();
 
             switch (name) {

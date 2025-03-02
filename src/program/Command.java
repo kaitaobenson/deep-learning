@@ -6,9 +6,8 @@ public class Command {
         VOID, STRING, INT, FLOAT, BOOLEAN;
     }
 
-    private final String name;
-
-    private final InputType inputType;
+    public final String name;
+    public final InputType inputType;
 
     private String stringData;
     private int intData;
@@ -50,27 +49,13 @@ public class Command {
     }
 
     public Object getData() {
-        switch (inputType) {
-            case VOID:
-                return null;
-            case STRING:
-                return stringData;
-            case INT:
-                return intData;
-            case FLOAT:
-                return floatData;
-            case BOOLEAN:
-                return booleanData;
-            default:
-                throw new IllegalStateException("Unknown InputType");
-        }
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public InputType getInputType() {
-        return inputType;
+        return switch (inputType) {
+            case VOID -> null;
+            case STRING -> stringData;
+            case INT -> intData;
+            case FLOAT -> floatData;
+            case BOOLEAN -> booleanData;
+            default -> throw new IllegalStateException("Unknown InputType");
+        };
     }
 }
