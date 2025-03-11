@@ -1,6 +1,5 @@
 package network;
 
-
 import activation.IActivationFunction;
 
 import java.io.Serializable;
@@ -11,11 +10,13 @@ public class NeuronLayer implements Serializable {
     public IActivationFunction activationFunction;
     public Neuron[] neurons;
 
+    public int inputAmount = 0;
 
     public static NeuronLayer createInputLayer(float[] inputs) {
         NeuronLayer neuronLayer = new NeuronLayer();
 
         neuronLayer.activationFunction = null; // Not needed
+        neuronLayer.inputAmount = inputs.length;
         neuronLayer.neurons = new Neuron[inputs.length];
 
         for (int i = 0; i < inputs.length; i++) {
@@ -29,6 +30,7 @@ public class NeuronLayer implements Serializable {
         NeuronLayer neuronLayer = new NeuronLayer();
 
         neuronLayer.activationFunction = activationFunction;
+        neuronLayer.inputAmount = inputAmount;
         neuronLayer.neurons = new Neuron[neuronAmount];
 
         for (int i = 0; i < neuronAmount; i++) {
@@ -39,6 +41,15 @@ public class NeuronLayer implements Serializable {
         }
 
         return neuronLayer;
+    }
+
+    public void randomize() {
+        for (Neuron neuron : neurons) {
+            neuron.weights = getHeInitWeights(inputAmount);
+            neuron.weightDeltas = new float[inputAmount];
+            neuron.bias = 0;
+            neuron.biasDelta = 0;
+        }
     }
 
 

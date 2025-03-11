@@ -1,24 +1,25 @@
 package network.output;
 
+import java.util.Arrays;
+
 public class OutputAllData {
 
-    public static int totalSamples;
-    public static int correctSamples;
+    public int totalSamples;
+    public int correctSamples;
 
-    public OutputAllData(int totalSamples, int correctSamples) {
-        OutputAllData.totalSamples = totalSamples;
-        OutputAllData.correctSamples = correctSamples;
-    }
+    public int[] incorrectIndexes;
 
-    public static float getAccuracy() {
-        return (float) correctSamples / totalSamples;
+    public OutputAllData(int totalSamples, int correctSamples, int[] incorrectIndexes) {
+        this.totalSamples = totalSamples;
+        this.correctSamples = correctSamples;
+
+        this.incorrectIndexes = incorrectIndexes;
     }
 
     @Override
     public String toString() {
-        String str = "Output:\n" +
-                correctSamples + "/" + totalSamples + " guessed correctly";
-
-        return str;
+        String line1 = "Correct out of Total: " + correctSamples + "/" + totalSamples;
+        String line2 = "Incorrect Indexes: " + Arrays.toString(incorrectIndexes);
+        return line1 + "\n" + line2;
     }
 }

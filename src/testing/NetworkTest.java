@@ -2,7 +2,7 @@ package testing;
 
 public interface NetworkTest {
 
-    static final String savePath = "/src/testing/data-collected/";
+    String savePath = "/src/testing/data_collected/";
 
     void test();
 }

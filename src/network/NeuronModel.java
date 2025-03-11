@@ -6,7 +6,7 @@ import network.output.OutputAllData;
 import network.output.OutputSingleData;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NeuronModel implements Serializable {
@@ -15,7 +15,7 @@ public class NeuronModel implements Serializable {
     public final boolean miniBatch;
     public final int batchSize;
 
-    private final NeuronLayer[] layers;
+    public final NeuronLayer[] layers;
 
 
     public NeuronModel(NeuronLayer[] neuronLayers, boolean miniBatch, int batchSize, float learningRate) {
@@ -34,11 +34,16 @@ public class NeuronModel implements Serializable {
         }
     }
 
-    public void train(DataSet dataSet, int epochs) {
+    public void train (DataSet dataSet, int epochs) {
         for (int epoch = 0; epoch < epochs; epoch++) {
+
+            float loss = 0.0f;
+
             for (DataSample dataSample : dataSet.data) {
                 forward(dataSample.getInputs());
                 backward(learningRate, dataSample);
+
+                loss += computeLoss(dataSample);
 
                 // Apply weight updates
                 for (NeuronLayer layer : layers) {
@@ -47,30 +52,36 @@ public class NeuronModel implements Serializable {
                     }
                 }
             }
-            System.out.println("Epoch " + (epoch + 1) + " complete");
-            System.out.println(Arrays.toString(layers[1].neurons[0].weights));
+
+            System.out.println("EPOCH: " + (epoch + 1) + " complete");
+            System.out.println("AVERAGE LOSS: " + loss / dataSet.getSize());
         }
     }
 
     public void trainMiniBatch(DataSet dataSet, int epochs, int batchSize){
         for (int epoch = 0; epoch < epochs; epoch++) {
             DataSet[] miniBatches = generateMiniBatches(dataSet, batchSize);
+
+            float loss = 0.0f;
+
             for (DataSet batch : miniBatches) {
                 for (DataSample dataSample : batch.data) {
                     forward(dataSample.getInputs());
                     backward(learningRate, dataSample);
+
+                    loss += computeLoss(dataSample);
                 }
 
                 // Apply weight updates
                 for (NeuronLayer layer : layers) {
                     for (Neuron neuron : layer.neurons) {
-                        neuron.updateWeights(batch.getSampleAmount());
+                        neuron.updateWeights(batch.getSize());
                     }
                 }
             }
 
-            System.out.println("Epoch " + (epoch + 1) + " complete");
-            System.out.println(Arrays.toString(layers[2].neurons[1].weights));
+            System.out.println("EPOCH: " + (epoch + 1) + " complete");
+            System.out.println("AVERAGE LOSS: " + loss / dataSet.getSize());
         }
     }
 
@@ -82,18 +93,27 @@ public class NeuronModel implements Serializable {
 
     public OutputAllData testAll(DataSet dataSet) {
         int totalCorrect = 0;
-        for (DataSample dataSample : dataSet.data) {
-            OutputSingleData outputData = testSingle(dataSample);
+        ArrayList<Integer> incorrectIndexes = new ArrayList<>(1000);
+
+        for (int i = 0; i < dataSet.getSize(); i++) {
+            DataSample sample = dataSet.getSample(i);
+            OutputSingleData outputData = testSingle(sample);
+
             if (outputData.isCorrect) {
                 totalCorrect++;
+            } else {
+                incorrectIndexes.add(i);
             }
         }
 
-        return new OutputAllData(dataSet.getSampleAmount(), totalCorrect);
+        int[] incorrectIndexesArray = incorrectIndexes.stream().mapToInt(Integer::intValue).toArray();
+        return new OutputAllData(dataSet.getSize(), totalCorrect, incorrectIndexesArray);
     }
 
     public void randomize() {
-
+        for (NeuronLayer neuronLayer : layers) {
+            neuronLayer.randomize();
+        }
     }
 
 
@@ -156,8 +176,6 @@ public class NeuronModel implements Serializable {
                 float maxDelta = 10f;
                 delta = Math.max(-maxDelta, Math.min(maxDelta, delta));
 
-                //System.out.println("GRADIENT: " + delta);
-
                 neuron.gradient = delta;
 
                 for (int k = 0; k < neuron.weights.length; k++) {
@@ -184,21 +202,33 @@ public class NeuronModel implements Serializable {
         NeuronLayer current_layer = layers[l_index];
 
         for (Neuron neuron : current_layer.neurons) {
-            if (neuron.weights == null) {
-                System.out.println("WEIGHTS WERE NULL");
-                continue;
-            }// Skip if weights are not initialized
             gradient_sum += neuron.weights[n_index] * neuron.gradient;
         }
         return gradient_sum;
     }
 
-    private DataSet[] generateMiniBatches(DataSet dataset, int batchSize){
-        if (dataset.getSampleAmount() % batchSize != 0){
-            throw new IllegalArgumentException("Error: The batch size does not evenly divide the dataset size. Please choose a batch size that is a factor of the total data amount.");
+    private float computeLoss(DataSample dataSample) {
+        float[] outputs = extractOutputs();
+        float[] targets = dataSample.getTargets();
+        float loss = 0;
+
+        // Mean Squared Error (MSE)
+        for (int i = 0; i < outputs.length; i++) {
+            float error = outputs[i] - targets[i];
+            loss += error * error;
         }
 
-        DataSet[] miniBatches = new DataSet[Math.ceilDiv(dataset.getSampleAmount(),batchSize)];
+        return loss / outputs.length; // Average loss per output neuron
+    }
+
+
+    private DataSet[] generateMiniBatches(DataSet dataset, int batchSize) {
+        if (dataset.getSize() % batchSize != 0) {
+            System.out.println("ERROR: The batch size does not evenly divide into the dataset size.");
+            return null;
+        }
+
+        DataSet[] miniBatches = new DataSet[Math.ceilDiv(dataset.getSize(),batchSize)];
         for (int i = 0; i < miniBatches.length; i++) {
             miniBatches[i] = new DataSet(batchSize);
         }

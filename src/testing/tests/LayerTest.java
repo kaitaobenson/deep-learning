@@ -84,7 +84,7 @@ public class LayerTest implements NetworkTest {
                 OutputAllData outputData = neuronModel.testAll(testingDigitContainer);
 
                 // Record input and output values
-                int correctSamples = OutputAllData.correctSamples;
+                int correctSamples = outputData.correctSamples;
                 dataPointLogger.addPoint(layerAmount, correctSamples);
             }
 

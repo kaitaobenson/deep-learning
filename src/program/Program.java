@@ -4,6 +4,7 @@ import activation.LeakyReLu;
 import data.DataSample;
 import data.Digit;
 import data.DataSet;
+import network.Neuron;
 import network.output.OutputAllData;
 import network.output.OutputSingleData;
 import persistence.MnistLoader;
@@ -26,9 +27,9 @@ public class Program {
     public NeuronLayer[] neuronLayers = {
             NeuronLayer.createInputLayer(new float[784]),
             NeuronLayer.createHiddenLayer(784, 20, new LeakyReLu()),
-            NeuronLayer.createHiddenLayer(20, 20, new LeakyReLu()),
-            NeuronLayer.createHiddenLayer(20, 20, new LeakyReLu()),
-            NeuronLayer.createHiddenLayer(20, 20, new LeakyReLu()),
+            //NeuronLayer.createHiddenLayer(20, 20, new LeakyReLu()),
+            //NeuronLayer.createHiddenLayer(20, 20, new LeakyReLu()),
+            //NeuronLayer.createHiddenLayer(20, 20, new LeakyReLu()),
             NeuronLayer.createHiddenLayer(20, 10, new LeakyReLu()),
     };
     public NeuronModel neuronModel = new NeuronModel(neuronLayers, miniBatch, batchSize, learningRate);
@@ -130,7 +131,6 @@ public class Program {
 
         OutputAllData outputData = neuronModel.testAll(dataSet);
 
-        System.out.println("ABOOUTA PRINT OUTPUT DATA:");
         System.out.println(outputData);
     }
 
@@ -147,11 +147,12 @@ public class Program {
         Digit digit = mnistLoader.parseDigitFromPng(path);
 
         test(digit);
+        visualizeNeurons(neuronModel.layers[1].neurons);
     }
 
     public void printDigit(DataSet dataSet, int index) {
         // Validate
-        if (index > dataSet.getSampleAmount() || index < 0) {
+        if (index > dataSet.getSize() || index < 0) {
             System.out.println("Index not found");
             return;
         }
@@ -176,6 +177,17 @@ public class Program {
             System.out.println(e.getMessage());
         } catch (ClassNotFoundException e) {
             System.out.println("Unexpected error happened: " + e.getMessage());
+        }
+    }
+
+    public void visualizeNeurons(Neuron[] neurons) {
+        for (int i = 0; i < neurons.length; i++) {
+            MnistLoader mnistLoader = new MnistLoader();
+
+            Digit digit = new Digit(neurons[i].weights, 0);
+
+            System.out.println("Saved Neuron: " + i);
+            mnistLoader.saveDigitAsPng(digit, "src/persistence/saved_models/neuron" + i + ".png");
         }
     }
 

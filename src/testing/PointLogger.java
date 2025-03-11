@@ -53,7 +53,7 @@ public class PointLogger {
         try (FileWriter writer = new FileWriter(fileName + ".csv")) {
             writer.write(sb.toString());
         } catch (IOException e) {
-            System.out.println("Error writing output file");
+            System.out.println("ERROR: Failed to write test output file");
         }
     }
 }

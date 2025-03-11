@@ -17,7 +17,7 @@ public class Neuron implements Serializable {
 	public static Neuron createInputNeuron(float value) {
 		Neuron neuron = new Neuron();
 
-		neuron.weights = new float[0]; // Empty array instead of null
+		neuron.weights = new float[0];
 		neuron.weightDeltas = new float[0];
 
 		neuron.bias = -1;
@@ -28,7 +28,6 @@ public class Neuron implements Serializable {
 
 		return neuron;
 	}
-
 
 	public static Neuron createHiddenNeuron(float[] weights, float bias) {
 		Neuron neuron = new Neuron();
@@ -45,10 +44,8 @@ public class Neuron implements Serializable {
 	}
 
 	public void updateWeights(int batchSize) {
-		if (weights != null) { // Skip input neurons
-			for (int i = 0; i < weights.length; i++) {
-				weights[i] += weightDeltas[i] / batchSize; // Apply cached updates
-			}
+		for (int i = 0; i < weights.length; i++) {
+			weights[i] += weightDeltas[i] / batchSize;
 		}
 		bias += biasDelta / batchSize;
 

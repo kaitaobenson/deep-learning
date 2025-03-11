@@ -90,10 +90,10 @@ public class BatchTest implements NetworkTest {
                 neuronModel.trainModel(trainingDigits, 1);
 
                 // Test model
-                neuronModel.testAll(testingDigitContainer);
+                OutputAllData outputData = neuronModel.testAll(testingDigitContainer);
 
                 // Record input and output values
-                int correctSamples = OutputAllData.correctSamples;
+                int correctSamples = outputData.correctSamples;
                 dataPointLogger.addPoint(batchAmount, correctSamples);
             }
 

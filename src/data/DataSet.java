@@ -16,7 +16,7 @@ public class DataSet {
         Collections.shuffle(data);
     }
 
-    public int getSampleAmount() {
+    public int getSize() {
         return data.size();
     }
 
